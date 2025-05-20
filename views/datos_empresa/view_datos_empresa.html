@@ -6,10 +6,12 @@
   <title>Datos Empresa</title>
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Bootstrap Icons (opcional) -->
+  <!-- Bootstrap Icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <link rel="icon" type="image/png" href="img/logo-contaplus-favicon.png">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
+
   <link rel="stylesheet" href="view_datos_empresa.css">
 </head>
 <body>
@@ -90,11 +92,101 @@
 
   <!-- CONTENIDO PRINCIPAL -->
   <div class="content">
-    <h1>Bienvenido</h1>
-    <p>Este es el contenido principal de la página.</p>
+    
+      <div class="container py-4">
+      <h2 class="mb-4">Datos Empresa</h2>
+      <form id="form-datos-empresa">
+
+        <!-- Sección 1: Datos Generales -->
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label for="razonSocial" class="form-label">Razón Social</label>
+            <input type="text" class="form-control" id="razonSocial" name="razonSocial">
+          </div>
+          <div class="col-md-6">
+            <label for="nombreFantasia" class="form-label">Nombre de Fantasía</label>
+            <input type="text" class="form-control" id="nombreFantasia" name="nombreFantasia">
+          </div>
+          <div class="col-md-6">
+            <label for="rutEmpresa" class="form-label">RUT Empresa</label>
+            <input type="text" class="form-control" id="rutEmpresa" name="rutEmpresa">
+          </div>
+          <div class="col-md-6">
+            <label for="direccion" class="form-label">Dirección</label>
+            <input type="text" class="form-control" id="direccion" name="direccion">
+          </div>
+          <div class="col-12 col-md-4">
+              <label for="region" class="form-label">Región</label>
+              <select class="form-select" id="region" name="region"></select>
+          </div>
+          <div class="col-12 col-md-4">
+            <label for="comuna" class="form-label">Comuna</label>
+            <select class="form-select" id="comuna" name="comuna"></select>
+          </div>
+          <div class="col-12 col-md-4">
+            <label for="provincia" class="form-label">Provincia</label>
+            <input type="text" class="form-control" id="provincia" name="provincia" readonly>
+          </div>
+          <div class="col-md-4">
+            <label for="tipoPropiedad" class="form-label">Tipo de Propiedad</label>
+            <select class="form-select" id="tipoPropiedad" name="tipoPropiedad">
+              <option selected disabled>Seleccione</option>
+              <option>Usufructo</option>
+              <option>Cedido</option>
+              <option>Arrendado</option>
+              <option>Propio</option>
+            </select>
+          </div>
+          <div class="col-md-4">
+            <label for="telefono" class="form-label">Teléfono</label>
+            <input type="text" class="form-control" id="telefono" name="telefono">
+          </div>
+          <div class="col-md-4">
+            <label for="correo" class="form-label">Correo Electrónico</label>
+            <input type="email" class="form-control" id="correo" name="correo">
+          </div>
+        </div>
+
+        <!-- Sección 2: Fechas y Representante -->
+        <hr class="my-4">
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label for="fechaConstitucion" class="form-label">Fecha de Constitución</label>
+            <input type="date" class="form-control" id="fechaConstitucion" name="fechaConstitucion">
+          </div>
+          <div class="col-md-6">
+            <label for="fechaInicio" class="form-label">Fecha de Inicio de Actividades</label>
+            <input type="date" class="form-control" id="fechaInicio" name="fechaInicio">
+          </div>
+          <div class="col-md-6">
+            <label for="representanteLegal" class="form-label">Nombre Representante Legal</label>
+            <input type="text" class="form-control" id="representanteLegal" name="representanteLegal">
+          </div>
+          <div class="col-md-6">
+            <label for="rutRepresentante" class="form-label">RUT Representante Legal</label>
+            <input type="text" class="form-control" id="rutRepresentante" name="rutRepresentante">
+          </div>
+          <div class="col-md-6">
+            <label for="tipoSociedad" class="form-label">Tipo de Sociedad</label>
+            <select class="form-select" id="tipoSociedad" name="tipoSociedad">
+              <option selected disabled>Seleccione</option>
+            </select>
+          </div>
+      </div>
+
+      <!-- Botón -->
+      <div class="mt-4 d-flex justify-content-end">
+        <button type="submit" class="btn btn-primary">Guardar / Actualizar</button>
+      </div>
+
+    </form>
+  </div>
+
+
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="view_datos_empresa.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
 </body>
 </html>
