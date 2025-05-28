@@ -53,6 +53,21 @@ closeBtn.addEventListener("click", () => {
     toggleBtn.classList.remove("hide"); 
 });
 
+// CERRAR AL HACER CLICK AFUERA 
+document.addEventListener('click', function (event) {
+  const sidebar = document.getElementById('sidebar');
+  const toggleBtn = document.getElementById('toggleSidebar');
+
+  // Si el sidebar está abierto y el clic NO fue dentro del sidebar ni en el botón
+  if (
+    sidebar.classList.contains('show') &&
+    !sidebar.contains(event.target) &&
+    !toggleBtn.contains(event.target)
+  ) {
+    sidebar.classList.remove('show');
+    toggleBtn.classList.remove('hide');
+  }
+});
 
 
 /* FUNCIONES VIEW */
