@@ -1292,7 +1292,38 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
+    // 18. definir opciones de género del representante legal
+    const generoChoices = new Choices('#generoRepresentante', {
+      searchEnabled: false,
+      shouldSort: false,
+    });
 
+    generoChoices.setChoices(
+      [
+        { value: '', label: 'Seleccione una opción', disabled: true, selected: true },
+        { value: 'Hombre', label: 'Hombre' },
+        { value: 'Mujer', label: 'Mujer' },
+        { value: 'Otro', label: 'Otro' }
+      ],
+      'value',
+      'label',
+      false
+    );
+
+    // mostrar campo "Especifique" si elige "Otro"
+    const selectGenero = document.getElementById('generoRepresentante');
+    const campoGeneroOtro = document.getElementById('campoGeneroOtro');
+
+    selectGenero.addEventListener('change', () => {
+      if (selectGenero.value === 'Otro') {
+        campoGeneroOtro.classList.remove('d-none');
+        campoGeneroOtro.querySelector('input').setAttribute('required', 'required');
+      } else {
+        campoGeneroOtro.classList.add('d-none');
+        campoGeneroOtro.querySelector('input').removeAttribute('required');
+        campoGeneroOtro.querySelector('input').value = '';
+      }
+    });
 
 
 
