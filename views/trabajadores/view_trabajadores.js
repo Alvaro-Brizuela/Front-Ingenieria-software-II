@@ -145,6 +145,9 @@ if (selectSalud && planUfContainer) {
         const preview = document.getElementById('previewFoto');
         preview.src = URL.createObjectURL(file);
         preview.style.display = 'block';
+        const fotoArribaDerecha = document.getElementById('fotoArribaDerecha');
+        fotoArribaDerecha.src = URL.createObjectURL(file);
+        fotoArribaDerecha.style.display = 'block';
       }
     });
     // ACÁ: Muestra la vista previa de la foto carnet frontal cuando se selecciona un archivo
