@@ -1,4 +1,3 @@
-console.log("✅ JS cargado correctamente");
 
 /* HEADER - SIDEBAR */
 const toggleBtn = document.getElementById("toggleSidebar");
@@ -86,11 +85,11 @@ formCargo.addEventListener("submit", async (e) => {
   const nuevoCargo = await guardarCargoEnBackend(nombre, descripcion);
 
   if (nuevoCargo) {
-    alert("✅ Cargo guardado correctamente.");
+    alert("Cargo guardado correctamente.");
     formCargo.reset();
     await recargarCargos();
   } else {
-    alert("❌ Hubo un error al guardar el cargo.");
+    alert("Hubo un error al guardar el cargo.");
   }
 });
 

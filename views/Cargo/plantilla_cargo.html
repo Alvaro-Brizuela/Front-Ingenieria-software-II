@@ -15,6 +15,7 @@
 <body>
   
 <!-- HEADER -->
+<<<<<<< HEAD
 <header class="header">
   <button id="toggleSidebar" class="btn btn-light btn-toggle">
     <i class="bi bi-list"></i>
@@ -87,12 +88,106 @@
     </div>
   </div>
 </div>
+=======
+  <header class="header">
+    <!-- Botón hamburguesa a la izquierda -->
+    <button id="toggleSidebar" class="btn btn-light btn-toggle">
+      <i class="bi bi-list"></i>
+    </button>
+
+    <!-- Contenedor a Icono perfil -->
+    <div class="header-right">
+        <div class="profile-icon" id="profileIcon"></div>
+        <div class="dropdown-menu" id="dropdownMenu">
+          <span class="user-name" id="userName"></span>
+          <button id="logoutBtn">Cerrar sesión</button>
+        </div>
+    </div>
+  </header>
+
+  <!-- SIDEBAR -->
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-header">
+      <div class="logo-title">
+        <img src="img/logo-crop.png" alt="Logo Contaplus" class="logo-sidebar">
+        <h5>CONTAPLUS</h5>
+      </div>
+      <button id="closeSidebar" class="custom-close">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+
+    <div class="accordion" id="sidebarAccordion">
+
+      <!-- Sección 1 -->
+      <div class="accordion-item bg-transparent border-0">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapseOne">
+            <i class="bi bi-building icon"></i> Empresa
+          </button>
+        </h2>
+        <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#sidebarAccordion">
+          <div class="accordion-body">
+            <a href="#" class="d-block">Datos Empresa</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sección 2 -->
+      <div class="accordion-item bg-transparent border-0">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
+            <i class="bi bi-people icon"></i> Trabajadores
+          </button>
+        </h2>
+        <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#sidebarAccordion">
+          <div class="accordion-body">
+            <a href="#" class="d-block">Ver Trabajadores</a>
+            <a href="#" class="d-block">Nuevo Trabajador</a>
+            <a href="#" class="d-block">Cargos</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sección 3 -->
+      <div class="accordion-item bg-transparent border-0">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapseThree">
+            <i class="bi bi-journal-check icon"></i> Contratos
+          </button>
+        </h2>
+        <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#sidebarAccordion">
+          <div class="accordion-body">
+            <a href="#" class="d-block">Ver Contratos</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+>>>>>>> d4adf5222288e6e7a760a616a1946a51dd79c377
 
 <!-- CONTENIDO PRINCIPAL -->
 <div class="content">
   <div class="container py-4">
     <h2 class="mb-4">Gestión de Cargos</h2>
 
+<<<<<<< HEAD
     <!-- Formulario para agregar/editar cargos -->
     <form id="formCargo" class="mb-4">
       <div class="mb-3">
@@ -132,12 +227,73 @@
           </ul>
         </div>
       </div>
+=======
+<!-- Formulario para agregar/editar cargos -->
+<form id="formCargo" class="mb-4">
+  <div class="mb-3">
+    <label for="nombreCargo" class="form-label">Nombre del Cargo</label>
+    <input type="text" class="form-control" id="nombreCargo" name="nombreCargo" required maxlength="60">
+  </div>
+  <div class="mb-3">
+    <label for="descripcionCargo" class="form-label">Descripción</label>
+    <textarea class="form-control" id="descripcionCargo" name="descripcionCargo" rows="5" maxlength="300"></textarea>
+  </div>
+  <div class="mt-4 d-flex justify-content-end">
+    <button type="submit" class="btn btn-guardar-cargo">Guardar Cargo</button>
+  </div>
+</form>
+
+
+<!-- Lista de cargos directamente visible -->
+<div class="card shadow-sm">
+  <div class="card-body">
+    <h5 class="card-title mb-3">Cargos Registrados</h5>
+
+    <!-- Buscador -->
+    <div class="mb-3">
+      <input type="text" id="buscadorCargo" class="form-control" placeholder="Buscar por nombre de cargo...">
+    </div>
+
+    <!-- Contenedor con scroll interno -->
+    <div class="scrollable-list">
+      <ul class="list-group" id="listaCargos">
+        <!-- Aquí se cargarán los cargos -->
+      </ul>
+>>>>>>> d4adf5222288e6e7a760a616a1946a51dd79c377
     </div>
   </div>
 </div>
 
+<<<<<<< HEAD
 <!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="plantilla_cargo.js"></script>
 </body>
 </html>
+=======
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="plantilla_cargo.js"></script>
+</body>
+</html>
+>>>>>>> d4adf5222288e6e7a760a616a1946a51dd79c377
