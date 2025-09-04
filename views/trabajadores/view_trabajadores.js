@@ -471,5 +471,88 @@ if (selectSalud && planUfContainer) {
         });
 
   });
+document.addEventListener('DOMContentLoaded', function () {
+  const foto = document.getElementById('fotoArribaDerecha');
+  const modalDescarga = document.getElementById('modalDescargaImagen');
+  const modalEliminar = document.getElementById('modalEliminarFoto');
+  const fondo = document.getElementById('fondoModalDescarga');
+
+  const btnDescargar = document.getElementById('btnDescargarFoto');
+  const btnEliminar = document.getElementById('btnEliminarFoto');
+  const btnConfirmarDescarga = document.getElementById('confirmarDescargaBtn');
+  const btnCancelarDescarga = document.getElementById('cancelarDescargaBtn');
+  const btnConfirmarEliminar = document.getElementById('confirmarEliminarBtn');
+  const btnCancelarEliminar = document.getElementById('cancelarEliminarBtn');
+  const btnAgregarFoto = document.getElementById('btnAgregarFoto');
+  const inputAgregarFoto = document.getElementById('inputAgregarFoto');
+  const fotoArribaDerecha = document.getElementById('fotoArribaDerecha');
+
+  const inputFoto = document.getElementById('fotoTrabajador');
+  const previewFoto = document.getElementById('previewFoto');
+
+  // ----- Modal de DESCARGA -----
+  if (btnDescargar) {
+    btnDescargar.addEventListener('click', () => {
+      modalDescarga.style.display = 'block';
+      fondo.style.display = 'block';
+    });
+
+    btnCancelarDescarga.addEventListener('click', () => {
+      modalDescarga.style.display = 'none';
+      fondo.style.display = 'none';
+    });
+
+    btnConfirmarDescarga.addEventListener('click', () => {
+      const link = document.createElement('a');
+      link.href = foto.src;
+      link.download = 'foto_trabajador.jpg';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      modalDescarga.style.display = 'none';
+      fondo.style.display = 'none';
+    });
+  }
+
+  // ----- Modal de ELIMINACIÓN -----
+  if (btnEliminar) {
+    btnEliminar.addEventListener('click', () => {
+      modalEliminar.style.display = 'block';
+      fondo.style.display = 'block';
+    });
+
+    btnCancelarEliminar.addEventListener('click', () => {
+      modalEliminar.style.display = 'none';
+      fondo.style.display = 'none';
+    });
+
+    btnConfirmarEliminar.addEventListener('click', () => {
+      foto.src = 'img/inicio.png'; // Imagen por defecto nueva
+      if (inputFoto) inputFoto.value = '';
+      if (previewFoto) previewFoto.style.display = 'none';
+
+      modalEliminar.style.display = 'none';
+      fondo.style.display = 'none';
+    });
+  }
+
+  // ----- AGREGAR FOTO -----
+  if (btnAgregarFoto && inputAgregarFoto && fotoArribaDerecha) {
+    btnAgregarFoto.addEventListener('click', () => {
+      inputAgregarFoto.click();
+    });
+
+    inputAgregarFoto.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        const nuevaSrc = URL.createObjectURL(file);
+        fotoArribaDerecha.src = nuevaSrc;
+      }
+    });
+  }
+
+});
+
 
 

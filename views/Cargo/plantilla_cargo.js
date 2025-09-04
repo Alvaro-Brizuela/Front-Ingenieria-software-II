@@ -1,5 +1,5 @@
-/* PLANTILA HEADER - SIDE BAR */
 
+/* HEADER - SIDEBAR */
 const toggleBtn = document.getElementById("toggleSidebar");
 const closeBtn = document.getElementById("closeSidebar");
 const sidebar = document.getElementById("sidebar");
@@ -10,55 +10,38 @@ const dropdownMenu = document.getElementById('dropdownMenu');
 const userNameDisplay = document.getElementById('userName');
 const logoutBtn = document.getElementById('logoutBtn');
 
-// Mostrar inicial y nombre
 function setUserInitial(name) {
-    const initial = name.trim().charAt(0).toUpperCase();
-    profileIcon.textContent = initial;
-    userNameDisplay.textContent = name;
+  const initial = name.trim().charAt(0).toUpperCase();
+  profileIcon.textContent = initial;
+  userNameDisplay.textContent = name;
 }
-
-// ACÁ VA EL NOMBRE DEL USUARIO
 setUserInitial("Felipe Moscoso");
 
-// Abrir/cerrar menú
 profileIcon.addEventListener('click', () => {
-    dropdownMenu.classList.toggle('show');
+  dropdownMenu.classList.toggle('show');
 });
 
-// Ocultar si clic fuera del menú
 document.addEventListener('click', (event) => {
-    if (
-        !profileIcon.contains(event.target) &&
-        !dropdownMenu.contains(event.target)
-    ) {
-        dropdownMenu.classList.remove('show');
-    }
+  if (!profileIcon.contains(event.target) && !dropdownMenu.contains(event.target)) {
+    dropdownMenu.classList.remove('show');
+  }
 });
 
-// Acción de cerrar sesión
 logoutBtn.addEventListener('click', () => {
-   
-    // ACÁ VA LA ACCION DE CERRAR SESIÓN
-    alert("Sesión cerrada");
+  alert("Sesión cerrada");
 });
 
-// Sidebar toggle
 toggleBtn.addEventListener("click", () => {
-    sidebar.classList.add("show");
-    toggleBtn.classList.add("hide");
+  sidebar.classList.add("show");
+  toggleBtn.classList.add("hide");
 });
 
 closeBtn.addEventListener("click", () => {
-    sidebar.classList.remove("show");
-    toggleBtn.classList.remove("hide"); 
+  sidebar.classList.remove("show");
+  toggleBtn.classList.remove("hide");
 });
 
-// CERRAR AL HACER CLICK AFUERA 
 document.addEventListener('click', function (event) {
-  const sidebar = document.getElementById('sidebar');
-  const toggleBtn = document.getElementById('toggleSidebar');
-
-  // Si el sidebar está abierto y el clic NO fue dentro del sidebar ni en el botón
   if (
     sidebar.classList.contains('show') &&
     !sidebar.contains(event.target) &&
@@ -69,7 +52,6 @@ document.addEventListener('click', function (event) {
   }
 });
 
-
 /* FUNCIONES VIEW */
 
 const formCargo = document.getElementById("formCargo");
@@ -78,21 +60,21 @@ const nombreInput = document.getElementById("nombreCargo");
 const descripcionInput = document.getElementById("descripcionCargo");
 const buscadorInput = document.getElementById("buscadorCargo");
 
-let cargos = JSON.parse(localStorage.getItem("cargos")) || [];
+let cargos = [];
 
 // Validar si el nombre ya existe
 function validarNombreExistente(nombre) {
   return cargos.some(c => c.nombre.toLowerCase() === nombre.toLowerCase());
 }
 
-formCargo.addEventListener("submit", (e) => {
+// Evento guardar cargo
+formCargo.addEventListener("submit", async (e) => {
   e.preventDefault();
 
   const nombre = nombreInput.value.trim();
   const descripcion = descripcionInput.value.trim();
 
   if (!nombre) return;
-
   if (validarNombreExistente(nombre)) {
     nombreInput.classList.add("is-invalid");
     return;
@@ -100,14 +82,18 @@ formCargo.addEventListener("submit", (e) => {
 
   nombreInput.classList.remove("is-invalid");
 
-  cargos.push({ nombre, descripcion });
-  localStorage.setItem("cargos", JSON.stringify(cargos));
+  const nuevoCargo = await guardarCargoEnBackend(nombre, descripcion);
 
-  formCargo.reset();
-  actualizarListaCargos();
+  if (nuevoCargo) {
+    alert("Cargo guardado correctamente.");
+    formCargo.reset();
+    await recargarCargos();
+  } else {
+    alert("Hubo un error al guardar el cargo.");
+  }
 });
 
-// Renderizar cargos en lista visible
+// Renderizar lista de cargos
 function actualizarListaCargos(filtro = "") {
   listaCargos.innerHTML = "";
 
@@ -128,7 +114,7 @@ function actualizarListaCargos(filtro = "") {
     li.className = "list-group-item d-flex justify-content-between align-items-center fade-in";
 
     const span = document.createElement("span");
-    span.innerHTML = `${cargo.nombre}<small>${cargo.descripcion}</small>`;
+    span.innerHTML = `<strong>${cargo.nombre}</strong><br><small>${cargo.descripcion}</small>`;
 
     const btnEditar = document.createElement("button");
     btnEditar.className = "btn btn-sm btn-outline-primary me-2";
@@ -136,9 +122,7 @@ function actualizarListaCargos(filtro = "") {
     btnEditar.onclick = () => {
       nombreInput.value = cargo.nombre;
       descripcionInput.value = cargo.descripcion;
-
       cargos.splice(indexOriginal, 1);
-      localStorage.setItem("cargos", JSON.stringify(cargos));
       actualizarListaCargos(buscadorInput.value);
     };
 
@@ -150,7 +134,6 @@ function actualizarListaCargos(filtro = "") {
         li.classList.add("fade-out");
         setTimeout(() => {
           cargos.splice(indexOriginal, 1);
-          localStorage.setItem("cargos", JSON.stringify(cargos));
           actualizarListaCargos(buscadorInput.value);
         }, 300);
       }
@@ -174,7 +157,93 @@ if (buscadorInput) {
   });
 }
 
-// Inicializar
-document.addEventListener("DOMContentLoaded", () => {
+/* CONEXIONES */
+const API_URL = 'http://localhost:4000/graphql';
+
+async function cargarCargosDesdeBackend() {
+  const query = `
+    query {
+      cargos {
+        id
+        nombre
+        descripcion
+      }
+    }
+  `;
+
+  try {
+    const response = await fetch(API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query }),
+    });
+
+    const json = await response.json();
+    console.log("Respuesta GraphQL completa:", json);
+
+    if (json.errors) {
+      console.error("❌ Error GraphQL:", json.errors);
+      return [];
+    }
+
+    return json.data.cargos;
+  } catch (error) {
+    console.error("❌ Error de conexión:", error);
+    return [];
+  }
+}
+
+async function guardarCargoEnBackend(nombre, descripcion) {
+  const mutation = `
+    mutation {
+      createCargo(input: {
+        nombre: "${nombre}",
+        descripcion: "${descripcion}"
+      }) {
+        id
+        nombre
+        descripcion
+      }
+    }
+  `;
+
+  try {
+    const response = await fetch(API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query: mutation }),
+    });
+
+    const json = await response.json();
+
+    if (json.errors) {
+      console.error("❌ Error al guardar cargo:", json.errors);
+      return null;
+    }
+
+    return json.data.createCargo;
+  } catch (error) {
+    console.error("❌ Error de conexión al guardar cargo:", error);
+    return null;
+  }
+}
+
+// Función global reutilizable
+async function recargarCargos() {
+  cargos = await cargarCargosDesdeBackend();
   actualizarListaCargos();
+}
+
+// Carga inicial
+document.addEventListener("DOMContentLoaded", async () => {
+  console.log("DOM cargado");
+
+  const btnDescargar = document.getElementById("btnDescargarPDF");
+  if (btnDescargar) {
+    btnDescargar.addEventListener("click", () => {
+      alert("Su PDF se descargó correctamente.");
+    });
+  }
+
+  await recargarCargos();
 });

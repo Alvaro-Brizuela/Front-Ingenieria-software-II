@@ -36,65 +36,60 @@
   </header>
 
   <!-- SIDEBAR -->
-  <div id="sidebar" class="sidebar">
-    <div class="sidebar-header">
-      <div class="logo-title">
-        <img src="img/logo-crop.png" alt="Logo Contaplus" class="logo-sidebar">
-        <h5>CONTAPLUS</h5>
-      </div>
-      <button id="closeSidebar" class="custom-close">
-        <i class="bi bi-x-lg"></i>
-      </button>
+<div id="sidebar" class="sidebar">
+  <div class="sidebar-header">
+    <div class="logo-title">
+      <img src="img/logo-crop.png" alt="Logo Contaplus" class="logo-sidebar">
+      <h5>CONTAPLUS</h5>
     </div>
-
-    <div class="accordion" id="sidebarAccordion">
-
-      <!-- Sección 1 -->
-      <div class="accordion-item bg-transparent border-0">
-        <h2 class="accordion-header">
-          <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapseOne">
-            <i class="bi bi-building icon"></i> Empresa
-          </button>
-        </h2>
-        <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#sidebarAccordion">
-          <div class="accordion-body">
-            <a href="#" class="d-block">Datos Empresa</a>
-          </div>
+    <button id="closeSidebar" class="custom-close">
+      <i class="bi bi-x-lg"></i>
+    </button>
+  </div>
+  <div class="accordion" id="sidebarAccordion">
+    <!-- Sección 1 -->
+    <div class="accordion-item bg-transparent border-0">
+      <h2 class="accordion-header">
+        <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapseOne">
+          <i class="bi bi-building icon"></i> Empresa
+        </button>
+      </h2>
+      <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#sidebarAccordion">
+        <div class="accordion-body">
+          <a href="../datos_empresa/view_datos_empresa.html" class="d-block">Datos Empresa</a>
         </div>
       </div>
-
-      <!-- Sección 2 -->
-      <div class="accordion-item bg-transparent border-0">
-        <h2 class="accordion-header">
-          <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
-            <i class="bi bi-people icon"></i> Trabajadores
-          </button>
-        </h2>
-        <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#sidebarAccordion">
-          <div class="accordion-body">
-            <a href="#" class="d-block">Ver Trabajadores</a>
-            <a href="#" class="d-block">Nuevo Trabajador</a>
-            <a href="#" class="d-block">Cargos</a>
-          </div>
+    </div>
+    <!-- Sección 2 -->
+    <div class="accordion-item bg-transparent border-0">
+      <h2 class="accordion-header">
+        <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
+          <i class="bi bi-people icon"></i> Trabajadores
+        </button>
+      </h2>
+      <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#sidebarAccordion">
+        <div class="accordion-body">
+          <a href="../trabajadores/view_trabajadores.html" class="d-block">Ver Trabajadores</a>
+          <a href="#" class="d-block">Nuevo Trabajador</a>
+          <a href="../Cargo/plantilla_cargo.html" class="d-block">Cargos</a>
         </div>
       </div>
-
-      <!-- Sección 3 -->
-      <div class="accordion-item bg-transparent border-0">
-        <h2 class="accordion-header">
-          <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapseThree">
-            <i class="bi bi-journal-check icon"></i> Contratos
-          </button>
-        </h2>
-        <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#sidebarAccordion">
-          <div class="accordion-body">
-            <a href="#" class="d-block">Ver Contratos</a>
-          </div>
+    </div>
+    <!-- Sección 3 -->
+    <div class="accordion-item bg-transparent border-0">
+      <h2 class="accordion-header">
+        <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapseThree">
+          <i class="bi bi-journal-check icon"></i> Contratos
+        </button>
+      </h2>
+      <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#sidebarAccordion">
+        <div class="accordion-body">
+          <a href="#" class="d-block">Ver Contratos</a>
         </div>
       </div>
-
     </div>
   </div>
+</div>
 
 
   <!-- CONTENIDO PRINCIPAL -->
@@ -137,7 +132,20 @@
       <h2 class="mb-4">Datos del trabajador</h2>
       <form id="form-datos-empresa">
       <div class="d-flex justify-content-end">
-        <img id="fotoArribaDerecha" src="img/fotoDefault.png" alt="Foto trabajador" style="width:170px; height:170px; object-fit:cover; border-radius:8px; border:2px solid #ccc; box-shadow:0 2px 8px #0001;">
+        <div class="d-flex justify-content-end align-items-center gap-3 mb-3">
+      <img id="fotoArribaDerecha" src="img/fotoDefault.png" alt="Foto trabajador" style="width:170px; height:170px; object-fit:cover; border-radius:8px; border:2px solid #ccc; box-shadow:0 2px 8px #0001;">
+      <button id="btnDescargarFoto" class="btn btn-outline-primary">
+        <i class="bi bi-download"></i> Descargar
+      </button>
+      <button id="btnEliminarFoto" class="btn btn-outline-danger">
+        <i class="bi bi-trash"></i> Eliminar
+      </button>
+      <button id="btnAgregarFoto" class="btn btn-outline-success">
+        <i class="bi bi-upload"></i> Agregar Foto
+      </button>
+      <input type="file" id="inputAgregarFoto" accept="image/*" style="display: none;">
+
+    </div>
       </div>
 
         <!-- Sección 1: Datos Generales -->
@@ -327,6 +335,25 @@
   </div>
 
   </div>
+  <!-- Modal de confirmación de descarga -->
+  <div id="modalDescargaImagen" class="position-fixed top-50 start-50 translate-middle bg-white rounded shadow p-4 text-center" style="display: none; z-index: 2000; max-width: 400px; width: 90%;">
+    <h5 class="mb-3 text-dark">¿Desea descargar la imagen?</h5>
+    <div class="d-flex justify-content-center gap-3">
+      <button id="confirmarDescargaBtn" class="btn btn-primary">Sí, descargar</button>
+      <button id="cancelarDescargaBtn" class="btn btn-secondary">Cancelar</button>
+    </div>
+  </div>
+    <!-- Modal de confirmación de eliminación -->
+  <div id="modalEliminarFoto" class="position-fixed top-50 start-50 translate-middle bg-white rounded shadow p-4 text-center" style="display: none; z-index: 2000; max-width: 400px; width: 90%;">
+    <h5 class="mb-3 text-dark">¿Está seguro que desea eliminar la foto?</h5>
+    <div class="d-flex justify-content-center gap-3">
+      <button id="confirmarEliminarBtn" class="btn btn-danger">Sí, eliminar</button>
+      <button id="cancelarEliminarBtn" class="btn btn-secondary">Cancelar</button>
+    </div>
+  </div>
+
+  <!-- Fondo oscuro -->
+  <div id="fondoModalDescarga" class="position-fixed top-0 start-0 w-100 h-100" style="display: none; background-color: rgba(0,0,0,0.5); z-index: 1500;"></div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
