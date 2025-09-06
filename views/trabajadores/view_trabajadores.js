@@ -111,6 +111,8 @@ if (rutInput) {
   });
 }
 
+
+
 // ACÁ: Valida que el teléfono personal tenga al menos 8 dígitos
 const telefonoPersonalInput = document.getElementById('telefonoPersonal');
 if (telefonoPersonalInput) {
@@ -128,16 +130,22 @@ if (telefonoPersonalInput) {
 // ACÁ: Muestra el campo "Plan en UF" solo si la institución de salud no es FONASA
 const planUfContainer = document.getElementById('planUfContainer');
 const selectSalud = document.getElementById('salud');
-if (selectSalud && planUfContainer) {
+const planUFInput = document.getElementById('planUF');
+
+if (selectSalud && planUfContainer && planUFInput) {
   selectSalud.addEventListener('change', function () {
     if (selectSalud.value.trim().toLowerCase() !== 'fonasa') {
       planUfContainer.style.display = 'block';
+      planUFInput.removeAttribute('disabled');
+      planUFInput.setAttribute('required', 'required');
     } else {
       planUfContainer.style.display = 'none';
+      planUFInput.removeAttribute('required');
+      planUFInput.setAttribute('disabled', 'disabled');
+      planUFInput.value = '';
     }
   });
 }
-
 // ACÁ: Muestra la vista previa de la foto del trabajador cuando se selecciona un archivo
     document.getElementById('fotoTrabajador').addEventListener('change', function(event) {
       const [file] = event.target.files;
@@ -168,37 +176,18 @@ if (selectSalud && planUfContainer) {
         preview.style.display = 'block';
       }
     }); 
-    // ACÁ: Inicializa Choices.js en los selects indicados y flatpickr en los campos de fecha
-    document.addEventListener('DOMContentLoaded', async function() {
-      // Mapeo de select id a endpoint
-      const selectEndpoints = {
-        nacionalidadTrabajador: 'paises',
-        region: 'regiones',
-        comuna: 'comunas',
-        afp: 'afps',
-        salud: 'instituciones-salud',
-        jefe: 'jefes'
-        // Puedes agregar más si tu backend los soporta
-      };
 
-      // Carga dinámica de opciones para cada select
-      for (const [selectId, endpoint] of Object.entries(selectEndpoints)) {
-        const select = document.getElementById(selectId);
-        if (select) {
-          try {
-            const res = await fetch(`http://localhost:3000/${endpoint}`);
-            if (!res.ok) throw new Error(`HTTP ${res.status}`);
-            const data = await res.json();
-            select.innerHTML = '<option value="">Seleccione...</option>' +
-              data.map(opt => `<option value="${opt}">${opt}</option>`).join('');
-          } catch (e) {
-            console.error(`Error cargando ${endpoint}:`, e); // <-- Agregado para depuración
-            select.innerHTML = `<option value="">Error al cargar opciones (${e.message})</option>`;
-          }
-        }
-      }
+    // PLANTILLA: Inicialización de Choices.js en los selects indicados
+    document.addEventListener('DOMContentLoaded', function() {
+      // Aquí puedes adaptar la carga de opciones desde tu backend FastAPI/PostgreSQL
+      // Ejemplo:
+      // fetch('/api/tu-endpoint')
+      //   .then(res => res.json())
+      //   .then(data => {
+      //     // Llena el select con las opciones recibidas
+      //   });
 
-      // Inicializa Choices.js después de llenar los selects
+      // Inicializa Choices.js en los selects
       const selects = [
         'nacionalidadTrabajador',
         'estadoCivil',
@@ -221,7 +210,6 @@ if (selectSalud && planUfContainer) {
           });
         }
       });
-      
       // ACÁ: Inicializa flatpickr en los campos de fecha
       const fechaNacimiento = document.getElementById('fechaNacimientoTrabajador');
       if (fechaNacimiento) {
@@ -247,80 +235,7 @@ if (selectSalud && planUfContainer) {
       }
     });
 
-  // ACÁ: Envía el formulario de datos del trabajador al backend usando fetch
-  document.getElementById('form-datos-empresa').addEventListener('submit', function(e) {
-    e.preventDefault(); // Evita el envío tradicional
-    const formData = new FormData(this);
-
-    fetch('http://localhost:3000/trabajadores', { // URL de tu backend
-      method: 'POST',
-      body: formData
-    })
-    .then(res => res.json())
-    .then(data => {
-      // Mostrar los datos recibidos del backend en un alert o en consola
-      alert('Datos enviados correctamente:\n' + JSON.stringify(data, null, 2));
-      // También puedes mostrar los datos en el DOM si prefieres
-      // document.getElementById('resultadosEnvio').textContent = JSON.stringify(data, null, 2);
-    })
-    .catch(err => {
-      alert('Error al enviar los datos');
-    });
-  });
-
-    // ACÁ: (Ejemplo comentado) Mostrar contratos del trabajador obtenidos desde el backend
-    document.addEventListener('DOMContentLoaded', function() {
-      const listaContratos = document.getElementById('listaContratos');
-      // Cambiado a la URL real del backend
-      fetch('http://localhost:3000/contratos')
-        .then(res => res.json())
-        .then(data => {
-          if (Array.isArray(data)) {
-            listaContratos.innerHTML = '';
-            data.forEach(function(contrato, idx) {
-              const li = document.createElement('li');
-              li.className = 'list-group-item d-flex align-items-center justify-content-between';
-              li.innerHTML = `
-                <span>${contrato.nombre}</span>
-                <div class="btn-group btn-group-sm" role="group">
-                  <a href="${contrato.url}" target="_blank" class="btn btn-outline-primary" title="Ver">
-                    <i class="bi bi-eye"></i>
-                  </a>
-                  <a href="${contrato.url}" download class="btn btn-outline-success" title="Descargar">
-                    <i class="bi bi-download"></i>
-                  </a>
-                  <button type="button" class="btn btn-outline-danger" title="Eliminar" data-idx="${idx}">
-                    <i class="bi bi-trash"></i>
-                  </button>
-                </div>
-              `;
-              listaContratos.appendChild(li);
-            });
-          }
-        });
-    });
-
-  // ACÁ: Agrega un listener para manejar la eliminación de contratos en el frontend
-  document.addEventListener('DOMContentLoaded', function() {
-    const listaContratos = document.getElementById('listaContratos');
-    listaContratos.addEventListener('click', function(e) {
-      const btn = e.target.closest('button[data-idx]');
-      if (btn) {
-        // Elimina el contrato del DOM
-        btn.closest('li').remove();
-        // Si quieres eliminar en el backend, aquí puedes hacer un fetch al backend
-        // Ejemplo:
-        // const contratoNombre = btn.closest('li').querySelector('span').textContent;
-        // fetch('http://localhost:3000/contratos/eliminar', {
-        //   method: 'POST',
-        //   headers: { 'Content-Type': 'application/json' },
-        //   body: JSON.stringify({ nombre: contratoNombre })
-        // });
-      }
-    });
-  });
-
-  // ACÁ: Muestra u oculta los formularios según la acción seleccionada (nuevo/buscar trabajador)
+      // ACÁ: Muestra u oculta los formularios según la acción seleccionada (nuevo/buscar trabajador)
   document.addEventListener('DOMContentLoaded', function() {
     const btnNuevo = document.getElementById('btnNuevoTrabajador');
     const btnBuscar = document.getElementById('btnBuscarTrabajador');
@@ -334,143 +249,100 @@ if (selectSalud && planUfContainer) {
       busquedaDiv.style.display = '';
       formDatos.style.display = 'none';
     });
-  
-    // ACÁ: Realiza la búsqueda de trabajadores en el backend y muestra los resultados
-    document.getElementById('formBusquedaTrabajador').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const nombre = document.getElementById('busquedaNombre').value;
-      const rut = document.getElementById('busquedaRut').value;
-      const cargo = document.getElementById('busquedaCargo').value;
-      const resultadosDiv = document.getElementById('resultadosBusqueda');
+  })
 
-      // Cambiado a la URL real del backend
-      fetch('http://localhost:3000/buscar-trabajadores', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          nombre: nombre,
-          rut: rut,
-          cargo: cargo
-        })
-      })
-      .then(res => res.json())
-      .then(resultados => {
-        if (!Array.isArray(resultados) || resultados.length === 0) {
-          resultadosDiv.innerHTML = '<div class="alert alert-warning">No se encontraron trabajadores.</div>';
-        } else {
-          resultadosDiv.innerHTML = '<ul class="list-group">' +
-            resultados.map(t =>
-              `<li class="list-group-item d-flex justify-content-between align-items-center">
-                <span>
-                  <strong>${t.nombre}</strong> - ${t.rut} - ${t.cargo}
-                </span>
-                <button class="btn btn-sm btn-outline-success" onclick="verTrabajador('${t.rut}')">
-                  <i class="bi bi-pencil"></i> Ver/Editar
-                </button>
-              </li>`
-            ).join('') +
-            '</ul>';
-        }
-      })
-      .catch(() => {
-        resultadosDiv.innerHTML = '<div class="alert alert-danger">Error al buscar trabajadores.</div>';
-      });
-    });
-  });
-  
-  // ACÁ: Función para ver/editar trabajador (debes cargar los datos reales del backend)
-  function verTrabajador(rut) {
-    //? Debes pedir al backend: datos completos del trabajador con el rut dado
-    //? Ejemplo de datos esperados: { nombre, rut, fechaNacimiento, sexo, nacionalidad, ... }
-    alert('Cargar datos del trabajador con RUT: ' + rut);
-    document.getElementById('busquedaTrabajador').style.display = 'none';
-    document.getElementById('form-datos-empresa').style.display = '';
-  }
-
-  // ACÁ: Manejo de subida y listado de documentos personales/laborales
-  document.addEventListener('DOMContentLoaded', function() {
-    const inputDocumentos = document.getElementById('inputDocumentos');
-    const listaDocumentos = document.getElementById('listaDocumentos');
-    let documentosSubidos = []; // [{nombre, url}]
-
-    // ACÁ: Renderiza la lista de documentos subidos
-    function renderListaDocumentos() {
-      listaDocumentos.innerHTML = '';
-      documentosSubidos.forEach((doc, idx) => {
-        const li = document.createElement('li');
-        li.className = 'list-group-item d-flex justify-content-between align-items-center';
-        li.innerHTML = `
-          <span>${doc.nombre}</span>
-          <div class="btn-group btn-group-sm" role="group">
-            <a href="${doc.url}" target="_blank" class="btn btn-outline-primary" title="Ver">
-              <i class="bi bi-eye"></i>
-            </a>
-            <a href="${doc.url}" download class="btn btn-outline-success" title="Descargar">
-              <i class="bi bi-download"></i>
-            </a>
-            <button type="button" class="btn btn-outline-danger" title="Eliminar" data-idx="${idx}">
-              <i class="bi bi-trash"></i>
-            </button>
-          </div>
-        `;
-        listaDocumentos.appendChild(li);
-      });
+//Enviar datos del trabajador (POST/api/trabajador) 
+async function enviarTrabajador() {
+  const trabajador = {
+    datos_generales: {
+      nombre_completo: document.getElementById('nombreTrabajador').value,
+      rut: document.getElementById('rutTrabajador').value,
+      fecha_nacimiento: document.getElementById('fechaNacimientoTrabajador').value,
+      sexo: document.getElementById('sexo').value,
+      nacionalidad: document.getElementById('nacionalidadTrabajador').value,
+      estado_civil: document.getElementById('estadoCivil').value,
+      foto_url: document.getElementById('fotoArribaDerecha').src
+    },
+    info_contacto: {
+      telefono_personal: document.getElementById('telefonoPersonal').value,
+      telefono_corporativo: document.getElementById('telefonoCorporativo')?.value || null,
+      correo_personal: document.getElementById('correoPersonal').value,
+      correo_corporativo: document.getElementById('correoCorporativo')?.value || null
+    },
+    info_vivienda: {
+      direccion: document.getElementById('direccion').value,
+      region: document.getElementById('region').value,
+      comuna: document.getElementById('comuna').value,
+      provincia: document.getElementById('provincia').value
+    },
+    info_seguros: {
+      afp: document.getElementById('afp').value,
+      instituto_salud: document.getElementById('salud').value,
+      plan_uf: parseFloat(document.getElementById('planUF').value)
+    },
+    info_laboral: {
+      cargo: document.getElementById('cargo').value,
+      jefe_directo: document.getElementById('jefe').value,
+      sueldo_base: parseFloat(document.getElementById('sueldoBase').value),
+      fecha_ingreso: document.getElementById('fechaIngreso').value,
+      fecha_contrato: document.getElementById('fechaContrato').value,
+      forma_pago: document.getElementById('formaPago').value
     }
+  };
 
-    // ACÁ: Elimina un documento de la lista y del backend
-    listaDocumentos.addEventListener('click', function(e) {
-      if (e.target.closest('button[data-idx]')) {
-        const idx = e.target.closest('button[data-idx]').getAttribute('data-idx');
-        const doc = documentosSubidos[idx];
-        // Cambiado a la URL real del backend
-        fetch('http://localhost:3000/documentos/eliminar', {
-          method: 'POST',
-          body: JSON.stringify({ nombre: doc.nombre }),
-          headers: { 'Content-Type': 'application/json' }
-        }).then(() => {
-          documentosSubidos.splice(idx, 1);
-          renderListaDocumentos();
-        }).catch(() => {
-          alert('Error al eliminar el documento');
-        });
-      }
-    });
-
-    // ACÁ: Sube documentos al backend y actualiza la lista
-    inputDocumentos.addEventListener('change', function(e) {
-      const files = Array.from(e.target.files);
-      if (files.length === 0) return;
-      const formData = new FormData();
-      files.forEach(f => formData.append('documentos', f));
-      // Cambiado a la URL real del backend
-      fetch('http://localhost:3000/documentos/subir', {
-        method: 'POST',
-        body: formData
-      })
-      .then(res => res.json())
-      .then(data => {
-        // data: [{nombre, url}, ...]
-        if (Array.isArray(data)) {
-          documentosSubidos = documentosSubidos.concat(data);
-          renderListaDocumentos();
-        }
-        inputDocumentos.value = ''; // Limpiar input
-      })
-      .catch(() => {
-        alert('Error al subir documentos');
-      });
-    });
-
-    // ACÁ: (Ejemplo comentado) Carga documentos existentes al cargar la página
-    // Cambiado a la URL real del backend
-    fetch('http://localhost:3000/documentos/listar')
-        .then(res => res.json())
-        .then(data => {
-          documentosSubidos = data;
-          renderListaDocumentos();
-        });
-
+  //ACÁ: esta la conexion con la base de datos
+  const res = await fetch('/api/trabajador', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(trabajador)
   });
+  const data = await res.json();
+  alert('Trabajador guardado: ' + JSON.stringify(data, null, 2));
+}
+  
+async function cargarTrabajador(id) {
+  const res = await fetch(`/api/trabajador/${id}`);
+  const data = await res.json();
+
+  // Rellenar los campos del formulario
+  document.getElementById('nombreTrabajador').value = data.datos_generales.nombre_completo;
+  document.getElementById('rutTrabajador').value = data.datos_generales.rut;
+  document.getElementById('fechaNacimientoTrabajador').value = data.datos_generales.fecha_nacimiento;
+  document.getElementById('sexo').value = data.datos_generales.sexo;
+  document.getElementById('nacionalidadTrabajador').value = data.datos_generales.nacionalidad;
+  document.getElementById('estadoCivil').value = data.datos_generales.estado_civil;
+  document.getElementById('fotoArribaDerecha').src = data.datos_generales.foto_url;
+
+  document.getElementById('telefonoPersonal').value = data.info_contacto.telefono_personal;
+  if (document.getElementById('telefonoCorporativo')) document.getElementById('telefonoCorporativo').value = data.info_contacto.telefono_corporativo || '';
+  document.getElementById('correoPersonal').value = data.info_contacto.correo_personal;
+  if (document.getElementById('correoCorporativo')) document.getElementById('correoCorporativo').value = data.info_contacto.correo_corporativo || '';
+
+  document.getElementById('direccion').value = data.info_vivienda.direccion;
+  document.getElementById('region').value = data.info_vivienda.region;
+  document.getElementById('comuna').value = data.info_vivienda.comuna;
+  document.getElementById('provincia').value = data.info_vivienda.provincia;
+
+  document.getElementById('afp').value = data.info_seguros.afp;
+  document.getElementById('salud').value = data.info_seguros.instituto_salud;
+  document.getElementById('planUF').value = data.info_seguros.plan_uf;
+
+  document.getElementById('cargo').value = data.info_laboral.cargo;
+  document.getElementById('jefe').value = data.info_laboral.jefe_directo;
+  document.getElementById('sueldoBase').value = data.info_laboral.sueldo_base;
+  document.getElementById('fechaIngreso').value = data.info_laboral.fecha_ingreso;
+  document.getElementById('fechaContrato').value = data.info_laboral.fecha_contrato;
+  document.getElementById('formaPago').value = data.info_laboral.forma_pago;
+}
+
+  // ...plantilla para gestión de contratos...
+
+  // ...plantilla para eliminación de contratos...
+
+  // ...plantilla para gestión de documentos personales/laborales...
+
+
+// ACÁ: estan los elementos para descargar, eliminar y cambiar la imagen del trabajador
 document.addEventListener('DOMContentLoaded', function () {
   const foto = document.getElementById('fotoArribaDerecha');
   const modalDescarga = document.getElementById('modalDescargaImagen');
@@ -554,5 +426,46 @@ document.addEventListener('DOMContentLoaded', function () {
 
 });
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////
 
-
+// Función de ejemplo para mostrar en consola el objeto que se enviaría al backend
+function mostrarTrabajadorEnConsola() {
+  const trabajador = {
+    datos_generales: {
+      nombre_completo: document.getElementById('nombreTrabajador').value,
+      rut: document.getElementById('rutTrabajador').value,
+      fecha_nacimiento: document.getElementById('fechaNacimientoTrabajador').value,
+      sexo: document.getElementById('sexo').value,
+      nacionalidad: document.getElementById('nacionalidadTrabajador').value,
+      estado_civil: document.getElementById('estadoCivil').value,
+      foto_url: document.getElementById('fotoArribaDerecha').src
+    },
+    info_contacto: {
+      telefono_personal: document.getElementById('telefonoPersonal').value,
+      telefono_corporativo: document.getElementById('telefonoCorporativo')?.value || null,
+      correo_personal: document.getElementById('correoPersonal').value,
+      correo_corporativo: document.getElementById('correoCorporativo')?.value || null
+    },
+    info_vivienda: {
+      direccion: document.getElementById('direccion').value,
+      region: document.getElementById('region').value,
+      comuna: document.getElementById('comuna').value,
+      provincia: document.getElementById('provincia').value
+    },
+    info_seguros: {
+      afp: document.getElementById('afp').value,
+      instituto_salud: document.getElementById('salud').value,
+      plan_uf: parseFloat(document.getElementById('planUF').value)
+    },
+    info_laboral: {
+      cargo: document.getElementById('cargo').value,
+      jefe_directo: document.getElementById('jefe').value,
+      sueldo_base: parseFloat(document.getElementById('sueldoBase').value),
+      fecha_ingreso: document.getElementById('fechaIngreso').value,
+      fecha_contrato: document.getElementById('fechaContrato').value,
+      forma_pago: document.getElementById('formaPago').value
+    }
+  };
+  console.log('Objeto enviado al backend:', trabajador);
+}

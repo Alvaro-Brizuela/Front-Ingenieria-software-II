@@ -232,7 +232,7 @@
           </div>
           <div class="col-md-6" id="planUfContainer" style="display: none;">
             <label for="planUF" class="form-label">Plan en UF</label>
-            <input type="number" class="form-control" id="planUF" name="planUF" step="0.001" required>
+            <input type="number" class="form-control" id="planUF" name="planUF" step="0.001">
           </div>
         </div>
 
@@ -329,6 +329,7 @@
       <!-- Botón -->
       <div class="mt-4 d-flex justify-content-end">
         <button type="submit" class="btn btn-primary">Guardar / Actualizar</button>
+        <button type="button" class="btn btn-secondary ms-2" onclick="mostrarTrabajadorEnConsola()">Ver JSON en consola</button>
       </div>
 
     </form>
