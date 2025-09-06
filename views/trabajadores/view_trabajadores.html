@@ -240,7 +240,7 @@
           </div>
           <div class="col-md-6" id="planUfContainer" style="display: none;">
             <label for="planUF" class="form-label">Plan en UF</label>
-            <input type="number" class="form-control" id="planUF" name="planUF" step="0.001" required>
+            <input type="number" class="form-control" id="planUF" name="planUF" step="0.001">
           </div>
         </div>
 
@@ -359,6 +359,15 @@
       <button id="cancelarEliminarBtn" class="btn btn-secondary">Cancelar</button>
     </div>
   </div>
+  <!-- Modal de errores de validación -->
+<div id="modalErrores" class="position-fixed top-50 start-50 translate-middle bg-white rounded shadow p-4" 
+     style="display: none; z-index: 3000; max-width: 500px; width: 90%;">
+  <h5 class="mb-3 text-danger">Faltan datos por completar</h5>
+  <ul id="listaErrores" class="list-group mb-3"></ul>
+  <div class="text-end">
+    <button id="cerrarModalErrores" class="btn btn-secondary">Cerrar</button>
+  </div>
+</div>
 
   <!-- Fondo oscuro -->
   <div id="fondoModalDescarga" class="position-fixed top-0 start-0 w-100 h-100" style="display: none; background-color: rgba(0,0,0,0.5); z-index: 1500;"></div>
