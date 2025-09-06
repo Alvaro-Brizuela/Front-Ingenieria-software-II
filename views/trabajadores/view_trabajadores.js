@@ -126,22 +126,17 @@ if (telefonoPersonalInput) {
 }
 
 // ACÁ: Muestra el campo "Plan en UF" solo si la institución de salud no es FONASA
-// ACÁ: Muestra el campo "Plan en UF" solo si la institución de salud no es FONASA
 const planUfContainer = document.getElementById('planUfContainer');
 const selectSalud = document.getElementById('salud');
 if (selectSalud && planUfContainer) {
   selectSalud.addEventListener('change', function () {
-    const planUF = document.getElementById('planUF');
     if (selectSalud.value.trim().toLowerCase() !== 'fonasa') {
       planUfContainer.style.display = 'block';
-      planUF.setAttribute('required', 'required');
     } else {
       planUfContainer.style.display = 'none';
-      planUF.removeAttribute('required');
     }
   });
 }
-
 
 // ACÁ: Muestra la vista previa de la foto del trabajador cuando se selecciona un archivo
     document.getElementById('fotoTrabajador').addEventListener('change', function(event) {
@@ -252,46 +247,12 @@ if (selectSalud && planUfContainer) {
       }
     });
 
-    // ACÁ: Validación antes de enviar y popup de errores
-    document.getElementById('form-datos-empresa').addEventListener('submit', function(e) {
-      e.preventDefault();
-
-        const errores = [];
-    // Recorremos todos los inputs/selects requeridos
-    this.querySelectorAll('[required]').forEach(campo => {
-      const label = campo.closest('.col-md-6, .col-md-4, .col-12')?.querySelector('label')?.innerText || campo.name;
-
-      if (!campo.value || campo.value.trim() === '') {
-        errores.push(`- ${label}: campo vacío`);
-      }
-
-    // Validaciones específicas
-      if (campo.id === 'rutTrabajador' && campo.value.trim() !== '' && !validarRut(campo.value)) {
-      errores.push(`- ${label}: RUT inválido`);
-      }
-      if (campo.id === 'telefonoPersonal' && campo.value.trim() !== '' && campo.value.length < 8) {
-      errores.push(`- ${label}: debe tener al menos 8 dígitos`);
-      }
-      if (campo.type === 'email' && campo.value.trim() !== '' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(campo.value)) {
-      errores.push(`- ${label}: correo inválido`);
-      }
-    });
-
-    if (errores.length > 0) {
-  console.log("Errores detectados:", errores); // <--- Agregar
-  mostrarErrores(errores);
-  return;
-}
-
-
-      if (errores.length > 0) {
-      mostrarErrores(errores);
-      return; // detenemos el envío
-    }
-
-    // Si no hay errores, enviar normalmente
+  // ACÁ: Envía el formulario de datos del trabajador al backend usando fetch
+  document.getElementById('form-datos-empresa').addEventListener('submit', function(e) {
+    e.preventDefault(); // Evita el envío tradicional
     const formData = new FormData(this);
-    fetch('http://localhost:3000/trabajadores', {
+
+    fetch('http://localhost:3000/trabajadores', { // URL de tu backend
       method: 'POST',
       body: formData
     })
@@ -302,36 +263,10 @@ if (selectSalud && planUfContainer) {
       // También puedes mostrar los datos en el DOM si prefieres
       // document.getElementById('resultadosEnvio').textContent = JSON.stringify(data, null, 2);
     })
-    .catch(() => {
+    .catch(err => {
       alert('Error al enviar los datos');
     });
   });
-
-
-// Función para mostrar el modal con errores
-function mostrarErrores(errores) {
-  const modal = document.getElementById('modalErrores');
-  const fondo = document.getElementById('fondoModalErrores');
-  const lista = document.getElementById('listaErrores');
-  lista.innerHTML = '';
-
-  errores.forEach(err => {
-    const li = document.createElement('li');
-    li.className = 'list-group-item list-group-item-danger';
-    li.textContent = err;
-    lista.appendChild(li);
-  });
-
-  modal.style.display = 'block';
-  fondo.style.display = 'block';
-}
-
-// Cerrar modal de errores
-document.getElementById('cerrarModalErrores').addEventListener('click', () => {
-  document.getElementById('modalErrores').style.display = 'none';
-  document.getElementById('fondoModalErrores').style.display = 'none';
-});
-
 
     // ACÁ: (Ejemplo comentado) Mostrar contratos del trabajador obtenidos desde el backend
     document.addEventListener('DOMContentLoaded', function() {
