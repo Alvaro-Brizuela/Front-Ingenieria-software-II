@@ -139,3 +139,71 @@ GET /api/datos-historicos/descargar/:nombre
 
 
 ## 🧩 3. View Datos Trabajador (Tiene su propio mini backend de prueba)
+```json
+{
+  "idTrabajador": "UUID_GENERADO_O_IDENTIFICADOR",
+  "datosGenerales": {
+    "nombreCompleto": "Juan Perez",
+    "rut": "18.123.456-7",
+    "fechaNacimiento": "1990-05-15",
+    "sexo": "Masculino",
+    "nacionalidad": "Chilena",
+    "estadoCivil": "Soltero",
+    "fotoUrl": "url_de_la_foto_del_trabajador.jpg"
+  },
+  "infoContacto": {
+    "telefonoPersonal": "+56987654321",
+    "telefonoCorporativo": "+56221234567",
+    "correoPersonal": "juan.perez@email.com",
+    "correoCorporativo": "juan.perez@empresa.cl"
+  },
+  "infoVivienda": {
+    "direccion": "Avenida Siempre Viva 123",
+    "region": "Región Metropolitana de Santiago",
+    "comuna": "Las Condes",
+    "provincia": "Santiago"
+  },
+  "infoSeguros": {
+    "afp": "AFP Habitat",
+    "institutoSalud": "Isapre Colmena",
+    "planUF": 2.5
+  },
+  "infoLaboral": {
+    "cargo": "Analista de Datos",
+    "jefeDirecto": "Jefe_ID",
+    "sueldoBase": 1200000,
+    "fechaIngreso": "2023-01-20",
+    "fechaContrato": "2023-01-20",
+    "formaPago": "Transferencias"
+  },
+  "documentos": {
+    "carnet": {
+      "frontalUrl": "url_carnet_frontal.jpg",
+      "reversoUrl": "url_carnet_reverso.jpg"
+    },
+    "archivos": [
+      {
+        "nombreArchivo": "curriculum_vitae_juan.pdf",
+        "urlArchivo": "url_del_cv.pdf",
+        "fechaSubida": "2023-01-20",
+        "tipoDocumento": "CV"
+      },
+      {
+        "nombreArchivo": "contrato_trabajo_juan.pdf",
+        "urlArchivo": "url_contrato_trabajo.pdf",
+        "fechaSubida": "2023-01-20",
+        "tipoDocumento": "Contrato"
+      },
+      {
+        "nombreArchivo": "certificado_titulo.pdf",
+        "urlArchivo": "url_certificado_titulo.pdf",
+        "fechaSubida": "2023-01-22",
+        "tipoDocumento": "Certificado"
+      }
+    ]
+  }
+}
+```
+
+
+
