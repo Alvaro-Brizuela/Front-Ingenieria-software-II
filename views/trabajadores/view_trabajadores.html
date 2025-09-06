@@ -160,7 +160,7 @@
           </div>
           <div class="col-md-4">
             <label for="segundoApellido" class="form-label">Apellido Materno</label>
-            <input type="text" class="form-control" id="ApellidoMaterno" name="ApellidoMaterno" required>
+            <input type="text" class="form-control" id="segundoApellido" name="segundoApellido" required>
           </div>
           <div class="col-md-6">
             <label for="rutTrabajador" class="form-label">Rut del trabajador</label>
@@ -240,7 +240,7 @@
           </div>
           <div class="col-md-6" id="planUfContainer" style="display: none;">
             <label for="planUF" class="form-label">Plan en UF</label>
-            <input type="number" class="form-control" id="planUF" name="planUF" step="0.001">
+            <input type="number" class="form-control" id="planUF" name="planUF" step="0.001" required>
           </div>
         </div>
 
@@ -359,15 +359,6 @@
       <button id="cancelarEliminarBtn" class="btn btn-secondary">Cancelar</button>
     </div>
   </div>
-  <!-- Modal de errores de validación -->
-<div id="modalErrores" class="position-fixed top-50 start-50 translate-middle bg-white rounded shadow p-4" 
-     style="display: none; z-index: 3000; max-width: 500px; width: 90%;">
-  <h5 class="mb-3 text-danger">Faltan datos por completar</h5>
-  <ul id="listaErrores" class="list-group mb-3"></ul>
-  <div class="text-end">
-    <button id="cerrarModalErrores" class="btn btn-secondary">Cerrar</button>
-  </div>
-</div>
 
   <!-- Fondo oscuro -->
   <div id="fondoModalDescarga" class="position-fixed top-0 start-0 w-100 h-100" style="display: none; background-color: rgba(0,0,0,0.5); z-index: 1500;"></div>
