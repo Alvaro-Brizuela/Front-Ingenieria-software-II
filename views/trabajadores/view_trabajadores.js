@@ -78,19 +78,13 @@ document.addEventListener('click', function (event) {
  * @param {string} rut - RUT a validar.
  * @returns {boolean} true si es válido, false si no.
  */
-function validarRut(rut) {
-  rut = rut.replace(/^0+|[^0-9kK]+/g, '').toUpperCase();
-  if (rut.length < 2) return false;
+function formatearRut(rut) {
+  rut = rut.replace(/[^\dkK]/g, '').toUpperCase();
+  if (rut.length <= 1) return rut;
   let cuerpo = rut.slice(0, -1);
   let dv = rut.slice(-1);
-  let suma = 0, multiplo = 2;
-  for (let i = cuerpo.length - 1; i >= 0; i--) {
-    suma += parseInt(cuerpo[i]) * multiplo;
-    multiplo = multiplo < 7 ? multiplo + 1 : 2;
-  }
-  let dvEsperado = 11 - (suma % 11);
-  dvEsperado = dvEsperado === 11 ? '0' : dvEsperado === 10 ? 'K' : dvEsperado.toString();
-  return dv === dvEsperado;
+  cuerpo = cuerpo.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  return `${cuerpo}-${dv}`;
 }
 
 /**********************************************
@@ -100,6 +94,15 @@ function validarRut(rut) {
 // ACÁ: Valida el RUT cuando el usuario termina de escribirlo
 const rutInput = document.getElementById('rutTrabajador');
 if (rutInput) {
+  rutInput.addEventListener('input', function () {
+    let valor = rutInput.value.replace(/[^\dkK]/g, '').toUpperCase();
+    if (valor.length > 1) {
+      rutInput.value = formatearRut(valor);
+    } else {
+      rutInput.value = valor;
+    }
+  });
+  
   rutInput.addEventListener('blur', function () {
     if (!validarRut(rutInput.value)) {
       rutInput.classList.add('is-invalid');
@@ -110,7 +113,6 @@ if (rutInput) {
     }
   });
 }
-
 
 
 // ACÁ: Valida que el teléfono personal tenga al menos 8 dígitos
