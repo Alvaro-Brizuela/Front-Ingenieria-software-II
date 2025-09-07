@@ -255,7 +255,9 @@ if (selectSalud && planUfContainer && planUFInput) {
 async function enviarTrabajador() {
   const trabajador = {
     datos_generales: {
-      nombre_completo: document.getElementById('nombreTrabajador').value,
+      nombres: document.getElementById('nombresTrabajador').value,
+      apellidoPaterno: document.getElementById('apellidoPaterno'),
+      apellidoMaterno: document.getElementById('apellidoMaterno'),
       rut: document.getElementById('rutTrabajador').value,
       fecha_nacimiento: document.getElementById('fechaNacimientoTrabajador').value,
       sexo: document.getElementById('sexo').value,
@@ -305,7 +307,9 @@ async function cargarTrabajador(id) {
   const data = await res.json();
 
   // Rellenar los campos del formulario
-  document.getElementById('nombreTrabajador').value = data.datos_generales.nombre_completo;
+  document.getElementById('nombresTrabajador').value = data.datos_generales.nombre;
+  document.getElementById('apellidoPaterno').value = data.datos_generales.apellidoPaterno;
+  document.getElementById('apellidoMaterno').value = data.datos_generales.apellidoMaterno;
   document.getElementById('rutTrabajador').value = data.datos_generales.rut;
   document.getElementById('fechaNacimientoTrabajador').value = data.datos_generales.fecha_nacimiento;
   document.getElementById('sexo').value = data.datos_generales.sexo;
@@ -433,7 +437,9 @@ document.addEventListener('DOMContentLoaded', function () {
 function mostrarTrabajadorEnConsola() {
   const trabajador = {
     datos_generales: {
-      nombre_completo: document.getElementById('nombreTrabajador').value,
+      nombre: document.getElementById('nombresTrabajador').value,
+      apellidoPaterno: document.getElementById('apellidoPaterno').value,
+      apellidoMaterno: document.getElementById('apellidoMaterno').value,
       rut: document.getElementById('rutTrabajador').value,
       fecha_nacimiento: document.getElementById('fechaNacimientoTrabajador').value,
       sexo: document.getElementById('sexo').value,
