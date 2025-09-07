@@ -92,6 +92,26 @@ function formatearRut(rut) {
  **********************************************/
 
 // ACÁ: Valida el RUT cuando el usuario termina de escribirlo
+function validarRut(rut) {
+  rut = rut.replace(/[^\dkK]/g, '').toUpperCase();
+  if (rut.length < 2) return false;
+  let cuerpo = rut.slice(0, -1);
+  let dv = rut.slice(-1);
+
+  let suma = 0;
+  let multiplo = 2;
+
+  for (let i = cuerpo.length - 1; i >= 0; i--) {
+    suma += parseInt(cuerpo.charAt(i)) * multiplo;
+    multiplo = multiplo < 7 ? multiplo + 1 : 2;
+  }
+
+  let dvEsperado = 11 - (suma % 11);
+  dvEsperado = dvEsperado === 11 ? '0' : dvEsperado === 10 ? 'K' : dvEsperado.toString();
+
+  return dv === dvEsperado;
+}
+
 const rutInput = document.getElementById('rutTrabajador');
 if (rutInput) {
   rutInput.addEventListener('input', function () {
@@ -102,7 +122,7 @@ if (rutInput) {
       rutInput.value = valor;
     }
   });
-  
+
   rutInput.addEventListener('blur', function () {
     if (!validarRut(rutInput.value)) {
       rutInput.classList.add('is-invalid');
