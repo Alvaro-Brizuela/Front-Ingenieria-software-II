@@ -322,11 +322,14 @@ async function enviarTrabajador() {
   });
   const data = await res.json();
   alert('Trabajador guardado: ' + JSON.stringify(data, null, 2));
+  console.log('Conexión exitosa con la API. Respuesta:', data);
 }
   
 async function cargarTrabajador(id) {
   const res = await fetch(`/api/trabajador/${id}`);
   const data = await res.json();
+
+  console.log('Conexión exitosa con la API al cargar trabajador. Datos recibidos:', data); // <-- Aquí
 
   // Rellenar los campos del formulario
   document.getElementById('nombresTrabajador').value = data.datos_generales.nombre;
