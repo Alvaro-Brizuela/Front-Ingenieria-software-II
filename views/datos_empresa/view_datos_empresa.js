@@ -207,6 +207,79 @@ function cargarDatosEmpresa(data) {
   validarSumaParticipacion();
 }
 
+// ACA estan las funciones para formatear y validar los ruts
+/**
+ * Formatea el RUT chileno agregando puntos y guion.
+ * @param {string} rut
+ * @returns {string}
+ */
+function formatearRut(rut) {
+  rut = rut.replace(/[^\dkK]/g, '').toUpperCase();
+  if (rut.length <= 1) return rut;
+  let cuerpo = rut.slice(0, -1);
+  let dv = rut.slice(-1);
+  cuerpo = cuerpo.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  return `${cuerpo}-${dv}`;
+}
+
+/**
+ * Valida si un RUT chileno es válido.
+ * @param {string} rut
+ * @returns {boolean}
+ */
+function validarRut(rut) {
+  rut = rut.replace(/[^\dkK]/g, '').toUpperCase();
+  if (rut.length < 2) return false;
+  let cuerpo = rut.slice(0, -1);
+  let dv = rut.slice(-1);
+
+  let suma = 0;
+  let multiplo = 2;
+
+  for (let i = cuerpo.length - 1; i >= 0; i--) {
+    suma += parseInt(cuerpo.charAt(i)) * multiplo;
+    multiplo = multiplo < 7 ? multiplo + 1 : 2;
+  }
+
+  let dvEsperado = 11 - (suma % 11);
+  dvEsperado = dvEsperado === 11 ? '0' : dvEsperado === 10 ? 'K' : dvEsperado.toString();
+
+  return dv === dvEsperado;
+}
+
+/**
+ * Aplica formateo y validación visual al input de RUT.
+ * @param {HTMLInputElement} input
+ */
+function aplicarFormatoYValidacionRut(input) {
+  let valor = input.value.replace(/[^\dkK]/g, '').toUpperCase();
+  input.value = valor.length > 1 ? formatearRut(valor) : valor;
+
+  if (valor.length > 1 && !validarRut(valor)) {
+    input.classList.add('is-invalid');
+    input.setCustomValidity('RUT inválido');
+  } else {
+    input.classList.remove('is-invalid');
+    input.setCustomValidity('');
+  }
+}
+
+// Aplica a los campos de empresa
+document.addEventListener('DOMContentLoaded', () => {
+  ['rutEmpresa', 'rutRepresentante'].forEach(id => {
+    const input = document.getElementById(id);
+    if (input) {
+      input.addEventListener('input', () => aplicarFormatoYValidacionRut(input));
+      input.addEventListener('blur', () => aplicarFormatoYValidacionRut(input));
+    }
+  });
+
+  document.querySelectorAll('input[name="usuarioRUT[]"]').forEach(input => {
+    input.addEventListener('input', () => aplicarFormatoYValidacionRut(input));
+    input.addEventListener('blur', () => aplicarFormatoYValidacionRut(input));
+  });
+});
+
 
 // ACA: funcion para mostrar los socios
 function agregarSocioDesdeDatos(datos) {
