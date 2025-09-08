@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Crear EPP</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="../../../plantilla/img/logo-contaplus-favicon.png">
+  
+  <link rel="stylesheet" href="../Epp.css">
+</head>
+<body>
+  
+  <header class="header">
+    <button id="toggleSidebar" class="btn btn-light btn-toggle">
+      <i class="bi bi-list"></i>
+    </button>
+    <div class="header-right">
+        <div class="profile-icon" id="profileIcon"></div>
+        <div class="dropdown-menu" id="dropdownMenu">
+          <span class="user-name" id="userName"></span>
+          <button id="logoutBtn">Cerrar sesión</button>
+        </div>
+    </div>
+  </header>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-header">
+      <div class="logo-title">
+        <img src="../../../plantilla/img/logo-crop.png" alt="Logo Contaplus" class="logo-sidebar">
+        <h5>CONTAPLUS</h5>
+      </div>
+      <button id="closeSidebar" class="custom-close">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+
+    <div class="accordion" id="sidebarAccordion">
+      <div class="accordion-item bg-transparent border-0">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapseOne">
+            <i class="bi bi-building icon"></i> Empresa
+          </button>
+        </h2>
+        <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#sidebarAccordion">
+          <div class="accordion-body">
+            <a href="#" class="d-block">Datos Empresa</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item bg-transparent border-0">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
+            <i class="bi bi-people icon"></i> Trabajadores
+          </button>
+        </h2>
+        <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#sidebarAccordion">
+          <div class="accordion-body">
+            <a href="#" class="d-block">Ver Trabajadores</a>
+            <a href="#" class="d-block">Nuevo Trabajador</a>
+            <a href="#" class="d-block">Cargos</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item bg-transparent border-0">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapseThree">
+            <i class="bi bi-journal-check icon"></i> Contratos
+          </button>
+        </h2>
+        <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#sidebarAccordion">
+          <div class="accordion-body">
+            <a href="#" class="d-block">Ver Contratos</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="content">
+    
+    <div class="card p-4">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="card-title h3 m-0">Creación de Equipos de Protección Personal (EPP)</h1>
+      </div>
+
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="h5 m-0">Agregar Nuevos EPP</h2>
+        <button id="addRowBtn" class="btn btn-primary add-button">
+          <i class="bi bi-plus-lg"></i> Agregar fila
+        </button>
+      </div>
+      
+      <div class="table-responsive">
+          <table id="eppCreationTable" class="table">
+              <thead>
+                  <tr>
+                      <th>Nombre del EPP</th>
+                      <th>Descripción</th>
+                      <th></th> 
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr>
+                      <td><input type="text" class="form-control epp-name-input" required></td>
+                      <td><input type="text" class="form-control epp-description-input" required></td>
+                      <td>
+                        <button type="button" class="btn btn-danger btn-sm delete-row-btn">
+                          <i class="bi bi-trash3-fill"></i>
+                        </button>
+                      </td>
+                  </tr>
+              </tbody>
+          </table>
+      </div>
+
+      <div class="text-end mt-4">
+          <button id="saveBtn" class="btn btn-success">
+            <i class="bi bi-floppy-fill"></i> Guardar
+          </button>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="CrearEPP.js"></script>
+</body>
+</html>
