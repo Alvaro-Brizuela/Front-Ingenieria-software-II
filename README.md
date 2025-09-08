@@ -138,4 +138,58 @@ GET /api/datos-historicos/descargar/:nombre
 ---
 
 
-## 🧩 3. View Datos Trabajador (Tiene su propio mini backend de prueba)
+## 🧩 3. View Datos Trabajador
+```py
+class DatosGenerales(BaseModel):
+    nombre_completo: str
+    rut: str
+    fecha_nacimiento: date
+    sexo: str
+    nacionalidad: str
+    estado_civil: str
+    foto_url: str
+
+# Información de contacto
+class InfoContacto(BaseModel):
+    telefono_personal: str
+    telefono_corporativo: Optional[str] = None
+    correo_personal: EmailStr
+    correo_corporativo: Optional[EmailStr] = None
+
+# Información de vivienda
+class InfoVivienda(BaseModel):
+    direccion: str
+    region: str
+    comuna: str
+    provincia: str
+
+# Información de seguros
+class InfoSeguros(BaseModel):
+    afp: str
+    instituto_salud: str
+    plan_uf: float
+
+# Información laboral
+class InfoLaboral(BaseModel):
+    cargo: str
+    jefe_directo: str
+    sueldo_base: float
+    fecha_ingreso: date
+    fecha_contrato: date
+    forma_pago: str
+
+# Modelo completo del trabajador para la creación
+class TrabajadorCreate(BaseModel):
+    datos_generales: DatosGenerales
+    info_contacto: InfoContacto
+    info_vivienda: InfoVivienda
+    info_seguros: InfoSeguros
+    info_laboral: InfoLaboral
+
+# Modelo completo del trabajador para la lectura (incluye un ID)
+class Trabajador(TrabajadorCreate):
+    id: int
+```
+
+
+
