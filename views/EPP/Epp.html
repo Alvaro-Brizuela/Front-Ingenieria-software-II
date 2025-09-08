@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gestión de EPP</title>
+    <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="img/logo-contaplus-favicon.png">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
+  <!-- Flatpickr CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <link rel="icon" type="image/png" href="img/logo-contaplus-favicon.png">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="img/logo-contaplus-favicon.png">
+  
+  <link rel="stylesheet" href="Epp.css">
+  
+</head>
+<body>
+  
+  <header class="header">
+    <button id="toggleSidebar" class="btn btn-light btn-toggle">
+      <i class="bi bi-list"></i>
+    </button>
+    <div class="header-right">
+        <div class="profile-icon" id="profileIcon"></div>
+        <div class="dropdown-menu" id="dropdownMenu">
+          <span class="user-name" id="userName"></span>
+          <button id="logoutBtn">Cerrar sesión</button>
+        </div>
+    </div>
+  </header>
+  <!-- ACÁ Sidebar -->
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-header">
+      <div class="logo-title">
+        <img src="/plantilla/img/logo-crop.png" alt="Logo Contaplus" class="logo-sidebar">
+        <h5>CONTAPLUS</h5>
+      </div>
+      <button id="closeSidebar" class="custom-close">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+    <!-- ACÁ Acordeón del sidebar -->
+    <div class="accordion" id="sidebarAccordion">
+      <div class="accordion-item bg-transparent border-0">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapseOne">
+            <i class="bi bi-building icon"></i> Empresa
+          </button>
+        </h2>
+        <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#sidebarAccordion">
+          <div class="accordion-body">
+            <a href="#" class="d-block">Datos Empresa</a>
+          </div>
+        </div>
+      </div>
+      <!-- ACÁ Más secciones del acordeón -->
+      <div class="accordion-item bg-transparent border-0">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
+            <i class="bi bi-people icon"></i> Trabajadores
+          </button>
+        </h2>
+        <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#sidebarAccordion">
+          <div class="accordion-body">
+            <a href="#" class="d-block">Ver Trabajadores</a>
+            <a href="#" class="d-block">Nuevo Trabajador</a>
+            <a href="#" class="d-block">Cargos</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item bg-transparent border-0">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapseThree">
+            <i class="bi bi-journal-check icon"></i> Contratos
+          </button>
+        </h2>
+        <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#sidebarAccordion">
+          <div class="accordion-body">
+            <a href="#" class="d-block">Ver Contratos</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="content">
+    
+    <div class="card p-4">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="card-title h3 m-0">Gestión de Equipo de Protección Personal (EPP)</h1>
+      </div>
+      <!-- ACÁ Formulario de EPP -->
+    <div class="row g-3 mb-4">
+      <div class="col-md-6">
+        <label for="nombre" class="form-label">NOMBRE:</label>
+        <select class="form-select" id="nombre">
+            <option selected disabled value="">Seleccione un trabajador...</option>
+        </select>
+    </div>
+    <div class="col-md-6">
+        <label for="fecha" class="form-label">FECHA:</label>
+        <input type="date" class="form-control" id="fecha">
+    </div>
+    <div class="col-md-6">
+        <label for="rut" class="form-label">RUT:</label>
+        <input type="text" class="form-control" id="rut">
+    </div>
+    <div class="col-md-6">
+        <label for="cargo" class="form-label">CARGO:</label>
+        <select class="form-select" id="cargo">
+            <option selected disabled value="">Seleccione un cargo...</option>
+        </select>
+    </div>
+</div>
+ <!-- ACÁ Tabla de EPP -->
+      <div class="mb-4">
+          <p>Con el propósito de promover y mantener el nivel de seguridad y cumplimiento en lo establecido en la Ley Nº 16.744.- y sus Decretos Reglamentarios en lo relacionado al suministro de equipos de protección personal, por intermedio de la presente, se deja constancia de la provisión u entrega de los siguientes elementos de protección personal:</p>
+      </div>
+
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="h5 m-0">Elementos de Protección Personal</h2>
+        <button id="addRowBtn" class="btn btn-primary add-button">
+          <i class="bi bi-plus-lg"></i> Agregar fila
+        </button>
+      </div>
+      
+      <div class="table-responsive">
+          <table id="eppTable" class="table">
+              <thead>
+                  <tr>
+                      <th>Nombre del EPP</th>
+                      <th>Cantidad</th>
+                      <th>Fecha de Entrega</th>
+                      <th></th> 
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr>
+                      <td>
+                          <input list="epp-names" name="epp-name" class="form-control epp-input" required>
+                          <datalist id="epp-names">
+                              <option value="Casco de seguridad">
+                              <option value="Guantes de protección">
+                              <option value="Gafas de seguridad">
+                              <option value="Mascarilla N95">
+                              <option value="Chaleco reflectante">
+                              <option value="Botas de seguridad">
+                          </datalist>
+                      </td>
+                      <td><input type="number" min="1" class="form-control quantity-input" required></td>
+                      <td><input type="date" class="form-control date-input" required></td>
+                      <td>
+                        <button type="button" class="btn btn-danger btn-sm delete-row-btn">
+                          <i class="bi bi-trash3-fill"></i>
+                        </button>
+                      </td>
+                  </tr>
+              </tbody>
+          </table>
+      </div>
+      <!-- ACÁ Certificación y firmas -->
+      <div class="mt-4 mb-4">
+        <p>Certifico haber recibido los elementos de protección personal, como así también instrucciones para su correcto uso y reconozco la **OBLIGACION DE USAR**, conservar y cuidar los mismos, e informar del deterioro o extravío, conforme a lo indicado anteriormente.</p>
+      </div>
+
+      <div class="row mt-5">
+        <div class="col-md-6 text-center">
+            <p class="mb-1">_________________________________</p>
+            <p><strong>[NOMBRE EMPRESA]</strong></p>
+            <p><strong>RUT:</strong></p>
+            <p><strong>EMPLEADOR</strong></p>
+        </div>
+        <div class="col-md-6 text-center">
+            <p class="mb-1">_________________________________</p>
+            <p><strong>[NOMBRE TRABAJADOR]</strong></p>
+            <p><strong>RUT:</strong></p>
+            <p><strong>TRABAJADOR</strong></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="Epp.js"></script>
+</body>
+</html>
