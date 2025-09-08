@@ -1,0 +1,160 @@
+[33mcommit 3c19937e25cceb61cea456c6ecd4a7f1343d5b81[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mDani[m[33m)[m
+Author: TroniXx19 <danielalonsodiaza@gmail.com>
+Date:   Sun Sep 7 21:56:02 2025 -0300
+
+    crear objetos EPP
+
+[33mcommit b86e53882e12c32a2ddb85ea3c3c0a675a1e2a5d[m[33m ([m[1;31morigin/Dani[m[33m)[m
+Author: TroniXx19 <danielalonsodiaza@gmail.com>
+Date:   Sun Sep 7 21:23:08 2025 -0300
+
+    Crear documento EPP
+
+[33mcommit a350d4e84908f6ca1a9d7b5ec74442c1394c3c32[m
+Author: TroniXx19 <danielalonsodiaza@gmail.com>
+Date:   Sat Sep 6 19:56:26 2025 -0400
+
+    cambios
+
+[33mcommit b8b26879b021984b9616f4eb4952d2ee6c14997c[m
+Author: TroniXx19 <danielalonsodiaza@gmail.com>
+Date:   Sat Sep 6 19:53:13 2025 -0400
+
+    cosas borradas
+
+[33mcommit 99207ea5cf146f1217a5819df6c81bc6097d24ce[m
+Author: TroniXx19 <danielalonsodiaza@gmail.com>
+Date:   Sat Sep 6 19:23:16 2025 -0400
+
+    aca
+
+[33mcommit 997d16bb4e168c77bfaced93724b64cbc988feeb[m
+Author: TroniXx19 <danielalonsodiaza@gmail.com>
+Date:   Thu Sep 4 23:09:31 2025 -0400
+
+    actualizacion de alertas
+
+[33mcommit b01187e80b592fa373336b0fd9bee9588a8e901b[m
+Author: TroniXx19 <danielalonsodiaza@gmail.com>
+Date:   Thu Sep 4 19:59:28 2025 -0400
+
+    Guardo mi trabajo para poder subirlo
+
+[33mcommit 31a1ec51e8b70810f874003e4a98cce7be35863a[m
+Merge: d4adf52 d89a5f9
+Author: Daniel D. <danielalonsodiaza@gmail.com>
+Date:   Thu Sep 4 19:26:50 2025 -0400
+
+    Merge pull request #2 from Contapluss/main
+    
+    pullxd
+
+[33mcommit d89a5f9143cb6d135cd22e90e2f6eec046cf488b[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Merge: ee612b9 d13531f
+Author: DrStone4384 <135196724+DrStone438@users.noreply.github.com>
+Date:   Thu Sep 4 01:29:26 2025 -0400
+
+    Merge pull request #1 from Contapluss/joako
+    
+    Arreglo de los enlaces en el sidebar
+
+[33mcommit d13531f7c5f35fe0d4722b72eeedab41af60636e[m[33m ([m[1;31morigin/joako[m[33m)[m
+Author: Joaquin Bello <joako.jb12@gmail.com>
+Date:   Thu Sep 4 01:25:06 2025 -0400
+
+    arreglo del fortmato del sidebar
+
+[33mcommit ef91c20d6a3107a530e36279d627f01b58406185[m
+Author: Joaquin Bello <joako.jb12@gmail.com>
+Date:   Thu Sep 4 01:20:27 2025 -0400
+
+    Actualizar enlaces de navegación en las vistas de Cargos y Trabajadores
+
+[33mcommit ee612b9fca8c95cf65fa714e395788dcde8b00b3[m
+Author: DrStone4384 <joako.jb12@gmail.com>
+Date:   Wed Jun 18 18:44:16 2025 -0400
+
+    Arregle el merge que contenia un conflicto en view_trabajador, elimine el miniback que hice
+
+[33mcommit 322a18264afe72e8d4856d192148ed9b5722ad95[m
+Author: Arubaansu <atoro1703@gmail.com>
+Date:   Sun Jun 15 03:41:57 2025 -0400
+
+    error corregido de view cargos
+
+[33mcommit 3616bb95a663c086d222b1f21f200ed81aa58b2e[m
+Merge: d728ca9 d4adf52
+Author: Arubaansu <atoro1703@gmail.com>
+Date:   Sun Jun 15 03:38:37 2025 -0400
+
+    Merge remoto con mi frontend local
+
+[33mcommit d728ca9001bb0a187d0f07a5c037cff98e84ab47[m
+Author: Arubaansu <atoro1703@gmail.com>
+Date:   Sun Jun 15 03:32:10 2025 -0400
+
+    Primer commit del frontend conectado
+
+[33mcommit d4adf5222288e6e7a760a616a1946a51dd79c377[m
+Merge: 6ebedaa 12c3518
+Author: Alvaro-Brizuela <alvarobrizuela01@gmail.com>
+Date:   Tue Jun 3 01:13:45 2025 -0400
+
+    Merge branch 'main-front'
+
+[33mcommit 12c35186704bfa4df41efa4c97e9ef1c30ad1583[m
+Author: jotaaflowog <jorgebutto1107@gmail.com>
+Date:   Sun Jun 1 16:20:05 2025 -0400
+
+    View Trabajadores con foto implementada
+
+[33mcommit 69e656aa1a218c5e5b051de6f0e161ed7e111ed8[m
+Author: jotaaflowog <jorgebutto1107@gmail.com>
+Date:   Sun Jun 1 12:53:09 2025 -0400
+
+    Agregado Género Representante Legal a view datos empresa
+
+[33mcommit 6ebedaab2ee12c17a3726f57fb2dc4bfb05d0576[m
+Author: Alvaro-Brizuela <alvarobrizuela01@gmail.com>
+Date:   Wed May 28 17:49:21 2025 -0400
+
+    Initial commit
+
+[33mcommit 64bff4d64c2acad64d3775a605dd3061ea899d1e[m
+Author: jotaaflowog <jorgebutto1107@gmail.com>
+Date:   Wed May 28 15:35:51 2025 -0400
+
+    Views 1.0 Listas para trabajar en Backend
+
+[33mcommit a83159c7b3ca6bb79b5e53393ac4ec8e0eb5ebf6[m
+Author: jotaaflowog <jorgebutto1107@gmail.com>
+Date:   Tue May 20 15:42:09 2025 -0400
+
+    Avance en View datos empresa
+
+[33mcommit 1de24ca7462d63e65e8251c8f3302e6eb7ab4aed[m
+Author: jotaaflowog <jorgebutto1107@gmail.com>
+Date:   Tue May 20 13:31:38 2025 -0400
+
+    Creación de plantilla y creacion de carpetas principales.
+
+[33mcommit 4ae36c7e2856993ddab4392cd9ad3a41777505d7[m
+Merge: 3cfdd0f 633a172
+Author: Jorge Butto <147085398+jotaaflowog@users.noreply.github.com>
+Date:   Tue May 20 10:38:17 2025 -0400
+
+    Merge pull request #1 from DrStone438/main
+    
+    Creación de Plantilla del sidebar
+
+[33mcommit 633a1727cb801289eb1b9ddb0f5fb79d1158c3d5[m
+Author: DrStone4384 <135196724+DrStone438@users.noreply.github.com>
+Date:   Mon May 19 21:40:21 2025 -0400
+
+    Creación de Plantilla del sidebar
+
+[33mcommit 3cfdd0f56dad4555b6deae0f331daacd5659a193[m
+Author: Alvaro-Brizuela <alvarobrizuela01@gmail.com>
+Date:   Tue May 6 19:13:21 2025 -0400
+
+    Initial commit
