@@ -155,12 +155,12 @@
             <input type="text" class="form-control" id="nombresTrabajador" name="nombresTrabajador" required>
           </div>
           <div class="col-md-4">
-            <label for="primerApellido" class="form-label">Apellido Paterno</label>
-            <input type="text" class="form-control" id="ApellidoPaterno" name="ApellidoPaterno" required>
+            <label for="apellidoPaterno" class="form-label">Apellido Paterno</label>
+            <input type="text" class="form-control" id="apellidoPaterno" name="apellidoPaterno" required>
           </div>
           <div class="col-md-4">
-            <label for="segundoApellido" class="form-label">Apellido Materno</label>
-            <input type="text" class="form-control" id="segundoApellido" name="segundoApellido" required>
+            <label for="apellidoMaterno" class="form-label">Apellido Materno</label>
+            <input type="text" class="form-control" id="apellidoMaterno" name="apellidoMaterno" required>
           </div>
           <div class="col-md-6">
             <label for="rutTrabajador" class="form-label">Rut del trabajador</label>
@@ -240,7 +240,7 @@
           </div>
           <div class="col-md-6" id="planUfContainer" style="display: none;">
             <label for="planUF" class="form-label">Plan en UF</label>
-            <input type="number" class="form-control" id="planUF" name="planUF" step="0.001" required>
+            <input type="number" class="form-control" id="planUF" name="planUF" step="0.001">
           </div>
         </div>
 
@@ -337,6 +337,7 @@
       <!-- Botón -->
       <div class="mt-4 d-flex justify-content-end">
         <button type="submit" class="btn btn-primary">Guardar / Actualizar</button>
+        <button type="button" class="btn btn-secondary ms-2" onclick="mostrarTrabajadorEnConsola()">Ver JSON en consola</button>
       </div>
 
     </form>
