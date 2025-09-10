@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Permiso Sin Goce de Sueldo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    
+    <link rel="icon" type="image/png" href="../../../plantilla/img/logo-contaplus-favicon.png">
+    <link rel="stylesheet" href="../../../plantilla/plantilla_sidebar.css">
+    
+    <style>
+        .card-solicitud {
+            margin-bottom: 2rem;
+        }
+    </style>
+</head>
+<body>
+    
+    <header class="header">
+        <button id="toggleSidebar" class="btn btn-light btn-toggle">
+            <i class="bi bi-list"></i>
+        </button>
+        <div class="header-right">
+            <div class="profile-icon" id="profileIcon"></div>
+            <div class="dropdown-menu" id="dropdownMenu">
+                <span class="user-name" id="userName"></span>
+                <button id="logoutBtn">Cerrar sesión</button>
+            </div>
+        </div>
+    </header>
+
+    <div id="sidebar" class="sidebar">
+        <div class="sidebar-header">
+            <div class="logo-title">
+                <img src="../../../plantilla/img/logo-crop.png" alt="Logo Contaplus" class="logo-sidebar">
+                <h5>CONTAPLUS</h5>
+            </div>
+            <button id="closeSidebar" class="custom-close">
+                <i class="bi bi-x-lg"></i>
+            </button>
+        </div>
+
+        <div class="accordion" id="sidebarAccordion">
+            <div class="accordion-item bg-transparent border-0">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapseOne">
+                        <i class="bi bi-building icon"></i> Empresa
+                    </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#sidebarAccordion">
+                    <div class="accordion-body">
+                        <a href="#" class="d-block">Datos Empresa</a>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item bg-transparent border-0">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
+                        <i class="bi bi-people icon"></i> Trabajadores
+                    </button>
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#sidebarAccordion">
+                    <div class="accordion-body">
+                        <a href="#" class="d-block">Ver Trabajadores</a>
+                        <a href="#" class="d-block">Nuevo Trabajador</a>
+                        <a href="#" class="d-block">Cargos</a>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item bg-transparent border-0">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapseThree">
+                        <i class="bi bi-journal-check icon"></i> Contratos
+                    </button>
+                </h2>
+                <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#sidebarAccordion">
+                    <div class="accordion-body">
+                        <a href="#" class="d-block">Ver Contratos</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="card p-4 card-solicitud">
+            <h1 class="card-title h3 m-0">Solicitud de Permiso Sin Goce de Sueldo</h1>
+            <hr>
+            <form id="permisoForm" class="row g-3">
+                <div class="col-md-6">
+                    <label for="nombre" class="form-label">Nombre</label>
+                    <input type="text" class="form-control" id="nombre">
+                </div>
+                <div class="col-md-6">
+                    <label for="rut" class="form-label">RUT</label>
+                    <input type="text" class="form-control" id="rut">
+                </div>
+                
+                <div class="col-md-6">
+                    <label for="fechaInicio" class="form-label">Periodo Desde</label>
+                    <input type="date" class="form-control" id="fechaInicio">
+                </div>
+                <div class="col-md-6">
+                    <label for="fechaTermino" class="form-label">Periodo Hasta</label>
+                    <input type="date" class="form-control" id="fechaTermino">
+                </div>
+
+                <div class="col-12 mt-4 text-end">
+                    <button type="button" class="btn btn-primary me-2" id="descargarBtn">
+                        <i class="bi bi-file-earmark-arrow-down-fill"></i> Descargar PDF
+                    </button>
+                    <button type="submit" class="btn btn-success">
+                        <i class="bi bi-send-fill"></i> Enviar Solicitud
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div class="card p-4">
+            <h2 class="h5 m-0 mb-3">Solicitudes Pendientes</h2>
+            <div class="table-responsive">
+                <table id="solicitudesTable" class="table">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Periodo</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://unpkg.com/jspdf-autotable"></script>
+    <script src="Permiso.js"></script>
+</body>
+</html>
