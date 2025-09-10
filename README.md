@@ -101,7 +101,57 @@ fetch('/api/empresa/123')
 }
 ```
 
----
+```py
+# Modelo para los datos de un pago
+class Pago(BaseModel):
+    tipo: str
+    acciones: int
+    capital_pagado: float
+
+# Modelo para los datos de un Socio
+class Socio(BaseModel):
+    nombre: str
+    rut: str
+    participacion: int
+    acciones: int
+    fecha_incorporacion: date
+    pagos: List[Pago]
+
+# Modelo para los datos de un Usuario Autorizado
+class UsuarioAutorizado(BaseModel):
+    nombre: str
+    rut: str
+    cargo: str
+    correo: EmailStr
+    telefono: Optional[str] = None
+
+# Modelo principal para la Empresa
+class Empresa(BaseModel):
+    razon_social: str
+    nombre_fantasia: str
+    rut: str
+    tipo_sociedad: str
+    capital_total: float
+    cantidad_acciones: int
+    fecha_constitucion: date
+    fecha_inicio: date
+    region: str
+    comuna: str
+    tipo_propiedad: str
+    regimen_tributario: str
+    mutual: str
+    gratificacion_legal: str
+    actividades_economicas: List[str]
+    fecha_pago_global: date
+
+    # Los campos de archivos se manejan con UploadFile en el endpoint de FastAPI,
+    # pero aquí los representamos para el modelo de datos.
+    archivos_historicos: List[str]
+
+    # Modelos anidados
+    socios: List[Socio]
+    usuarios_autorizados: List[UsuarioAutorizado]
+```
 
 ### 🧾 Recepción de datos por parte del backend (`POST /api/empresa/guardar`)
 
