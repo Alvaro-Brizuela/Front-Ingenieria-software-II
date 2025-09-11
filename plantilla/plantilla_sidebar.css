@@ -38,7 +38,7 @@ body {
     right: 0;
     z-index: 1048;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
     padding: 0 1rem;
     width: 100%;
@@ -88,6 +88,7 @@ body {
     flex: 0 0 auto;
     white-space: nowrap;
     min-width: 120px; 
+    margin-left: auto;
 }
 
 /* ICONO DE PERFIL */
@@ -154,6 +155,32 @@ body {
 
 #logoutBtn:hover {
   background-color: var(--color-secundario);
+}
+
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.header-logo {
+  height: 30px;
+  width: auto;
+}
+
+.header-title {
+  color: var(--color-blanco);
+  font-weight: 600;
+  font-size: 1.2rem;
+  letter-spacing: 0.5px;
+}
+
+/* Modificar el estilo existente del botón toggle para alinearlo */
+.btn-toggle {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  padding: 0 0.5rem;
 }
 
 
@@ -302,6 +329,38 @@ body {
   background: none !important;
 }
 
+#subAccordionRRHH .accordion-button {
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  background-color: transparent;
+}
+
+#subAccordionRRHH .accordion-button:not(.collapsed) {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+#subAccordionRRHH .accordion-body {
+  padding: 0.5rem 0;
+}
+
+#subAccordionRRHH .accordion-body a {
+  padding: 0.25rem 0;
+  text-decoration: none;
+  color: rgb(255, 255, 255);
+}
+
+#subAccordionRRHH .accordion-body a:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* Remover bordes y sombras del acordeón anidado */
+#subAccordionRRHH .accordion-item {
+  background-color: transparent;
+}
+
+#subAccordionRRHH .accordion-button::after {
+  scale: 0.7;
+}
 
 
 
