@@ -1,5 +1,16 @@
 document.addEventListener('DOMContentLoaded', () => {
 
+    const nombreInput = document.getElementById('nombre');
+
+        nombreInput.addEventListener('keypress', (event) => {
+        // Expresión regular para verificar si el carácter es un número del 0 al 9
+        const esNumero = /[0-9]/.test(event.key);
+
+        if (esNumero) {
+            event.preventDefault(); // Detiene el evento y no permite escribir el número
+        }
+});
+
     const form = document.getElementById('permisoForm');
     const descargarBtn = document.getElementById('descargarBtn');
     const tablaBody = document.querySelector('#solicitudesTable tbody');
