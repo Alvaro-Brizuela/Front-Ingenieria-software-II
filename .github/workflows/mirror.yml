@@ -14,9 +14,11 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Debug remote
+        run: |
+          git remote add mirror https://x-access-token:${{ secrets.MIRROR_TOKEN }}@github.com/Alvaro-Brizuela/Copia-front-contaplus.git
+          git remote -v
+
       - name: Push to mirror
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git remote add mirror https://x-access-token:${{ secrets.MIRROR_TOKEN }}@github.com/Alvaro-Brizuela/Copia-front-contaplus.git
           git push --force mirror main:main
