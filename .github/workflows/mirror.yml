@@ -1,0 +1,22 @@
+name: Mirror main branch
+
+on:
+  push:
+    branches:
+      - main   # solo cuando haya cambios en main
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Push to mirror
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git remote add mirror https://x-access-token:${{ secrets.MIRROR_TOKEN }}@github.com/Alvaro-Brizuela/Copia-front-contaplus.git
+          git push --force mirror main
