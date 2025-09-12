@@ -161,54 +161,56 @@
 
 
     <div class="content">
-        <div class="card p-4 card-solicitud">
-            <h1 class="card-title h3 m-0">Solicitud de Permiso Sin Goce de Sueldo</h1>
-            <hr>
-            <form id="permisoForm" class="row g-3">
-                <div class="col-md-6">
-                    <label for="nombre" class="form-label">Nombre</label>
-                    <input type="text" class="form-control" id="nombre">
-                </div>
-                <div class="col-md-6">
-                    <label for="rut" class="form-label">RUT</label>
-                    <input type="text" class="form-control" id="rut">
-                </div>
+        <div class="container py-4">
+            <div class="card p-4 card-solicitud">
+                <h1 class="card-title h3 m-0">Solicitud de Permiso Sin Goce de Sueldo</h1>
+                <hr>
+                <form id="permisoForm" class="row g-3">
+                    <div class="col-md-6">
+                        <label for="nombre" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="nombre">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="rut" class="form-label">RUT</label>
+                        <input type="text" class="form-control" id="rut">
+                    </div>
 
-                <div class="col-md-6">
-                    <label for="fechaInicio" class="form-label">Periodo Desde</label>
-                    <input type="date" class="form-control" id="fechaInicio">
-                </div>
-                <div class="col-md-6">
-                    <label for="fechaTermino" class="form-label">Periodo Hasta</label>
-                    <input type="date" class="form-control" id="fechaTermino">
-                </div>
+                    <div class="col-md-6">
+                        <label for="fechaInicio" class="form-label">Periodo Desde</label>
+                        <input type="date" class="form-control" id="fechaInicio">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="fechaTermino" class="form-label">Periodo Hasta</label>
+                        <input type="date" class="form-control" id="fechaTermino">
+                    </div>
 
-                <div class="col-12 mt-4 text-end">
-                    <button type="button" class="btn btn-primary me-2" id="descargarBtn">
-                        <i class="bi bi-file-earmark-arrow-down-fill"></i> Descargar PDF
-                    </button>
-                    <button type="submit" class="btn btn-success">
-                        <i class="bi bi-send-fill"></i> Enviar Solicitud
-                    </button>
-                </div>
-            </form>
-        </div>
+                    <div class="col-12 mt-4 text-end">
+                        <button type="button" class="btn btn-primary me-2" id="descargarBtn">
+                            <i class="bi bi-file-earmark-arrow-down-fill"></i> Descargar PDF
+                        </button>
+                        <button type="submit" class="btn btn-success">
+                            <i class="bi bi-send-fill"></i> Enviar Solicitud
+                        </button>
+                    </div>
+                </form>
+            </div>
 
-        <div class="card p-4">
-            <h2 class="h5 m-0 mb-3">Solicitudes Pendientes</h2>
-            <div class="table-responsive">
-                <table id="solicitudesTable" class="table">
-                    <thead>
-                        <tr>
-                            <th>Nombre</th>
-                            <th>Periodo</th>
-                            <th>Estado</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
+            <div class="card p-4">
+                <h2 class="h5 m-0 mb-3">Solicitudes Pendientes</h2>
+                <div class="table-responsive">
+                    <table id="solicitudesTable" class="table">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Periodo</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
