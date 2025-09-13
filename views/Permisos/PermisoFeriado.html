@@ -152,6 +152,25 @@
                                         <a href="#" class="d-block">REC CAP CARGO</a>
                                     </div>
                                 </div>
+                                <!-- Permisos -->
+                                <div class="accordion-item border-0">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed ps-3" data-bs-toggle="collapse"
+                                            data-bs-target="#collapsePermiso">
+                                            Permisos
+                                        </button>
+                                    </h2>
+                                    <div id="collapsePermiso" class="accordion-collapse collapse">
+                                        <div class="accordion-body ps-4">
+                                            <a href="/views/Permisos/PermisoConGoce.html" class="d-block">Permiso Con
+                                                Goce de Sueldo</a>
+                                            <a href="/views/Permisos/PermisoSinGoce.html" class="d-block">Permiso Sin
+                                                Goce de Sueldo</a>
+                                            <a href="/views/Permisos/PermisoFeriado.html" class="d-block">Permiso
+                                                Feriado</a>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -162,55 +181,57 @@
 
     <!-- CONTENIDO PRINCIPAL -->
     <div class="content">
-        <div class="card p-4 card-solicitud">
-            <h1 class="card-title h3 m-0">Solicitud de Feriado</h1>
-            <hr>
-            <!--Sección 1-->
-            <form id="permisoForm" class="row g-3">
-                <div class="col-md-6">
-                    <label for="nombre" class="form-label">Nombre</label>
-                    <input type="text" class="form-control" id="nombre">
-                </div>
-                <div class="col-md-6">
-                    <label for="rut" class="form-label">RUT</label>
-                    <input type="text" class="form-control" id="rut">
-                </div>
+        <div class="container py-4">
+            <div class="card p-4 card-solicitud">
+                <h1 class="card-title h3 m-0">Solicitud de Feriado</h1>
+                <hr>
+                <!--Sección 1-->
+                <form id="permisoForm" class="row g-3">
+                    <div class="col-md-6">
+                        <label for="nombre" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="nombre">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="rut" class="form-label">RUT</label>
+                        <input type="text" class="form-control" id="rut">
+                    </div>
 
-                <div class="col-md-6">
-                    <label for="fechaInicio" class="form-label">Periodo Desde</label>
-                    <input type="date" class="form-control" id="fechaInicio">
-                </div>
-                <div class="col-md-6">
-                    <label for="fechaTermino" class="form-label">Periodo Hasta</label>
-                    <input type="date" class="form-control" id="fechaTermino">
-                </div>
+                    <div class="col-md-6">
+                        <label for="fechaInicio" class="form-label">Periodo Desde</label>
+                        <input type="date" class="form-control" id="fechaInicio">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="fechaTermino" class="form-label">Periodo Hasta</label>
+                        <input type="date" class="form-control" id="fechaTermino">
+                    </div>
 
-                <div class="col-12 mt-4 text-end">
-                    <button type="button" class="btn btn-primary me-2" id="descargarBtn">
-                        <i class="bi bi-file-earmark-arrow-down-fill"></i> Descargar PDF
-                    </button>
-                    <button type="submit" class="btn btn-success">
-                        <i class="bi bi-send-fill"></i> Enviar Solicitud
-                    </button>
+                    <div class="col-12 mt-4 text-end">
+                        <button type="button" class="btn btn-primary me-2" id="descargarBtn">
+                            <i class="bi bi-file-earmark-arrow-down-fill"></i> Descargar PDF
+                        </button>
+                        <button type="submit" class="btn btn-success">
+                            <i class="bi bi-send-fill"></i> Enviar Solicitud
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <!--Seccíon 2-->
+            <div class="card p-4">
+                <h2 class="h5 m-0 mb-3">Solicitudes Pendientes</h2>
+                <div class="table-responsive">
+                    <table id="solicitudesTable" class="table">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Periodo</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
                 </div>
-            </form>
-        </div>
-        <!--Seccíon 2-->
-        <div class="card p-4">
-            <h2 class="h5 m-0 mb-3">Solicitudes Pendientes</h2>
-            <div class="table-responsive">
-                <table id="solicitudesTable" class="table">
-                    <thead>
-                        <tr>
-                            <th>Nombre</th>
-                            <th>Periodo</th>
-                            <th>Estado</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
             </div>
         </div>
     </div>

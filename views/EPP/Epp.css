@@ -1,21 +1,27 @@
 /* -------------------------------------------------
-   ACÁ CONFIGURACIÓN GLOBAL
+   CONFIGURACIÓN GLOBAL
 -------------------------------------------------- */
+
 :root {
-    /* ACÁ Colores */
+
+    /* Colores */
     --color-primario: #003b5c;
     --color-secundario: #2493ff;
     --color-fondo: #f8f9fa;
     --color-blanco: #ffffff;
     --color-negro: #000000;
-    --color-gris-claro-borde: #dee2e6;
-    --color-gris-fondo-tabla: #f1f3f5;
 
-    /* ACÁ Fuentes */
+    /* Fuentes */
     --font-principal: 'Inter', sans-serif;
 }
 
+.btn-primary {
+  background-color: #003b5c !important; /* Cambia este valor por tu color primario */
+  border-color: #003b5c !important;
+}
+
 body {
+
     margin: 0;
     font-family: var(--font-principal);
     background-color: var(--color-fondo);
@@ -23,8 +29,9 @@ body {
 }
 
 /* -------------------------------------------------
-   ACÁ HEADER
+   HEADER
 -------------------------------------------------- */
+
 .header {
     background-color: var(--color-primario);
     color: var(--color-blanco);
@@ -35,23 +42,25 @@ body {
     right: 0;
     z-index: 1048;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
     padding: 0 1rem;
     width: 100%;
     box-sizing: border-box;
     gap: 1rem;
-    flex-wrap: nowrap;
-    min-width: 320px;
+    flex-wrap: nowrap; 
+    min-width: 320px;          
 }
 
+
+/* Botón hamburguesa */
 .btn-toggle {
     background-color: transparent;
     border: none;
     color: var(--color-blanco);
     font-size: 1.5rem;
     padding: 0;
-    flex-shrink: 0;
+    flex-shrink: 0; 
 }
 
 .btn-toggle.btn-light:hover,
@@ -74,15 +83,19 @@ body {
   opacity: 0.9;
 }
 
+
+/* Contenedor derecho */
 .header-right {
     display: flex;
     align-items: center;
     justify-content: flex-end;
     flex: 0 0 auto;
     white-space: nowrap;
-    min-width: 120px;
+    min-width: 120px; 
+    margin-left: auto;
 }
 
+/* ICONO DE PERFIL */
 .profile-icon {
     background-color: var(--color-blanco);
     color: var(--color-primario);
@@ -149,9 +162,36 @@ body {
 }
 
 
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.header-logo {
+  height: 30px;
+  width: auto;
+}
+
+.header-title {
+  color: var(--color-blanco);
+  font-weight: 600;
+  font-size: 1.2rem;
+  letter-spacing: 0.5px;
+}
+
+/* Modificar el estilo existente del botón toggle para alinearlo */
+.btn-toggle {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  padding: 0 0.5rem;
+}
+
 /* -------------------------------------------------
-   ACÁ SIDEBAR
+   SIDEBAR
 -------------------------------------------------- */
+
 .sidebar {
     width: 260px;
     height: 100vh;
@@ -167,7 +207,7 @@ body {
     box-shadow: 4px 0 10px rgba(0, 0, 0, 0.3);
     border-top-right-radius: 12px;
     border-bottom-right-radius: 12px;
-    overflow: hidden;
+    overflow: hidden;;
 }
 
 .sidebar.show {
@@ -232,7 +272,7 @@ body {
 }
 
 .accordion-body a {
-  padding-left: 2rem;
+  padding-left: 2rem; /* o más según profundidad */
   display: block;
   color: var(--color-blanco);
   text-decoration: none;
@@ -242,6 +282,13 @@ body {
 .accordion-body a:hover {
   background-color: rgba(255, 255, 255, 0.05);
   border-radius: 6px;
+}
+
+.sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
 }
 
 .logo-title {
@@ -285,6 +332,40 @@ body {
   box-shadow: none !important;
   background: none !important;
 }
+
+#subAccordionRRHH .accordion-button {
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  background-color: transparent;
+}
+
+#subAccordionRRHH .accordion-button:not(.collapsed) {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+#subAccordionRRHH .accordion-body {
+  padding: 0.5rem 0;
+}
+
+#subAccordionRRHH .accordion-body a {
+  padding: 0.25rem 0;
+  text-decoration: none;
+  color: rgb(255, 255, 255);
+}
+
+#subAccordionRRHH .accordion-body a:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* Remover bordes y sombras del acordeón anidado */
+#subAccordionRRHH .accordion-item {
+  background-color: transparent;
+}
+
+#subAccordionRRHH .accordion-button::after {
+  scale: 0.7;
+}
+
 
 
 /* -------------------------------------------------
