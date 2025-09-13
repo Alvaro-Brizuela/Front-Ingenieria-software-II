@@ -26,8 +26,12 @@ body {
     font-family: var(--font-principal);
     background-color: var(--color-fondo);
     color: var(--color-negro);
+    transition: margin-left 0.3s ease; /* ESTO HACE LA TRANSICIÓN SUAVE */
 }
 
+body.sidebar-open {
+    margin-left: 260px; /* Ancho de la sidebar */
+}
 /* -------------------------------------------------
    HEADER
 -------------------------------------------------- */

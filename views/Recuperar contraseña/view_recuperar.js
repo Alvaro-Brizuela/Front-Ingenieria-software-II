@@ -23,3 +23,4 @@ document.getElementById('recoverForm').addEventListener('submit', function (e) {
   // Aquí podrías redirigir o enviar datos al backend
   // window.location.href = 'login.html';
 });
+

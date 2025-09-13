@@ -60,3 +60,4 @@ registerForm.addEventListener('submit', function (e) {
 
 // Al cargar la página, ajusta la altura al formulario activo
 window.addEventListener('DOMContentLoaded', adjustFormHeight);
+
