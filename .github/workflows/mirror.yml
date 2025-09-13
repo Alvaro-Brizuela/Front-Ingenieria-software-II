@@ -1,0 +1,29 @@
+name: Mirror main branch
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false   # Importante: no uses el GITHUB_TOKEN automático
+
+      - name: Debug remote
+        run: |
+          echo "URL configurada:"
+          echo "https://Alvaro-Brizuela:***@github.com/Alvaro-Brizuela/Copia-front-contaplus.git"
+          git remote add mirror https://Alvaro-Brizuela:${{ secrets.MIRROR_TOKEN }}@github.com/Alvaro-Brizuela/Copia-front-contaplus.git
+          git remote -v
+
+      - name: Push to mirror
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git push --force mirror main:main --verbose
