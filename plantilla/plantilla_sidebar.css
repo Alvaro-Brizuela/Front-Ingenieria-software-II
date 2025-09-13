@@ -15,6 +15,10 @@
     --font-principal: 'Inter', sans-serif;
 }
 
+.btn-primary {
+  background-color: #003b5c !important; /* Cambia este valor por tu color primario */
+  border-color: #003b5c !important;
+}
 
 body {
 
@@ -157,6 +161,7 @@ body {
   background-color: var(--color-secundario);
 }
 
+
 .header-brand {
   display: flex;
   align-items: center;
@@ -182,7 +187,6 @@ body {
   height: 40px;
   padding: 0 0.5rem;
 }
-
 
 /* -------------------------------------------------
    SIDEBAR
@@ -361,6 +365,7 @@ body {
 #subAccordionRRHH .accordion-button::after {
   scale: 0.7;
 }
+
 
 
 

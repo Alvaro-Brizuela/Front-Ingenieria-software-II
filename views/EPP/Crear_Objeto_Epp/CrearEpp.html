@@ -13,75 +13,158 @@
 </head>
 <body>
   
+  <!-- HEADER -->
   <header class="header">
+    <!-- Botón hamburguesa a la izquierda -->
     <button id="toggleSidebar" class="btn btn-light btn-toggle">
       <i class="bi bi-list"></i>
     </button>
+
+    <div class="header-brand">
+      <img src="/plantilla/img/logo-crop.png" alt="Logo Contaplus" class="header-logo">
+      <span class="header-title">CONTAPLUS</span>
+    </div>
+
+    <!-- Contenedor a Icono perfil -->
     <div class="header-right">
-        <div class="profile-icon" id="profileIcon"></div>
-        <div class="dropdown-menu" id="dropdownMenu">
-          <span class="user-name" id="userName"></span>
-          <button id="logoutBtn">Cerrar sesión</button>
-        </div>
+      <div class="profile-icon" id="profileIcon"></div>
+      <div class="dropdown-menu" id="dropdownMenu">
+        <span class="user-name" id="userName"></span>
+        <button id="logoutBtn">Cerrar sesión</button>
+      </div>
     </div>
   </header>
 
+  <!-- SIDEBAR -->
   <div id="sidebar" class="sidebar">
     <div class="sidebar-header">
       <div class="logo-title">
-        <img src="../../../plantilla/img/logo-crop.png" alt="Logo Contaplus" class="logo-sidebar">
+        <img src="/plantilla/img/logo-crop.png" alt="Logo Contaplus" class="logo-sidebar">
         <h5>CONTAPLUS</h5>
       </div>
       <button id="closeSidebar" class="custom-close">
         <i class="bi bi-x-lg"></i>
       </button>
     </div>
-
     <div class="accordion" id="sidebarAccordion">
+
+      <!-- Empresa -->
       <div class="accordion-item bg-transparent border-0">
         <h2 class="accordion-header">
-          <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapseOne">
+          <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapseEmpresa">
             <i class="bi bi-building icon"></i> Empresa
           </button>
         </h2>
-        <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#sidebarAccordion">
+        <div id="collapseEmpresa" class="accordion-collapse collapse" data-bs-parent="#sidebarAccordion">
           <div class="accordion-body">
-            <a href="#" class="d-block">Datos Empresa</a>
+            <a href="../datos_empresa/view_datos_empresa.html" class="d-block">Datos Empresa</a>
           </div>
         </div>
       </div>
 
+      <!-- Recursos Humanos -->
       <div class="accordion-item bg-transparent border-0">
         <h2 class="accordion-header">
-          <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
-            <i class="bi bi-people icon"></i> Trabajadores
+          <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapseRRHH">
+            <i class="bi bi-people icon"></i> Recursos Humanos
           </button>
         </h2>
-        <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#sidebarAccordion">
-          <div class="accordion-body">
-            <a href="#" class="d-block">Ver Trabajadores</a>
-            <a href="#" class="d-block">Nuevo Trabajador</a>
-            <a href="#" class="d-block">Cargos</a>
-          </div>
-        </div>
-      </div>
+        <div id="collapseRRHH" class="accordion-collapse collapse" data-bs-parent="#sidebarAccordion">
+          <div class="accordion-body p-0">
+            <!-- Sub-acordeón para RRHH -->
+            <div class="accordion" id="subAccordionRRHH">
+              <!-- Trabajador -->
+              <div class="accordion-item border-0">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed ps-3" data-bs-toggle="collapse"
+                    data-bs-target="#collapseTrabajador">
+                    Trabajador
+                  </button>
+                </h2>
+                <div id="collapseTrabajador" class="accordion-collapse collapse">
+                  <div class="accordion-body ps-4">
+                    <a href="#" class="d-block">Nuevo Trabajador</a>
+                    <a href="../trabajadores/view_trabajadores.html" class="d-block">Ver Trabajadores</a>
+                    <a href="../Cargo/plantilla_cargo.html" class="d-block">Cargos</a>
+                  </div>
+                </div>
+              </div>
 
-      <div class="accordion-item bg-transparent border-0">
-        <h2 class="accordion-header">
-          <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapseThree">
-            <i class="bi bi-journal-check icon"></i> Contratos
-          </button>
-        </h2>
-        <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#sidebarAccordion">
-          <div class="accordion-body">
-            <a href="#" class="d-block">Ver Contratos</a>
+              <!-- Contratos -->
+              <div class="accordion-item border-0">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed ps-3" data-bs-toggle="collapse"
+                    data-bs-target="#collapseContratos">
+                    Contratos
+                  </button>
+                </h2>
+                <div id="collapseContratos" class="accordion-collapse collapse">
+                  <div class="accordion-body ps-4">
+                    <a href="#" class="d-block">Nuevo Contrato</a>
+                    <a href="#" class="d-block">Ver Contratos</a>
+                    <a href="#" class="d-block">Formato Contrato</a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Simuladores -->
+              <div class="accordion-item border-0">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed ps-3" data-bs-toggle="collapse"
+                    data-bs-target="#collapseSimuladores">
+                    Simuladores
+                  </button>
+                </h2>
+                <div id="collapseSimuladores" class="accordion-collapse collapse">
+                  <div class="accordion-body ps-4">
+                    <a href="#" class="d-block">Remuneración</a>
+                    <a href="#" class="d-block">Honorarios</a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Prevención -->
+              <div class="accordion-item border-0">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed ps-3" data-bs-toggle="collapse"
+                    data-bs-target="#collapsePrevencion">
+                    Prevención
+                  </button>
+                </h2>
+                <div id="collapsePrevencion" class="accordion-collapse collapse">
+                  <div class="accordion-body ps-4">
+                    <a href="#" class="d-block">REC R.I.O.H.S</a>
+                    <a href="#" class="d-block">REC EPP</a>
+                    <a href="#" class="d-block">REC DIE EPP</a>
+                    <a href="#" class="d-block">REC ODI</a>
+                    <a href="#" class="d-block">REC DIE ODI</a>
+                    <a href="#" class="d-block">REC CAP CARGO</a>
+                  </div>
+                </div>
+              </div>
+              <!-- Permisos -->
+              <div class="accordion-item border-0">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed ps-3" data-bs-toggle="collapse"
+                    data-bs-target="#collapsePermiso">
+                    Permisos
+                  </button>
+                </h2>
+                <div id="collapsePermiso" class="accordion-collapse collapse">
+                  <div class="accordion-body ps-4">
+                    <a href="/views/Permisos/PermisoConGoce.html" class="d-block">Permiso Con Goce de Sueldo</a>
+                    <a href="/views/Permisos/PermisoSinGoce.html" class="d-block">Permiso Sin Goce de Sueldo</a>
+                    <a href="/views/Permisos/PermisoFeriado.html" class="d-block">Permiso Feriado</a>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-
-
+<!--Contenido principal-->
   <div class="content">
     
     <div class="card p-4">
