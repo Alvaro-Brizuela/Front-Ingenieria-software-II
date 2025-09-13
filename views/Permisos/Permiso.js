@@ -73,6 +73,49 @@ document.addEventListener('click', function (event) {
 
 document.addEventListener('DOMContentLoaded', () => {
 
+    const nombreInput = document.getElementById('nombre');
+
+        nombreInput.addEventListener('keypress', (event) => {
+        // Expresión regular para verificar si el carácter es un número del 0 al 9
+        const esNumero = /[0-9]/.test(event.key);
+
+        if (esNumero) {
+            event.preventDefault(); // Detiene el evento y no permite escribir el número
+        }
+
+
+    const rutInput = document.getElementById('rut');
+
+        // Función para limpiar el formato del RUT y contar los dígitos
+    function limpiarRut(rut) {
+        return rut.replace(/[^0-9kK]/g, ''); // Elimina todo lo que no sea número o 'k'
+}
+
+    // Escuchar el evento de entrada en el campo de RUT
+    rutInput.addEventListener('input', (event) => {
+        const valor = event.target.value;
+        const rutLimpio = limpiarRut(valor);
+    
+    // Validar la longitud de los dígitos
+        if (rutLimpio.length > 9) {
+        event.target.setCustomValidity('El RUT debe tener 9 dígitos (sin puntos ni guiones).');
+        } else {
+            event.target.setCustomValidity(''); // Limpia el mensaje si la validación es correcta
+        }
+    });
+
+// Escuchar el evento de envío del formulario para la validación final
+const form = document.getElementById('permisoForm');
+form.addEventListener('submit', (e) => {
+    const rutLimpio = limpiarRut(rutInput.value);
+
+    if (rutLimpio.length !== 9) {
+        e.preventDefault(); // Detiene el envío del formulario
+        alert('El RUT es inválido. Por favor, asegúrate de que tenga 9 dígitos.');
+    }
+});
+});
+
     const form = document.getElementById('permisoForm');
     const descargarBtn = document.getElementById('descargarBtn');
     const tablaBody = document.querySelector('#solicitudesTable tbody');
