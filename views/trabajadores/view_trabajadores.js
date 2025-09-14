@@ -257,22 +257,6 @@ if (selectSalud && planUfContainer && planUFInput) {
       }
     });
 
-      // ACÁ: Muestra u oculta los formularios según la acción seleccionada (nuevo/buscar trabajador)
-  document.addEventListener('DOMContentLoaded', function() {
-    const btnNuevo = document.getElementById('btnNuevoTrabajador');
-    const btnBuscar = document.getElementById('btnBuscarTrabajador');
-    const busquedaDiv = document.getElementById('busquedaTrabajador');
-    const formDatos = document.getElementById('form-datos-empresa');
-    btnNuevo.addEventListener('click', function() {
-      busquedaDiv.style.display = 'none';
-      formDatos.style.display = '';
-    });
-    btnBuscar.addEventListener('click', function() {
-      busquedaDiv.style.display = '';
-      formDatos.style.display = 'none';
-    });
-  })
-
 //Enviar datos del trabajador (POST/api/trabajador) 
 async function enviarTrabajador() {
   const trabajador = {
