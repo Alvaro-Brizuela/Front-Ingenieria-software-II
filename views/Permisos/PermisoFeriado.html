@@ -181,20 +181,21 @@
 
     <!-- CONTENIDO PRINCIPAL -->
     <div class="content">
-        <div class="container py-4">
-            <div class="card p-4 card-solicitud">
-                <h1 class="card-title h3 m-0">Solicitud de Feriado</h1>
-                <hr>
-                <!--Sección 1-->
-                <form id="permisoForm" class="row g-3">
-                    <div class="col-md-6">
-                        <label for="nombre" class="form-label">Nombre</label>
-                        <input type="text" class="form-control" id="nombre">
-                    </div>
-                    <div class="col-md-6">
-                        <label for="rut" class="form-label">RUT</label>
-                        <input type="text" class="form-control" id="rut">
-                    </div>
+        <div class="card p-4 card-solicitud">
+            <h1 class="card-title h3 m-0">Solicitud de Feriado</h1>
+            <hr>
+            
+          <!--Sección 1-->
+
+            <form id="permisoForm" class="row g-3">
+                <div class="col-md-6">
+                    <label for="nombre" class="form-label">Nombre</label>
+                    <input type="text" class="form-control" id="nombre" pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ\s]+" title="Solo se permiten letras y espacios">
+                </div>
+                <div class="col-md-6">
+                    <label for="rut" class="form-label">RUT</label>
+                    <input type="text" class="form-control" id="rut" maxlength="12">
+                </div>
 
                     <div class="col-md-6">
                         <label for="fechaInicio" class="form-label">Periodo Desde</label>
