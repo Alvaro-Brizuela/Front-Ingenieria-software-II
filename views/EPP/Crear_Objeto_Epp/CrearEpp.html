@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -8,11 +9,12 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <link rel="icon" type="image/png" href="../../../plantilla/img/logo-contaplus-favicon.png">
-  
+
   <link rel="stylesheet" href="../Epp.css">
 </head>
+
 <body>
-  
+
   <!-- HEADER -->
   <header class="header">
     <!-- Botón hamburguesa a la izquierda -->
@@ -83,8 +85,8 @@
                 </h2>
                 <div id="collapseTrabajador" class="accordion-collapse collapse">
                   <div class="accordion-body ps-4">
-                    <a href="#" class="d-block">Nuevo Trabajador</a>
-                    <a href="../trabajadores/view_trabajadores.html" class="d-block">Ver Trabajadores</a>
+                    <a href="../trabajadores/view_trabajadores.html" class="d-block">Nuevo Trabajador</a>
+                    <a href="../ver_trabajador/view_ver_trabajador.html" class="d-block">Ver
                     <a href="../Cargo/plantilla_cargo.html" class="d-block">Cargos</a>
                   </div>
                 </div>
@@ -164,9 +166,9 @@
       </div>
     </div>
   </div>
-<!--Contenido principal-->
+  <!--Contenido principal-->
   <div class="content">
-    
+
     <div class="card p-4">
       <div class="d-flex justify-content-between align-items-center mb-4">
         <h1 class="card-title h3 m-0">Creación de Equipos de Protección Personal (EPP)</h1>
@@ -178,34 +180,34 @@
           <i class="bi bi-plus-lg"></i> Agregar fila
         </button>
       </div>
-      
+
       <div class="table-responsive">
-          <table id="eppCreationTable" class="table">
-              <thead>
-                  <tr>
-                      <th>Nombre del EPP</th>
-                      <th>Descripción</th>
-                      <th></th> 
-                  </tr>
-              </thead>
-              <tbody>
-                  <tr>
-                      <td><input type="text" class="form-control epp-name-input" required></td>
-                      <td><input type="text" class="form-control epp-description-input" required></td>
-                      <td>
-                        <button type="button" class="btn btn-danger btn-sm delete-row-btn">
-                          <i class="bi bi-trash3-fill"></i>
-                        </button>
-                      </td>
-                  </tr>
-              </tbody>
-          </table>
+        <table id="eppCreationTable" class="table">
+          <thead>
+            <tr>
+              <th>Nombre del EPP</th>
+              <th>Descripción</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><input type="text" class="form-control epp-name-input" required></td>
+              <td><input type="text" class="form-control epp-description-input" required></td>
+              <td>
+                <button type="button" class="btn btn-danger btn-sm delete-row-btn">
+                  <i class="bi bi-trash3-fill"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
 
       <div class="text-end mt-4">
-          <button id="saveBtn" class="btn btn-success">
-            <i class="bi bi-floppy-fill"></i> Guardar
-          </button>
+        <button id="saveBtn" class="btn btn-success">
+          <i class="bi bi-floppy-fill"></i> Guardar
+        </button>
       </div>
 
     </div>
@@ -214,4 +216,5 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="CrearEPP.js"></script>
 </body>
+
 </html>
