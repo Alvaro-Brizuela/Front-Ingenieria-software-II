@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
+    /* PLANTILLA HEADER - SIDE BAR */
 
-    /* ----- FUNCIONALIDAD DEL SIDEBAR Y HEADER ----- */
+/* ----- FUNCIONALIDAD DEL SIDEBAR Y HEADER ----- */
     const toggleBtn = document.getElementById("toggleSidebar");
     const closeBtn = document.getElementById("closeSidebar");
     const sidebar = document.getElementById("sidebar");
@@ -68,11 +69,12 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
 
-    /* ----- FUNCIONALIDAD DE LA TABLA EPP ----- */
+/* ----- FIN DEL CÓDIGO DEL SIDEBAR ----- */
+    /* ----- ACÁ FUNCIONALIDAD DE LA TABLA EPP ----- */
     const addRowBtn = document.getElementById('addRowBtn');
     const tableBody = document.querySelector('#eppTable tbody');
 
-    // Función para agregar una nueva fila
+    // ACÁ Función para agregar una nueva fila
     function addNewRow() {
         const newRow = document.createElement('tr');
         newRow.innerHTML = `
@@ -98,23 +100,25 @@ document.addEventListener('DOMContentLoaded', function() {
         tableBody.appendChild(newRow);
     }
     
-    // Función para eliminar la fila
+    // ACÁ Función para eliminar la fila
     function deleteRow(event) {
+        // Asegúrate de que el clic fue en el botón o el ícono
         const button = event.target.closest('.delete-row-btn');
         if (button) {
-            const row = button.closest('tr');
+            const row = button.closest('tr'); // Encuentra la fila más cercana
             if (row) {
-                row.remove();
+                row.remove(); // Elimina la fila
             }
         }
     }
 
-    // Event Listeners
+    // ACÁ Event Listeners
     if (addRowBtn) {
         addRowBtn.addEventListener('click', addNewRow);
     } else {
         console.error("Error: No se encontró el botón con el ID 'addRowBtn'.");
     }
 
+    // Usamos delegación de eventos para los botones de eliminar
     tableBody.addEventListener('click', deleteRow);
 });

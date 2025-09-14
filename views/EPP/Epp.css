@@ -10,6 +10,7 @@
     --color-fondo: #f8f9fa;
     --color-blanco: #ffffff;
     --color-negro: #000000;
+    --color-gris-claro-borde: #dee2e6; 
 
     /* Fuentes */
     --font-principal: 'Inter', sans-serif;
