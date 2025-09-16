@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    /* ----- FUNCIONALIDAD DEL SIDEBAR Y HEADER ----- */
+   /* ----- FUNCIONALIDAD DEL SIDEBAR Y HEADER ----- */
     const toggleBtn = document.getElementById("toggleSidebar");
     const closeBtn = document.getElementById("closeSidebar");
     const sidebar = document.getElementById("sidebar");
@@ -10,22 +10,22 @@ document.addEventListener('DOMContentLoaded', function() {
     const userNameDisplay = document.getElementById('userName');
     const logoutBtn = document.getElementById('logoutBtn');
 
-    // Mostrar inicial y nombre
+    // Muestra la inicial y el nombre del usuario en el header.
     function setUserInitial(name) {
         const initial = name.trim().charAt(0).toUpperCase();
         profileIcon.textContent = initial;
         userNameDisplay.textContent = name;
     }
 
-    // ACÁ VA EL NOMBRE DEL USUARIO
-    setUserInitial("Felipe Moscoso");
+    // Inicializa el nombre del usuario (puedes cambiarlo por el real)
+    setUserInitial("Nombre de Prueba");
 
-    // Abrir/cerrar menú
+    // Abre/cierra el menú de usuario al hacer click en el icono de perfil
     profileIcon.addEventListener('click', () => {
         dropdownMenu.classList.toggle('show');
     });
 
-    // Ocultar si clic fuera del menú
+    // Oculta el menú de usuario si se hace clic fuera de él
     document.addEventListener('click', (event) => {
         if (
             !profileIcon.contains(event.target) &&
@@ -35,38 +35,39 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Acción de cerrar sesión
+    // Acción de cerrar sesión (reemplazar por la lógica real)
     logoutBtn.addEventListener('click', () => {
-       
-        // ACÁ VA LA ACCION DE CERRAR SESIÓN
         alert("Sesión cerrada");
     });
 
-    // Sidebar toggle
+    // Abre el sidebar y desplaza el cuerpo de la página
     toggleBtn.addEventListener("click", () => {
         sidebar.classList.add("show");
+        body.classList.add("sidebar-open");
         toggleBtn.classList.add("hide");
     });
 
+    // Cierra el sidebar y devuelve el cuerpo de la página a su lugar
     closeBtn.addEventListener("click", () => {
         sidebar.classList.remove("show");
+        body.classList.remove("sidebar-open");
         toggleBtn.classList.remove("hide"); 
     });
 
-    // CERRAR AL HACER CLICK AFUERA 
+    // Cierra el sidebar si se hace clic fuera de él
     document.addEventListener('click', function (event) {
-      const sidebar = document.getElementById('sidebar');
-      const toggleBtn = document.getElementById('toggleSidebar');
-
       if (
         sidebar.classList.contains('show') &&
         !sidebar.contains(event.target) &&
         !toggleBtn.contains(event.target)
       ) {
-        sidebar.classList.remove('show');
-        toggleBtn.classList.remove('hide');
+        sidebar.classList.remove("show");
+        body.classList.remove("sidebar-open");
+        toggleBtn.classList.remove("hide");
       }
     });
+
+/* ----- FIN DEL CÓDIGO DEL SIDEBAR ----- */
 
 
     /* ----- FUNCIONALIDAD DE LA TABLA DE CREACIÓN DE EPP ----- */

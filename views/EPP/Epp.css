@@ -10,6 +10,7 @@
     --color-fondo: #f8f9fa;
     --color-blanco: #ffffff;
     --color-negro: #000000;
+    --color-gris-claro-borde: #dee2e6; 
 
     /* Fuentes */
     --font-principal: 'Inter', sans-serif;
@@ -21,12 +22,14 @@
 }
 
 body {
-
     margin: 0;
     font-family: var(--font-principal);
     background-color: var(--color-fondo);
     color: var(--color-negro);
+    transition: margin-left 0.3s ease; /* ESTO ES LO QUE FALTA */
 }
+
+
 
 /* -------------------------------------------------
    HEADER
@@ -366,7 +369,9 @@ body {
   scale: 0.7;
 }
 
-
+body.sidebar-open {
+    margin-left: 260px; /* Ancho de la sidebar */
+}
 
 /* -------------------------------------------------
    ACÁ PÁGINA PRINCIPAL (views / content)
