@@ -38,7 +38,8 @@
 
     // Acción de cerrar sesión (reemplazar por la lógica real)
     logoutBtn.addEventListener('click', () => {
-        alert("Sesión cerrada");
+        localStorage.clear(); // borra tokens y datos
+        window.location.href = "../Login/view_login.html"; 
     });
 
     // Abre el sidebar y desplaza el cuerpo de la página
@@ -211,61 +212,49 @@ form.addEventListener('submit', function (e) {
 // ACA: funcion para mostrar los datos
 function cargarDatosEmpresa(data) {
   // === CAMPOS BÁSICOS ===
-  document.getElementById('razonSocial').value = data.razonSocial || '';
-  document.getElementById('nombreFantasia').value = data.nombreFantasia || '';
-  document.getElementById('rut').value = data.rut || '';
-  document.getElementById('capitalTotal').value = data.capitalTotal || '';
-  document.getElementById('cantidadAcciones').value = data.cantidadAcciones || '';
-  document.getElementById('fechaConstitucion').value = data.fechaConstitucion || '';
-  document.getElementById('fechaInicio').value = data.fechaInicio || '';
+  document.getElementById('razonSocial').value = data.razon_social || '';
+  document.getElementById('nombreFantasia').value = data.nombre_fantasia || '';
+  document.getElementById('rutEmpresa').value = `${data.rut_empresa}-${data.DV_rut}` || '';
+  document.getElementById('capitalTotal').value = data.acciones_capital?.capital_total || '';
+  document.getElementById('cantidadAcciones').value = data.acciones_capital?.cantidad_acciones || '';
+  document.getElementById('fechaConstitucion').value = data.fecha_constitucion || '';
+  document.getElementById('fechaInicio').value = data.fecha_inicio_actividades || '';
 
-  // === SELECTS Y CHOICES ===
-  document.getElementById('tipoSociedad').value = data.tipoSociedad || '';
-  document.getElementById('region').value = data.region || '';
-  document.getElementById('comuna').value = data.comuna || '';
-  document.getElementById('tipoPropiedad').value = data.tipoPropiedad || '';
-  document.getElementById('regimenTributario').value = data.regimenTributario || '';
-  document.getElementById('mutual').value = data.mutual || '';
-  document.getElementById('gratificacionLegal').value = data.gratificacionLegal || '';
-
-  // Actualizar Choices.js si estás usando este plugin
-  ['tipoSociedad', 'region', 'comuna', 'tipoPropiedad', 'regimenTributario', 'mutual', 'gratificacionLegal'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el && el.choicesInstance) {
-      el.choicesInstance.setChoiceByValue(data[id]);
-    }
-  });
-
-  // === ACTIVIDADES ECONÓMICAS MULTISELECT ===
-  if (window.actividadChoices && data.actividadesEconomicas) {
-    actividadChoices.clearStore();
-    actividadChoices.setValue(data.actividadesEconomicas.map(act => ({ value: act, label: act })));
+  // === DATOS LEGALES ===
+  if (data.datos_legales) {
+    document.getElementById('tipoSociedad').value = data.datos_legales.tipo_sociedad || '';
   }
 
-  // === FECHA DE PAGO GLOBAL ===
-  const fechaPago = data.fechaPagoGlobal || null;
-  if (fechaPago) {
-    document.getElementById('fechaPagoGlobal')._flatpickr.setDate(fechaPago);
+  // === DIRECCIÓN ===
+  if (data.direccion) {
+    document.getElementById('region').value = data.direccion.region || '';
+    document.getElementById('comuna').value = data.direccion.comuna || '';
+  }
+
+  // === SOCIOS ===
+  if (Array.isArray(data.empresa_socio)) {
+    data.empresa_socio.forEach(socio => agregarSocioDesdeDatos(socio));
+  }
+
+  // === USUARIOS AUTORIZADOS ===
+  if (Array.isArray(data.usuario)) {
+    data.usuario.forEach(u => agregarUsuarioDesdeDatos(u));
   }
 
   // === ARCHIVOS HISTÓRICOS ===
-  archivosCargados.length = 0;
-  if (Array.isArray(data.archivosHistoricos)) {
-    data.archivosHistoricos.forEach(nombre => {
+  if (Array.isArray(data.archivos_historicos)) {
+    archivosCargados.length = 0;
+    data.archivos_historicos.forEach(nombre => {
       archivosCargados.push({ name: nombre, size: 0, desdeServidor: true });
     });
+    renderizarListaArchivos();
   }
-  renderizarListaArchivos();
 
-  // === SOCIOS (opcional) ===
-  // Si usas lógica para cargar socios ya creados, deberías tener una función tipo:
-  // data.socios.forEach(socio => agregarSocioDesdeDatos(socio));
-
-  // === OPCIONAL: recalcular capitales y validaciones ===
   actualizarCapitalSocios();
   validarSumaAccionesSocios();
   validarSumaParticipacion();
 }
+
 
 // ACA estan las funciones para formatear y validar los ruts
 /**
@@ -1477,5 +1466,46 @@ document.addEventListener('input', e => {
   }
 });
 
+// === OBTENER DATOS DE LA EMPRESA DESDE EL BACKEND aca===
+async function fetchDatosEmpresa() {
+  const token = localStorage.getItem("access_token");
+  if (!token) {
+    alert("⚠️ No estás autenticado. Redirigiendo al login...");
+    window.location.href = "../Login/view_login.html";
+    return;
+  }
+
+  try {
+    const res = await fetch("https://back-end-fastapi-production.up.railway.app/empresa/full", {
+      method: "GET",
+      headers: {
+        "Authorization": `Bearer ${token}`
+      }
+    });
+
+    if (!res.ok) {
+      const error = await res.json();
+      console.error("❌ Error al cargar empresa:", error);
+      alert(error.detail || "No se pudo obtener la empresa.");
+      return;
+    }
+
+    const data = await res.json();
+    console.log("✅ Empresa cargada:", data);
+
+    // Usamos tu función ya existente
+    cargarDatosEmpresa(data);
+
+    // Poner nombre de la empresa/usuario en el header
+    setUserInitial(data.nombre_fantasia || "Empresa");
+
+  } catch (err) {
+    console.error("❌ Error de conexión:", err);
+    alert("No se pudo conectar al servidor.");
+  }
+}
+
+// Ejecutar al entrar a la página
+document.addEventListener("DOMContentLoaded", fetchDatosEmpresa);
 
 
