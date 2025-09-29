@@ -12,11 +12,13 @@
 }
 
 body {
-  margin: 0;
-  font-family: var(--font-principal);
-  background-color: var(--color-fondo);
-  color: var(--color-negro);
+    margin: 0;
+    font-family: var(--font-principal);
+    background-color: var(--color-fondo);
+    color: var(--color-negro);
+    transition: margin-left 0.3s ease; /* ESTO ES LO QUE FALTA */
 }
+
 
 /* Fondo con degradado */
 .login-bg {

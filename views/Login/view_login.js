@@ -8,7 +8,7 @@ const registerForm = document.getElementById('registerForm');
 const formWrapper = document.querySelector('.form-wrapper');
 
 // URL de tu backend FastAPI
-const API_URL = "http://localhost:8000/auth";
+const API_URL = "https://back-end-fastapi-production.up.railway.app/auth";
 
 // Ajusta la altura del contenedor al formulario activo
 function adjustFormHeight() {
@@ -130,3 +130,4 @@ registerForm.addEventListener('submit', async function (e) {
 
 // ---------------------------
 window.addEventListener('DOMContentLoaded', adjustFormHeight);
+

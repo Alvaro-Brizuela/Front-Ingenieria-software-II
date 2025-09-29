@@ -10,7 +10,6 @@
     --color-fondo: #f8f9fa;
     --color-blanco: #ffffff;
     --color-negro: #000000;
-    --color-gris-claro-borde: #dee2e6; 
 
     /* Fuentes */
     --font-principal: 'Inter', sans-serif;
@@ -22,14 +21,12 @@
 }
 
 body {
+
     margin: 0;
     font-family: var(--font-principal);
     background-color: var(--color-fondo);
     color: var(--color-negro);
-    transition: margin-left 0.3s ease; /* ESTO ES LO QUE FALTA */
 }
-
-
 
 /* -------------------------------------------------
    HEADER
@@ -369,95 +366,14 @@ body {
   scale: 0.7;
 }
 
-body.sidebar-open {
-    margin-left: 260px; /* Ancho de la sidebar */
-}
+
+
 
 /* -------------------------------------------------
-   ACÁ PÁGINA PRINCIPAL (views / content)
+   PÁGINA PRINCIPAL (views / content)
 -------------------------------------------------- */
 
 .content {
     padding: 2rem;
     padding-top: 80px;
-    flex-grow: 1;
-    transition: margin-left 0.3s ease;
-}
-
-.card {
-    border: 1px solid var(--color-gris-claro-borde);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-    border-radius: 0.5rem;
-}
-
-.card-title {
-    color: var(--color-negro);
-    font-weight: 600;
-    border-bottom: 1px solid var(--color-gris-claro-borde);
-    padding-bottom: 1rem;
-    margin-bottom: 1.5rem;
-}
-
-.btn-primary {
-    background-color: var(--color-primario);
-    border-color: var(--color-primario);
-    transition: background-color 0.2s ease, border-color 0.2s ease;
-    padding: 0.6rem 1.2rem;
-    font-size: 0.9rem;
-    font-weight: 600;
-}
-
-.btn-primary:hover {
-    background-color: var(--color-secundario);
-    border-color: var(--color-secundario);
-}
-
-/* ACÁ Reglas para la tabla - ¡Ajuste importante! */
-.table {
-    border-collapse: collapse;
-}
-
-.table th,
-.table td {
-    padding: 12px;
-    border: none;
-    border-bottom: 1px solid var(--color-gris-claro-borde);
-    text-align: left;
-}
-
-.table thead th {
-    background-color: var(--color-gris-fondo-tabla);
-    color: var(--color-negro);
-    font-weight: 600;
-    border-bottom: 1px solid var(--color-gris-claro-borde);
-}
-
-/* ACÁ Para la primera y última fila, si se necesita un borde arriba o abajo */
-.table tbody tr:first-child td {
-    border-top: none;
-}
-.table tbody tr:last-child td {
-    border-bottom: 1px solid var(--color-gris-claro-borde);
-}
-
-.form-control {
-    font-family: var(--font-principal);
-    border: 1px solid var(--color-gris-claro-borde);
-    border-radius: 0.25rem;
-    padding: 0.375rem 0.75rem;
-    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-}
-
-.form-control:focus {
-    border-color: var(--color-secundario);
-    box-shadow: 0 0 0 0.25rem rgba(36, 147, 255, 0.25);
-}
-
-.table thead th:last-child,
-.table tbody tr td:last-child {
-  padding: 0;
-  border: none;
-  /* ACÁNuevo estilo para centrar verticalmente el botón */
-  text-align: center;
-  vertical-align: middle;
 }

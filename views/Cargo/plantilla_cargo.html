@@ -83,8 +83,8 @@
                 </h2>
                 <div id="collapseTrabajador" class="accordion-collapse collapse">
                   <div class="accordion-body ps-4">
-                    <a href="#" class="d-block">Nuevo Trabajador</a>
-                    <a href="../trabajadores/view_trabajadores.html" class="d-block">Ver Trabajadores</a>
+                    <a href="../trabajadores/view_trabajadores.html" class="d-block">Nuevo Trabajador</a>
+                    <a href="../ver_trabajador/view_ver_trabajador.html" class="d-block">Ver Trabajador</a>
                     <a href="../Cargo/plantilla_cargo.html" class="d-block">Cargos</a>
                   </div>
                 </div>
@@ -141,6 +141,39 @@
                     <a href="#" class="d-block">REC CAP CARGO</a>
                   </div>
                 </div>
+                <!-- Permisos -->
+                <div class="accordion-item border-0">
+                  <h2 class="accordion-header">
+                    <button class="accordion-button collapsed ps-3" data-bs-toggle="collapse"
+                      data-bs-target="#collapsePermiso">
+                      Permisos
+                    </button>
+                  </h2>
+                  <div id="collapsePermiso" class="accordion-collapse collapse">
+                    <div class="accordion-body ps-4">
+                      <a href="/views/Permisos/PermisoConGoce.html" class="d-block">Permiso Con Goce de Sueldo</a>
+                      <a href="/views/Permisos/PermisoSinGoce.html" class="d-block">Permiso Sin Goce de Sueldo</a>
+                      <a href="/views/Permisos/PermisoFeriado.html" class="d-block">Permiso Feriado</a>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- EPP -->
+                <div class="accordion-item border-0">
+                  <h2 class="accordion-header">
+                    <button class="accordion-button collapsed ps-3" data-bs-toggle="collapse"
+                      data-bs-target="#collapseEPP">
+                      EPP
+                    </button>
+                  </h2>
+                  <div id="collapseEPP" class="accordion-collapse collapse">
+                    <div class="accordion-body ps-4">
+                      <a href="/views/EPP/Epp.html" class="d-block">EPP</a>
+                      <a href="/views/EPP/Crear_Objeto_Epp/CrearEpp.html" class="d-block">Crear EPP</a>
+                    </div>
+                  </div>
+                </div>
+
               </div>
             </div>
           </div>
@@ -152,7 +185,7 @@
 
   <!-- CONTENIDO PRINCIPAL -->
   <div class="content">
-    <div class="container py-4">
+    <div class="card py-4">
       <h2 class="mb-4">Gestión de Cargos</h2>
 
       <!-- Formulario para agregar/editar cargos -->

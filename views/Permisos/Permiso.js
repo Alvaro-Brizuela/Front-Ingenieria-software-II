@@ -1,60 +1,74 @@
 /* PLANTILLA HEADER - SIDE BAR */
 
-// ACÁ: Manejo de la apertura/cierre del sidebar y menú de usuario
-const toggleBtn = document.getElementById("toggleSidebar");
-const closeBtn = document.getElementById("closeSidebar");
-const sidebar = document.getElementById("sidebar");
-const body = document.body;
+/* ----- FUNCIONALIDAD DEL SIDEBAR Y HEADER ----- */
+    const toggleBtn = document.getElementById("toggleSidebar");
+    const closeBtn = document.getElementById("closeSidebar");
+    const sidebar = document.getElementById("sidebar");
+    const body = document.body;
 
-const profileIcon = document.getElementById('profileIcon');
-const dropdownMenu = document.getElementById('dropdownMenu');
-const userNameDisplay = document.getElementById('userName');
-const logoutBtn = document.getElementById('logoutBtn');
+    const profileIcon = document.getElementById('profileIcon');
+    const dropdownMenu = document.getElementById('dropdownMenu');
+    const userNameDisplay = document.getElementById('userName');
+    const logoutBtn = document.getElementById('logoutBtn');
 
-/**
- * ACÁ: Muestra la inicial y el nombre del usuario en el header.
- * @param {string} name - Nombre del usuario.
- */
-function setUserInitial(name) {
-    const initial = name.trim().charAt(0).toUpperCase();
-    profileIcon.textContent = initial;
-    userNameDisplay.textContent = name;
-}
-
-// ACÁ: Inicializa el nombre del usuario (debe ser reemplazado por el real)
-setUserInitial("Nombre de Prueba");
-
-// ACÁ: Abre/cierra el menú de usuario al hacer click en el icono de perfil
-profileIcon.addEventListener('click', () => {
-    dropdownMenu.classList.toggle('show');
-});
-
-// ACÁ: Oculta el menú de usuario si se hace clic fuera de él
-document.addEventListener('click', (event) => {
-    if (
-        !profileIcon.contains(event.target) &&
-        !dropdownMenu.contains(event.target)
-    ) {
-        dropdownMenu.classList.remove('show');
+    // Muestra la inicial y el nombre del usuario en el header.
+    function setUserInitial(name) {
+        const initial = name.trim().charAt(0).toUpperCase();
+        profileIcon.textContent = initial;
+        userNameDisplay.textContent = name;
     }
-});
 
-// ACÁ: Acción de cerrar sesión (debe ser reemplazada por la lógica real)
-logoutBtn.addEventListener('click', () => {
-    alert("Sesión cerrada");
-});
+    // Inicializa el nombre del usuario (puedes cambiarlo por el real)
+    setUserInitial("Nombre de Prueba");
 
-// ACÁ: Abre el sidebar al hacer click en el botón hamburguesa
-toggleBtn.addEventListener("click", () => {
-    sidebar.classList.add("show");
-    toggleBtn.classList.add("hide");
-});
+    // Abre/cierra el menú de usuario al hacer click en el icono de perfil
+    profileIcon.addEventListener('click', () => {
+        dropdownMenu.classList.toggle('show');
+    });
 
-// ACÁ: Cierra el sidebar al hacer click en el botón de cerrar
-closeBtn.addEventListener("click", () => {
-    sidebar.classList.remove("show");
-    toggleBtn.classList.remove("hide"); 
-});
+    // Oculta el menú de usuario si se hace clic fuera de él
+    document.addEventListener('click', (event) => {
+        if (
+            !profileIcon.contains(event.target) &&
+            !dropdownMenu.contains(event.target)
+        ) {
+            dropdownMenu.classList.remove('show');
+        }
+    });
+
+    // Acción de cerrar sesión (reemplazar por la lógica real)
+    logoutBtn.addEventListener('click', () => {
+        alert("Sesión cerrada");
+    });
+
+    // Abre el sidebar y desplaza el cuerpo de la página
+    toggleBtn.addEventListener("click", () => {
+        sidebar.classList.add("show");
+        body.classList.add("sidebar-open");
+        toggleBtn.classList.add("hide");
+    });
+
+    // Cierra el sidebar y devuelve el cuerpo de la página a su lugar
+    closeBtn.addEventListener("click", () => {
+        sidebar.classList.remove("show");
+        body.classList.remove("sidebar-open");
+        toggleBtn.classList.remove("hide"); 
+    });
+
+    // Cierra el sidebar si se hace clic fuera de él
+    document.addEventListener('click', function (event) {
+      if (
+        sidebar.classList.contains('show') &&
+        !sidebar.contains(event.target) &&
+        !toggleBtn.contains(event.target)
+      ) {
+        sidebar.classList.remove("show");
+        body.classList.remove("sidebar-open");
+        toggleBtn.classList.remove("hide");
+      }
+    });
+
+/* ----- FIN DEL CÓDIGO DEL SIDEBAR ----- */
 
 // ACÁ: Cierra el sidebar si se hace click fuera de él
 document.addEventListener('click', function (event) {
@@ -72,6 +86,49 @@ document.addEventListener('click', function (event) {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
+
+    const nombreInput = document.getElementById('nombre');
+
+        nombreInput.addEventListener('keypress', (event) => {
+        // Expresión regular para verificar si el carácter es un número del 0 al 9
+        const esNumero = /[0-9]/.test(event.key);
+
+        if (esNumero) {
+            event.preventDefault(); // Detiene el evento y no permite escribir el número
+        }
+
+
+    const rutInput = document.getElementById('rut');
+
+        // Función para limpiar el formato del RUT y contar los dígitos
+    function limpiarRut(rut) {
+        return rut.replace(/[^0-9kK]/g, ''); // Elimina todo lo que no sea número o 'k'
+}
+
+    // Escuchar el evento de entrada en el campo de RUT
+    rutInput.addEventListener('input', (event) => {
+        const valor = event.target.value;
+        const rutLimpio = limpiarRut(valor);
+    
+    // Validar la longitud de los dígitos
+        if (rutLimpio.length > 9) {
+        event.target.setCustomValidity('El RUT debe tener 9 dígitos (sin puntos ni guiones).');
+        } else {
+            event.target.setCustomValidity(''); // Limpia el mensaje si la validación es correcta
+        }
+    });
+
+// Escuchar el evento de envío del formulario para la validación final
+const form = document.getElementById('permisoForm');
+form.addEventListener('submit', (e) => {
+    const rutLimpio = limpiarRut(rutInput.value);
+
+    if (rutLimpio.length !== 9) {
+        e.preventDefault(); // Detiene el envío del formulario
+        alert('El RUT es inválido. Por favor, asegúrate de que tenga 9 dígitos.');
+    }
+});
+});
 
     const form = document.getElementById('permisoForm');
     const descargarBtn = document.getElementById('descargarBtn');

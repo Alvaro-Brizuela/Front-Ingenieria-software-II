@@ -15,15 +15,22 @@
     --font-principal: 'Inter', sans-serif;
 }
 
+.btn-primary {
+  background-color: #003b5c !important; /* Cambia este valor por tu color primario */
+  border-color: #003b5c !important;
+}
 
 body {
-
     margin: 0;
     font-family: var(--font-principal);
     background-color: var(--color-fondo);
     color: var(--color-negro);
+    transition: margin-left 0.3s ease; /* ESTO HACE LA TRANSICIÓN SUAVE */
 }
 
+body.sidebar-open {
+    margin-left: 260px; /* Ancho de la sidebar */
+}
 /* -------------------------------------------------
    HEADER
 -------------------------------------------------- */
@@ -157,6 +164,7 @@ body {
   background-color: var(--color-secundario);
 }
 
+
 .header-brand {
   display: flex;
   align-items: center;
@@ -182,7 +190,6 @@ body {
   height: 40px;
   padding: 0 0.5rem;
 }
-
 
 /* -------------------------------------------------
    SIDEBAR
@@ -361,6 +368,7 @@ body {
 #subAccordionRRHH .accordion-button::after {
   scale: 0.7;
 }
+
 
 
 
