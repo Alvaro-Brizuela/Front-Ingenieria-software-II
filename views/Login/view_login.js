@@ -76,7 +76,7 @@ loginForm.addEventListener('submit', async function (e) {
     localStorage.setItem("rol", data.rol);
 
     // Redirigir a dashboard
-    window.location.href = "/dashboard.html";
+    window.location.href = "../datos_empresa/view_datos_empresa.html";
   } catch (err) {
     console.error("Error de conexión:", err);
     alert("No se pudo conectar con el servidor");
