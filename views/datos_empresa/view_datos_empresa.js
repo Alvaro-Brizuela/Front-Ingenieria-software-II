@@ -256,7 +256,7 @@ function cargarDatosEmpresa(data) {
     // Si el usuario tiene múltiples login_usuario
     if (Array.isArray(u.login_usuario)) {
       u.login_usuario.forEach(login => {
-        agregarUsuarioDesdeDatos({
+        cargarUsuariosDesdeDatos({
           nombre: u.nombre || '',
           rut: u.rut || '',
           cargo: u.cargo || '',
@@ -408,18 +408,26 @@ function agregarSocioDesdeDatos(datos) {
 }
 
 // ACA: funcion para mostrar los usuarios autorizados
-function agregarUsuarioDesdeDatos(usuario) {
+function cargarUsuariosDesdeDatos(listaUsuarios) {
+  const nombresInputs = document.querySelectorAll('input[name="usuarioNombres[]"]');
+  const apPatInputs = document.querySelectorAll('input[name="usuarioPrimerApellido[]"]');
+  const apMatInputs = document.querySelectorAll('input[name="usuarioSegundoApellido[]"]');
+  const rutInputs = document.querySelectorAll('input[name="usuarioRUT[]"]');
+  const correoInputs = document.querySelectorAll('input[name="usuarioCorreo[]"]');
+  const claveInputs = document.querySelectorAll('input[name="usuarioClave[]"]');
+  const rolSelects = document.querySelectorAll('select[name="usuarioRol[]"]');
 
-  // Tomar el último bloque agregado
-  const usuarios = document.querySelectorAll('.usuario-item');
-  const usuarioItem = usuarios[usuarios.length - 1];
-
-  // Completar campos
-  usuarioItem.querySelector('input[name="nombreUsuario[]"]').value = usuario.nombre;
-  usuarioItem.querySelector('input[name="rutUsuario[]"]').value = usuario.rut;
-  usuarioItem.querySelector('input[name="cargoUsuario[]"]').value = usuario.cargo;
-  usuarioItem.querySelector('input[name="correoUsuario[]"]').value = usuario.correo;
-  usuarioItem.querySelector('input[name="telefonoUsuario[]"]').value = usuario.telefono;
+  listaUsuarios.forEach((u, i) => {
+    if (i < nombresInputs.length) {
+      nombresInputs[i].value = u.nombre || '';
+      apPatInputs[i].value = u.apellido_paterno || '';
+      apMatInputs[i].value = u.apellido_materno || '';
+      rutInputs[i].value = u.rut || '';
+      correoInputs[i].value = (u.login_usuario && u.login_usuario[0]?.correo) || '';
+      claveInputs[i].value = ''; // ⚠️ nunca rellenes claves desde el back
+      if (rolSelects[i]) rolSelects[i].value = u.rol || '';
+    }
+  });
 }
 
 
