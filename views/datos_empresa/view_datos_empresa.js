@@ -210,11 +210,14 @@ form.addEventListener('submit', function (e) {
 
 
 // ACA: funcion para mostrar los datos
+// ACA: funcion para mostrar los datos
 function cargarDatosEmpresa(data) {
   // === CAMPOS BÁSICOS ===
   document.getElementById('razonSocial').value = data.razon_social || '';
   document.getElementById('nombreFantasia').value = data.nombre_fantasia || '';
-  document.getElementById('rutEmpresa').value = `${data.rut_empresa}-${data.DV_rut}` || '';
+  document.getElementById('rutEmpresa').value = data.rut_empresa && data.DV_rut 
+      ? `${data.rut_empresa}-${data.DV_rut}`
+      : '';
   document.getElementById('capitalTotal').value = data.acciones_capital?.capital_total || '';
   document.getElementById('cantidadAcciones').value = data.acciones_capital?.cantidad_acciones || '';
   document.getElementById('fechaConstitucion').value = data.fecha_constitucion || '';
@@ -223,12 +226,19 @@ function cargarDatosEmpresa(data) {
   // === DATOS LEGALES ===
   if (data.datos_legales) {
     document.getElementById('tipoSociedad').value = data.datos_legales.tipo_sociedad || '';
+    document.getElementById('nombresRepresentante').value = data.datos_legales.representante?.nombre || '';
+    document.getElementById('apellidoPaternoRepresentante').value = data.datos_legales.representante?.apellido_paterno || '';
+    document.getElementById('apellidoMaternoRepresentante').value = data.datos_legales.representante?.apellido_materno || '';
+    document.getElementById('rutRepresentante').value = data.datos_legales.representante?.rut || '';
+    document.getElementById('generoRepresentante').value = data.datos_legales.representante?.genero || '';
   }
 
   // === DIRECCIÓN ===
   if (data.direccion) {
     document.getElementById('region').value = data.direccion.region || '';
     document.getElementById('comuna').value = data.direccion.comuna || '';
+    document.getElementById('provincia').value = data.direccion.provincia || '';
+    document.getElementById('direccion').value = data.direccion.direccion || '';
   }
 
   // === SOCIOS ===
@@ -236,9 +246,21 @@ function cargarDatosEmpresa(data) {
     data.empresa_socio.forEach(socio => agregarSocioDesdeDatos(socio));
   }
 
-  // === USUARIOS AUTORIZADOS ===
+  // === USUARIOS AUTORIZADOS (máx 3 en HTML) ===
   if (Array.isArray(data.usuario)) {
-    data.usuario.forEach(u => agregarUsuarioDesdeDatos(u));
+    data.usuario.forEach((u, i) => {
+      const nombres = document.querySelectorAll('input[name="usuarioNombres[]"]')[i];
+      const primerApellido = document.querySelectorAll('input[name="usuarioPrimerApellido[]"]')[i];
+      const segundoApellido = document.querySelectorAll('input[name="usuarioSegundoApellido[]"]')[i];
+      const rut = document.querySelectorAll('input[name="usuarioRUT[]"]')[i];
+      const correo = document.querySelectorAll('input[name="usuarioCorreo[]"]')[i];
+
+      if (nombres) nombres.value = u.nombre || '';
+      if (primerApellido) primerApellido.value = u.apellido_paterno || '';
+      if (segundoApellido) segundoApellido.value = u.apellido_materno || '';
+      if (rut) rut.value = u.rut || '';
+      if (correo) correo.value = u.correo || '';
+    });
   }
 
   // === ARCHIVOS HISTÓRICOS ===
@@ -254,6 +276,7 @@ function cargarDatosEmpresa(data) {
   validarSumaAccionesSocios();
   validarSumaParticipacion();
 }
+
 
 
 // ACA estan las funciones para formatear y validar los ruts
