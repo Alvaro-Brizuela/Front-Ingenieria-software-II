@@ -252,23 +252,22 @@ function cargarDatosEmpresa(data) {
 
   // === USUARIOS AUTORIZADOS (máx 3 en HTML) ===
   if (Array.isArray(data.usuario)) {
-    data.usuario.forEach((u, i) => {
-      console.log(u);
-      const nombres = document.querySelectorAll('input[name="usuarioNombres[]"]')[i];
-      const primerApellido = document.querySelectorAll('input[name="usuarioPrimerApellido[]"]')[i];
-      const segundoApellido = document.querySelectorAll('input[name="usuarioSegundoApellido[]"]')[i];
-      const rut = document.querySelectorAll('input[name="usuarioRUT[]"]')[i];
-      const correo = document.querySelectorAll('input[name="usuarioCorreo[]"]')[i];
-      const rol = document.querySelectorAll('select[name="usuarioRol[]"]')[i];
-
-      if (nombres) nombres.value = u.nombre || '';
-      if (primerApellido) primerApellido.value = u.apellido_paterno || '';
-      if (segundoApellido) segundoApellido.value = u.apellido_materno || '';
-      if (rut) rut.value = u.rut || '';
-      if (correo) correo.value = u.correo || '';
-      if (rol) rol.value = u.rol || '';
-    });
+  data.usuario.forEach(u => {
+    // Si el usuario tiene múltiples login_usuario
+    if (Array.isArray(u.login_usuario)) {
+      u.login_usuario.forEach(login => {
+        agregarUsuarioDesdeDatos({
+          nombre: u.nombre || '',
+          rut: u.rut || '',
+          cargo: u.cargo || '',
+          correo: login.correo || '',
+          telefono: login.telefono || ''
+        });
+      });
+    }
+  });
   }
+
 
   // === ARCHIVOS HISTÓRICOS ===
   if (Array.isArray(data.archivos_historicos)) {
