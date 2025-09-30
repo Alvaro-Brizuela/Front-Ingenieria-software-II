@@ -409,8 +409,6 @@ function agregarSocioDesdeDatos(datos) {
 
 // ACA: funcion para mostrar los usuarios autorizados
 function agregarUsuarioDesdeDatos(usuario) {
-  // Simula click en "Agregar usuario autorizado"
-  document.getElementById('btnAgregarUsuario').click();
 
   // Tomar el último bloque agregado
   const usuarios = document.querySelectorAll('.usuario-item');
