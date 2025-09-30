@@ -414,7 +414,7 @@ function cargarUsuariosDesdeDatos(listaUsuarios) {
       nombresInputs[i].value = u.nombre || '';
       apPatInputs[i].value = u.apellido_paterno || '';
       apMatInputs[i].value = u.apellido_materno || '';
-      rutInputs[i].value = u.rut || '';
+      rutInputs[i].value = u.rut + u.rut_dv|| '';
       correoInputs[i].value = (u.login_usuario && u.login_usuario[0]?.correo) || '';
       claveInputs[i].value = ''; // ⚠️ nunca rellenes claves desde el back
       if (rolSelects[i]) rolSelects[i].value = u.rol || '';
