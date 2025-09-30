@@ -222,7 +222,7 @@ function cargarDatosEmpresa(data) {
   document.getElementById('cantidadAcciones').value = data.acciones_capital?.cantidad_acciones || '';
   document.getElementById('fechaConstitucion').value = data.fecha_constitucion || '';
   document.getElementById('fechaInicio').value = data.fecha_inicio_actividades || '';
-  document.getElementById('correo').value = data.correo || '';   // 👈 correo de la empresa
+  document.getElementById('correo').value = data.correo || '';
   document.getElementById('telefono').value = data.telefono || '';
   document.getElementById('direccion').value = data.direccion_fisica || '';
 
@@ -253,6 +253,7 @@ function cargarDatosEmpresa(data) {
   // === USUARIOS AUTORIZADOS (máx 3 en HTML) ===
   if (Array.isArray(data.usuario)) {
     data.usuario.forEach((u, i) => {
+      console.log(u);
       const nombres = document.querySelectorAll('input[name="usuarioNombres[]"]')[i];
       const primerApellido = document.querySelectorAll('input[name="usuarioPrimerApellido[]"]')[i];
       const segundoApellido = document.querySelectorAll('input[name="usuarioSegundoApellido[]"]')[i];
