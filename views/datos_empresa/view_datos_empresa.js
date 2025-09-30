@@ -210,27 +210,31 @@ form.addEventListener('submit', function (e) {
 
 
 // ACA: funcion para mostrar los datos
-// ACA: funcion para mostrar los datos
+// === FUNCION PARA MOSTRAR LOS DATOS DE LA EMPRESA ===
 function cargarDatosEmpresa(data) {
   // === CAMPOS BÁSICOS ===
   document.getElementById('razonSocial').value = data.razon_social || '';
   document.getElementById('nombreFantasia').value = data.nombre_fantasia || '';
-  document.getElementById('rutEmpresa').value = data.rut_empresa && data.DV_rut 
-      ? `${data.rut_empresa}-${data.DV_rut}`
+  document.getElementById('rutEmpresa').value = (data.rut_empresa && data.DV_rut) 
+      ? `${data.rut_empresa}-${data.DV_rut}` 
       : '';
   document.getElementById('capitalTotal').value = data.acciones_capital?.capital_total || '';
   document.getElementById('cantidadAcciones').value = data.acciones_capital?.cantidad_acciones || '';
   document.getElementById('fechaConstitucion').value = data.fecha_constitucion || '';
   document.getElementById('fechaInicio').value = data.fecha_inicio_actividades || '';
+  document.getElementById('correo').value = data.correo || '';   // 👈 correo de la empresa
+  document.getElementById('telefono').value = data.telefono || '';
+  document.getElementById('direccion').value = data.direccion_fisica || '';
 
   // === DATOS LEGALES ===
   if (data.datos_legales) {
     document.getElementById('tipoSociedad').value = data.datos_legales.tipo_sociedad || '';
-    document.getElementById('nombresRepresentante').value = data.datos_legales.representante?.nombre || '';
-    document.getElementById('apellidoPaternoRepresentante').value = data.datos_legales.representante?.apellido_paterno || '';
-    document.getElementById('apellidoMaternoRepresentante').value = data.datos_legales.representante?.apellido_materno || '';
-    document.getElementById('rutRepresentante').value = data.datos_legales.representante?.rut || '';
-    document.getElementById('generoRepresentante').value = data.datos_legales.representante?.genero || '';
+    const rep = data.datos_legales.representante || {};
+    document.getElementById('nombresRepresentante').value = rep.nombre || '';
+    document.getElementById('apellidoPaternoRepresentante').value = rep.apellido_paterno || '';
+    document.getElementById('apellidoMaternoRepresentante').value = rep.apellido_materno || '';
+    document.getElementById('rutRepresentante').value = rep.rut || '';
+    document.getElementById('generoRepresentante').value = rep.genero || '';
   }
 
   // === DIRECCIÓN ===
@@ -254,12 +258,14 @@ function cargarDatosEmpresa(data) {
       const segundoApellido = document.querySelectorAll('input[name="usuarioSegundoApellido[]"]')[i];
       const rut = document.querySelectorAll('input[name="usuarioRUT[]"]')[i];
       const correo = document.querySelectorAll('input[name="usuarioCorreo[]"]')[i];
+      const rol = document.querySelectorAll('select[name="usuarioRol[]"]')[i];
 
       if (nombres) nombres.value = u.nombre || '';
       if (primerApellido) primerApellido.value = u.apellido_paterno || '';
       if (segundoApellido) segundoApellido.value = u.apellido_materno || '';
       if (rut) rut.value = u.rut || '';
       if (correo) correo.value = u.correo || '';
+      if (rol) rol.value = u.rol || '';
     });
   }
 
@@ -272,10 +278,12 @@ function cargarDatosEmpresa(data) {
     renderizarListaArchivos();
   }
 
+  // === VALIDACIONES Y CÁLCULOS ===
   actualizarCapitalSocios();
   validarSumaAccionesSocios();
   validarSumaParticipacion();
 }
+
 
 
 
