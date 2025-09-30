@@ -254,17 +254,9 @@ function cargarDatosEmpresa(data) {
   if (Array.isArray(data.usuario)) {
   data.usuario.forEach(u => {
     // Si el usuario tiene múltiples login_usuario
-    if (Array.isArray(u.login_usuario)) {
-      u.login_usuario.forEach(login => {
-        cargarUsuariosDesdeDatos({
-          nombre: u.nombre || '',
-          rut: u.rut || '',
-          cargo: u.cargo || '',
-          correo: login.correo || '',
-          telefono: login.telefono || ''
-        });
-      });
-    }
+  if (Array.isArray(data.usuario)) {
+  cargarUsuariosDesdeDatos(data.usuario);
+  }
   });
   }
 
