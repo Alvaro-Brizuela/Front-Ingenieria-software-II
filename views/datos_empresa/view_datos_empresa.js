@@ -38,7 +38,8 @@
 
     // Acción de cerrar sesión (reemplazar por la lógica real)
     logoutBtn.addEventListener('click', () => {
-        alert("Sesión cerrada");
+        localStorage.clear(); // borra tokens y datos
+        window.location.href = "../Login/view_login.html"; 
     });
 
     // Abre el sidebar y desplaza el cuerpo de la página
@@ -209,63 +210,74 @@ form.addEventListener('submit', function (e) {
 
 
 // ACA: funcion para mostrar los datos
+// === FUNCION PARA MOSTRAR LOS DATOS DE LA EMPRESA ===
 function cargarDatosEmpresa(data) {
   // === CAMPOS BÁSICOS ===
-  document.getElementById('razonSocial').value = data.razonSocial || '';
-  document.getElementById('nombreFantasia').value = data.nombreFantasia || '';
-  document.getElementById('rut').value = data.rut || '';
-  document.getElementById('capitalTotal').value = data.capitalTotal || '';
-  document.getElementById('cantidadAcciones').value = data.cantidadAcciones || '';
-  document.getElementById('fechaConstitucion').value = data.fechaConstitucion || '';
-  document.getElementById('fechaInicio').value = data.fechaInicio || '';
+  document.getElementById('razonSocial').value = data.razon_social || '';
+  document.getElementById('nombreFantasia').value = data.nombre_fantasia || '';
+  document.getElementById('rutEmpresa').value = (data.rut_empresa && data.DV_rut) 
+      ? `${data.rut_empresa}-${data.DV_rut}` 
+      : '';
+  document.getElementById('capitalTotal').value = data.acciones_capital?.capital_total || '';
+  document.getElementById('cantidadAcciones').value = data.acciones_capital?.cantidad_acciones || '';
+  document.getElementById('fechaConstitucion').value = data.fecha_constitucion || '';
+  document.getElementById('fechaInicio').value = data.fecha_inicio_actividades || '';
+  document.getElementById('correo').value = data.correo || '';
+  document.getElementById('telefono').value = data.telefono || '';
+  document.getElementById('direccion').value = data.direccion_fisica || '';
 
-  // === SELECTS Y CHOICES ===
-  document.getElementById('tipoSociedad').value = data.tipoSociedad || '';
-  document.getElementById('region').value = data.region || '';
-  document.getElementById('comuna').value = data.comuna || '';
-  document.getElementById('tipoPropiedad').value = data.tipoPropiedad || '';
-  document.getElementById('regimenTributario').value = data.regimenTributario || '';
-  document.getElementById('mutual').value = data.mutual || '';
-  document.getElementById('gratificacionLegal').value = data.gratificacionLegal || '';
+  // === DATOS LEGALES ===
+  if (data.datos_legales) {
+    document.getElementById('tipoSociedad').value = data.datos_legales.tipo_sociedad || '';
+    const rep = data.datos_legales.representante || {};
+    document.getElementById('nombresRepresentante').value = rep.nombre || '';
+    document.getElementById('apellidoPaternoRepresentante').value = rep.apellido_paterno || '';
+    document.getElementById('apellidoMaternoRepresentante').value = rep.apellido_materno || '';
+    document.getElementById('rutRepresentante').value = rep.rut || '';
+    document.getElementById('generoRepresentante').value = rep.genero || '';
+  }
 
-  // Actualizar Choices.js si estás usando este plugin
-  ['tipoSociedad', 'region', 'comuna', 'tipoPropiedad', 'regimenTributario', 'mutual', 'gratificacionLegal'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el && el.choicesInstance) {
-      el.choicesInstance.setChoiceByValue(data[id]);
-    }
+  // === DIRECCIÓN ===
+  if (data.direccion) {
+    document.getElementById('region').value = data.direccion.region || '';
+    document.getElementById('comuna').value = data.direccion.comuna || '';
+    document.getElementById('provincia').value = data.direccion.provincia || '';
+    document.getElementById('direccion').value = data.direccion.direccion || '';
+  }
+
+  // === SOCIOS ===
+  if (Array.isArray(data.empresa_socio)) {
+    data.empresa_socio.forEach(socio => agregarSocioDesdeDatos(socio));
+  }
+
+  // === USUARIOS AUTORIZADOS (máx 3 en HTML) ===
+  if (Array.isArray(data.usuario)) {
+  data.usuario.forEach(u => {
+    // Si el usuario tiene múltiples login_usuario
+  if (Array.isArray(data.usuario)) {
+  cargarUsuariosDesdeDatos(data.usuario);
+  }
   });
-
-  // === ACTIVIDADES ECONÓMICAS MULTISELECT ===
-  if (window.actividadChoices && data.actividadesEconomicas) {
-    actividadChoices.clearStore();
-    actividadChoices.setValue(data.actividadesEconomicas.map(act => ({ value: act, label: act })));
   }
 
-  // === FECHA DE PAGO GLOBAL ===
-  const fechaPago = data.fechaPagoGlobal || null;
-  if (fechaPago) {
-    document.getElementById('fechaPagoGlobal')._flatpickr.setDate(fechaPago);
-  }
 
   // === ARCHIVOS HISTÓRICOS ===
-  archivosCargados.length = 0;
-  if (Array.isArray(data.archivosHistoricos)) {
-    data.archivosHistoricos.forEach(nombre => {
+  if (Array.isArray(data.archivos_historicos)) {
+    archivosCargados.length = 0;
+    data.archivos_historicos.forEach(nombre => {
       archivosCargados.push({ name: nombre, size: 0, desdeServidor: true });
     });
+    renderizarListaArchivos();
   }
-  renderizarListaArchivos();
 
-  // === SOCIOS (opcional) ===
-  // Si usas lógica para cargar socios ya creados, deberías tener una función tipo:
-  // data.socios.forEach(socio => agregarSocioDesdeDatos(socio));
-
-  // === OPCIONAL: recalcular capitales y validaciones ===
+  // === VALIDACIONES Y CÁLCULOS ===
   actualizarCapitalSocios();
   validarSumaAccionesSocios();
   validarSumaParticipacion();
 }
+
+
+
 
 // ACA estan las funciones para formatear y validar los ruts
 /**
@@ -388,20 +400,26 @@ function agregarSocioDesdeDatos(datos) {
 }
 
 // ACA: funcion para mostrar los usuarios autorizados
-function agregarUsuarioDesdeDatos(usuario) {
-  // Simula click en "Agregar usuario autorizado"
-  document.getElementById('btnAgregarUsuario').click();
+function cargarUsuariosDesdeDatos(listaUsuarios) {
+  const nombresInputs = document.querySelectorAll('input[name="usuarioNombres[]"]');
+  const apPatInputs = document.querySelectorAll('input[name="usuarioPrimerApellido[]"]');
+  const apMatInputs = document.querySelectorAll('input[name="usuarioSegundoApellido[]"]');
+  const rutInputs = document.querySelectorAll('input[name="usuarioRUT[]"]');
+  const correoInputs = document.querySelectorAll('input[name="usuarioCorreo[]"]');
+  const claveInputs = document.querySelectorAll('input[name="usuarioClave[]"]');
+  const rolSelects = document.querySelectorAll('select[name="usuarioRol[]"]');
 
-  // Tomar el último bloque agregado
-  const usuarios = document.querySelectorAll('.usuario-item');
-  const usuarioItem = usuarios[usuarios.length - 1];
-
-  // Completar campos
-  usuarioItem.querySelector('input[name="nombreUsuario[]"]').value = usuario.nombre;
-  usuarioItem.querySelector('input[name="rutUsuario[]"]').value = usuario.rut;
-  usuarioItem.querySelector('input[name="cargoUsuario[]"]').value = usuario.cargo;
-  usuarioItem.querySelector('input[name="correoUsuario[]"]').value = usuario.correo;
-  usuarioItem.querySelector('input[name="telefonoUsuario[]"]').value = usuario.telefono;
+  listaUsuarios.forEach((u, i) => {
+    if (i < nombresInputs.length) {
+      nombresInputs[i].value = u.nombre || '';
+      apPatInputs[i].value = u.apellido_paterno || '';
+      apMatInputs[i].value = u.apellido_materno || '';
+      rutInputs[i].value = u.rut + u.rut_dv|| '';
+      correoInputs[i].value = (u.login_usuario && u.login_usuario[0]?.correo) || '';
+      claveInputs[i].value = ''; // ⚠️ nunca rellenes claves desde el back
+      if (rolSelects[i]) rolSelects[i].value = u.rol || '';
+    }
+  });
 }
 
 
@@ -1477,5 +1495,46 @@ document.addEventListener('input', e => {
   }
 });
 
+// === OBTENER DATOS DE LA EMPRESA DESDE EL BACKEND aca===
+async function fetchDatosEmpresa() {
+  const token = localStorage.getItem("access_token");
+  if (!token) {
+    alert("⚠️ No estás autenticado. Redirigiendo al login...");
+    window.location.href = "../Login/view_login.html";
+    return;
+  }
+
+  try {
+    const res = await fetch("https://back-end-fastapi-production.up.railway.app/empresa/full", {
+      method: "GET",
+      headers: {
+        "Authorization": `Bearer ${token}`
+      }
+    });
+
+    if (!res.ok) {
+      const error = await res.json();
+      console.error("❌ Error al cargar empresa:", error);
+      alert(error.detail || "No se pudo obtener la empresa.");
+      return;
+    }
+
+    const data = await res.json();
+    console.log("✅ Empresa cargada:", data);
+
+    // Usamos tu función ya existente
+    cargarDatosEmpresa(data);
+
+    // Poner nombre de la empresa/usuario en el header
+    setUserInitial(data.nombre_fantasia || "Empresa");
+
+  } catch (err) {
+    console.error("❌ Error de conexión:", err);
+    alert("No se pudo conectar al servidor.");
+  }
+}
+
+// Ejecutar al entrar a la página
+document.addEventListener("DOMContentLoaded", fetchDatosEmpresa);
 
 

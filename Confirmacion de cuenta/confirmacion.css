@@ -1,0 +1,83 @@
+* {
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #2b2e39 0%, #404454 100%);
+    background-size: cover;
+    margin: 0;
+}
+
+.confirmation-box {
+    background-color: #e0e6ed;
+    border-radius: 15px;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+    max-width: 450px;
+    width: 100%;
+    animation: fadeIn 0.5s ease-out forwards;
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.confirmation-box h2 {
+    color: #2b2e39;
+    font-size: 28px;
+    margin-bottom: 1rem;
+    font-weight: 600;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.success-message {
+    color: #555555;
+    font-size: 18px;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.icon {
+    animation: bounce 1.5s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
+.icon img {
+    width: 80px;
+    height: 80px;
+    filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.3));
+}
+
+#backButton {
+    background: linear-gradient(145deg, #4b8fcc, #356f9e);
+    color: #ffffff;
+    border: none;
+    font-size: 18px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+#backButton:hover {
+    transform: translateY(-3px);
+    background: linear-gradient(145deg, #356f9e, #4b8fcc);
+    box-shadow: 0px 8px 20px rgba(75, 143, 204, 0.4);
+}
+
+#backButton:focus {
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(75, 143, 204, 0.3);
+}
