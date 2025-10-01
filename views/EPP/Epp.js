@@ -121,4 +121,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Usamos delegación de eventos para los botones de eliminar
     tableBody.addEventListener('click', deleteRow);
+
+     // Event Listeners para los nuevos botones
+    if (downloadPdfBtn) {
+        downloadPdfBtn.addEventListener('click', downloadPdf);
+    }
+
+    if (saveBtn) {
+        saveBtn.addEventListener('click', saveData);
+    }
+    /* ----- FIN: NUEVA FUNCIONALIDAD DE BOTONES ----- */
 });
