@@ -214,8 +214,8 @@ function addEppRow() {
                 <option value="">Seleccione un EPP</option>
             </select>
         </td>
-        <td><input type="number" min="1" class="form-control quantity-input" required></td>
-        <td><input type="date" class="form-control date-input" required></td>
+        <td><input type="number" min="1" class="form-control quantity-input"></td>
+        <td><input type="date" class="form-control date-input"></td>
         <td>
             <button type="button" class="btn btn-danger btn-sm" onclick="removeEppRow(this)">
                 <i class="bi bi-trash3-fill"></i>
@@ -275,24 +275,24 @@ async function GeneratePDFEPP() {
 
     // Recopilar datos de EPPs
     const eppRows = document.querySelectorAll('#eppTable tbody tr');
-    const eppList = [];
+    const elementos = [];
 
     for (let row of eppRows) {
         const eppId = row.querySelector('.epp-select').value;
         const quantity = row.querySelector('.quantity-input').value;
         const date = row.querySelector('.date-input').value;
 
-        if (!eppId || !quantity || !date) {
-            alert('Complete todos los campos de EPP');
+        if (!eppId) {
+            alert('Debe seleccionar al menos un EPP');
             submitButton.disabled = false;
             submitButton.innerHTML = 'Generar PDF';
             return;
         }
 
-        eppList.push({
+        elementos.push({
             id_epp: parseInt(eppId),
-            cantidad: parseInt(quantity),
-            fecha_entrega: date
+            cantidad: quantity ? parseInt(quantity) : null,
+            fecha_entrega: date ? date : null
         });
     }
 
@@ -301,7 +301,7 @@ async function GeneratePDFEPP() {
 
     const data = {
         rut: rutSinFormato,
-        epp_list: eppList
+        elementos: elementos
     };
 
     try {
