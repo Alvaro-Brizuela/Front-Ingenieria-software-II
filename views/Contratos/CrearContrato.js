@@ -17,6 +17,54 @@ document.addEventListener('DOMContentLoaded', () => {
         return localStorage.getItem('token');
     }
 
+    // Cargar datos de la empresa
+    async function cargarDatosEmpresa() {
+        try {
+            const token = getToken();
+            if (!token) {
+                alert('No se encontró token de autenticación. Por favor, inicia sesión.');
+                window.location.href = '/login.html';
+                return;
+            }
+
+            const response = await fetch(`${API_URL}/empresa/full`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error('Error al cargar datos de la empresa');
+            }
+
+            const empresa = await response.json();
+
+            // Rellenar campos de la empresa (readonly y en gris)
+            const nombreEmpresa = document.getElementById('nombreEmpresa');
+            const rutEmpresa = document.getElementById('rutEmpresa');
+
+            if (nombreEmpresa) {
+                nombreEmpresa.value = empresa.nombre_fantasia;
+                nombreEmpresa.readOnly = true;
+                nombreEmpresa.classList.add('bg-light');
+            }
+
+            if (rutEmpresa) {
+                rutEmpresa.value = `${empresa.rut_empresa}-${empresa.DV_rut}`;
+                rutEmpresa.readOnly = true;
+                rutEmpresa.classList.add('bg-light');
+            }
+
+        } catch (error) {
+            console.error('Error al cargar datos de empresa:', error);
+            alert('Error al cargar datos de la empresa');
+        }
+    }
+
+    // Cargar datos de empresa al iniciar
+    cargarDatosEmpresa();
+
     // Agregar cláusula desde el modal
     if (btnAgregarClausulaModal) {
         btnAgregarClausulaModal.addEventListener('click', () => {
