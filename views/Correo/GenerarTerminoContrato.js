@@ -4,15 +4,67 @@ function getToken() {
     return localStorage.getItem('access_token');
 }
 
-document.getElementById('terminoContratoForm').addEventListener('submit', async function(e) {
-    e.preventDefault();
-
+async function GeneratePDFTermino(data, submitButton) {
     const token = getToken();
     if (!token) {
         alert('No se encontró token de autenticación. Por favor, inicia sesión.');
         window.location.href = '/login.html';
         return;
     }
+
+    try {
+        // Mostrar indicador de carga
+        const originalText = submitButton.innerHTML;
+        submitButton.disabled = true;
+        submitButton.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Generando PDF...';
+
+        // Llamar al API
+        const response = await fetch(`${API_URL}/contrato/generate-pdf-termino`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify(data)
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.detail || 'Error al generar el PDF');
+        }
+
+        // Descargar el PDF
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `termino_contrato_${data.rut_trabajador}.pdf`;
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+
+        alert('PDF generado y descargado exitosamente');
+
+        // Limpiar formulario
+        document.getElementById('terminoContratoForm').reset();
+
+        // Restaurar botón
+        submitButton.disabled = false;
+        submitButton.innerHTML = originalText;
+
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Error al generar el PDF: ' + error.message);
+
+        // Restaurar botón
+        submitButton.disabled = false;
+        submitButton.innerHTML = '<i class="bi bi-download"></i> Generar y Descargar PDF';
+    }
+}
+
+document.getElementById('terminoContratoForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
 
     // Obtener datos del formulario
     const rutTrabajador = document.getElementById('rutTrabajador').value.trim();
@@ -44,55 +96,6 @@ document.getElementById('terminoContratoForm').addEventListener('submit', async 
         telefono_notaria: telefonoNotaria
     };
 
-    try {
-        // Mostrar indicador de carga
-        const submitButton = e.target.querySelector('button[type="submit"]');
-        const originalText = submitButton.innerHTML;
-        submitButton.disabled = true;
-        submitButton.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Generando PDF...';
-
-        // Llamar al API
-        const response = await fetch(`${API_URL}/contrato/generate-pdf-termino`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            },
-            body: JSON.stringify(data)
-        });
-
-        if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(errorData.detail || 'Error al generar el PDF');
-        }
-
-        // Descargar el PDF
-        const blob = await response.blob();
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `termino_contrato_${rutTrabajador}.pdf`;
-        document.body.appendChild(a);
-        a.click();
-        window.URL.revokeObjectURL(url);
-        document.body.removeChild(a);
-
-        alert('PDF generado y descargado exitosamente');
-
-        // Limpiar formulario
-        document.getElementById('terminoContratoForm').reset();
-
-        // Restaurar botón
-        submitButton.disabled = false;
-        submitButton.innerHTML = originalText;
-
-    } catch (error) {
-        console.error('Error:', error);
-        alert('Error al generar el PDF: ' + error.message);
-
-        // Restaurar botón
-        const submitButton = e.target.querySelector('button[type="submit"]');
-        submitButton.disabled = false;
-        submitButton.innerHTML = '<i class="bi bi-download"></i> Generar y Descargar PDF';
-    }
+    const submitButton = e.target.querySelector('button[type="submit"]');
+    await GeneratePDFTermino(data, submitButton);
 });
