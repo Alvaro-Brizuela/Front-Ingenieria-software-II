@@ -2,7 +2,7 @@
    FUNCIONALIDAD PARA CREAR CONTRATOS
    ================================================================= */
 
-const API_URL = `${window.location.protocol}//${window.location.hostname}:8000`;
+const API_URL = 'https://back-end-fastapi-production.up.railway.app';
 let clausulasAgregadas = [];
 
 document.addEventListener('DOMContentLoaded', () => {
