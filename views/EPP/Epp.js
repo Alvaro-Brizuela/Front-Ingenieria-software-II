@@ -243,7 +243,7 @@ function updateEppOptions() {
             if (!selectedEppIds.includes(String(epp.id_epp)) || String(epp.id_epp) === currentValue) {
                 const option = document.createElement('option');
                 option.value = epp.id_epp;
-                option.textContent = epp.nombre_epp;
+                option.textContent = epp.epp; // El API retorna "epp" no "nombre_epp"
                 select.appendChild(option);
             }
         });
