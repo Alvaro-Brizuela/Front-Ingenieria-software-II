@@ -19,19 +19,53 @@
             vertical-align: top;
             padding: 0.5rem;
         }
-        .tabla-odi input, .tabla-odi textarea {
+        .tabla-odi input, .tabla-odi textarea, .tabla-odi select {
             width: 100%;
             border: 1px solid #dee2e6;
             padding: 0.375rem 0.75rem;
             border-radius: 0.25rem;
         }
+        .tabla-odi select {
+            cursor: pointer;
+        }
         .acciones-tabla {
             display: flex;
-            justify-content: flex-end;
+            justify-content: space-between;
             margin-bottom: 1rem;
         }
-
-        
+        .btn-crear-odi {
+            background-color: #28a745;
+            color: white;
+            border: none;
+        }
+        .btn-crear-odi:hover {
+            background-color: #218838;
+            color: white;
+        }
+        .modal-content {
+            border-radius: 0.5rem;
+        }
+        .modal-header {
+            background-color: #003B5C;
+            color: white;
+            border-top-left-radius: 0.5rem;
+            border-top-right-radius: 0.5rem;
+        }
+        .modal-header .btn-close {
+            filter: brightness(0) invert(1);
+        }
+        .modal-footer {
+            border-top: 1px solid #dee2e6;
+        }
+        .btn-cancelar {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+        }
+        .btn-cancelar:hover {
+            background-color: #c82333;
+            color: white;
+        }
     </style>
 </head>
 <body>
@@ -43,6 +77,7 @@
         <div class="header-brand">
             <img src="/plantilla/img/logo-crop.png" alt="Logo Contaplus" class="header-logo">
             <span class="header-title">CONTAPLUS</span>
+        </div>
         <div class="header-right">
             <div class="profile-icon" id="profileIcon"></div>
             <div class="dropdown-menu" id="dropdownMenu">
@@ -52,8 +87,8 @@
         </div>
     </header>
 
-      <!-- SIDEBAR -->
-  <div id="sidebar" class="sidebar">
+    <!-- SIDEBAR -->
+    <div id="sidebar" class="sidebar">
         <div class="sidebar-header">
             <div class="logo-title">
                 <img src="../../plantilla/img/logo-crop.png" alt="Logo Contaplus" class="logo-sidebar">
@@ -136,6 +171,7 @@
             </div>
         </div>
     </div>
+
     <div class="content">
         <div class="card p-4 card-odi">
             <div class="d-flex justify-content-between align-items-center">
@@ -144,40 +180,40 @@
             </div>
             <hr>
             
-        <div class="mb-4">
-    <div class="row g-3 mb-3">
-        <div class="col-md-6">
-            <label for="apellidoPaterno" class="form-label">Apellido Paterno:</label>
-            <input type="text" class="form-control" id="apellidoPaterno" pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ\s]+" title="Solo se permiten letras y espacios">
-        </div>
-        <div class="col-md-6">
-            <label for="apellidoMaterno" class="form-label">Apellido Materno:</label>
-            <input type="text" class="form-control" id="apellidoMaterno" pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ\s]+" title="Solo se permiten letras y espacios">
-        </div>
-    </div>
-    
-    <div class="row g-3 mb-3">
-        <div class="col-md-6">
-            <label for="nombre" class="form-label">Nombres:</label>
-            <input type="text" class="form-control" id="nombre" pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ\s]+" title="Solo se permiten letras y espacios">
-        </div>
-        <div class="col-md-6">
-            <label for="rut" class="form-label">RUT:</label>
-            <input type="text" class="form-control" id="rut" pattern="[0-9]{1,8}-[0-9Kk]{1}" title="Formato: 12345678-9">
-        </div>
-    </div>
-    
-    <div class="row g-3 mb-3">
-        <div class="col-md-6">
-            <label for="cargo" class="form-label">Cargo:</label>
-            <input type="text" class="form-control" id="cargo">
-        </div>
-        <div class="col-md-6">
-            <label for="fecha" class="form-label">Fecha:</label>
-            <input type="date" class="form-control" id="fecha">
-        </div>
-    </div>
-</div>
+            <div class="mb-4">
+                <div class="row g-3 mb-3">
+                    <div class="col-md-6">
+                        <label for="apellidoPaterno" class="form-label">Apellido Paterno:</label>
+                        <input type="text" class="form-control" id="apellidoPaterno" pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ\s]+" title="Solo se permiten letras y espacios">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="apellidoMaterno" class="form-label">Apellido Materno:</label>
+                        <input type="text" class="form-control" id="apellidoMaterno" pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ\s]+" title="Solo se permiten letras y espacios">
+                    </div>
+                </div>
+                
+                <div class="row g-3 mb-3">
+                    <div class="col-md-6">
+                        <label for="nombre" class="form-label">Nombres:</label>
+                        <input type="text" class="form-control" id="nombre" pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ\s]+" title="Solo se permiten letras y espacios">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="rut" class="form-label">RUT:</label>
+                        <input type="text" class="form-control" id="rut" pattern="[0-9]{1,8}-[0-9Kk]{1}" title="Formato: 12345678-9">
+                    </div>
+                </div>
+                
+                <div class="row g-3 mb-3">
+                    <div class="col-md-6">
+                        <label for="cargo" class="form-label">Cargo:</label>
+                        <input type="text" class="form-control" id="cargo">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="fecha" class="form-label">Fecha:</label>
+                        <input type="date" class="form-control" id="fecha">
+                    </div>
+                </div>
+            </div>
 
             <div class="card p-3 mb-4">
                 <p>De acuerdo a lo establecido en el artículo 8 del Decreto N° 18, de 23 de abril de 2020, &lt;Nombre de la Empresa&gt; procede a informar sobre el riesgo que entrañan las actividades asociadas a su trabajo, indicando las instrucciones, métodos de trabajo y medidas preventivas necesarias para evitar los potenciales accidentes del trabajo y/o enfermedades profesionales, las cuales se le solicita leer y cumplir con todo esmero en beneficio de su propia salud.</p>
@@ -185,6 +221,9 @@
             </div>
 
             <div class="acciones-tabla">
+                <button class="btn btn-crear-odi" id="crearOdiBtn">
+                    <i class="bi bi-plus-circle"></i> Crear ODI
+                </button>
                 <button class="btn btn-dark" id="agregarFilaBtn">
                     <i class="bi bi-plus"></i> Agregar fila
                 </button>
@@ -192,19 +231,19 @@
             
             <div class="table-responsive">
                 <table class="table table-bordered tabla-odi">
-                <thead>
-                    <tr>
-                        <th>Actividad/Tarea a Realizar</th>
-                        <th>Peligros</th>
-                        <th>Consecuencias</th>
-                        <th>Medidas de Control</th>
-                        <th style="width: 50px;"></th>
-                    </tr>
-                </thead>
-                <tbody id="odiTableBody">
-                </tbody>
-            </table>
-        </div>
+                    <thead>
+                        <tr>
+                            <th>Actividad/Tarea a Realizar</th>
+                            <th>Peligros</th>
+                            <th>Consecuencias</th>
+                            <th>Medidas de Control</th>
+                            <th style="width: 50px;"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="odiTableBody">
+                    </tbody>
+                </table>
+            </div>
 
             <div class="card p-3 my-4">
                 <p>Declaro que he sido informado y he comprendido acerca de todos los riesgos asociados a mi área de trabajo, cómo también de las medidas preventivas y procedimientos de trabajo seguro que deberé aplicar y respetar en el desempeño de mis funciones.</p>
@@ -218,6 +257,48 @@
                 <div class="col-md-6 text-center">
                     <hr>
                     <p>Firma y Rut trabajador</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para Crear ODI -->
+    <div class="modal fade" id="crearOdiModal" tabindex="-1" aria-labelledby="crearOdiModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="crearOdiModalLabel">
+                        <i class="bi bi-file-earmark-plus"></i> Crear Nueva Actividad ODI
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formCrearOdi">
+                        <div class="mb-3">
+                            <label for="modalActividad" class="form-label">Actividad/Tarea a Realizar <span class="text-danger">*</span></label>
+                            <textarea class="form-control" id="modalActividad" rows="3" required placeholder="Ingrese la actividad o tarea"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="modalPeligros" class="form-label">Peligros <span class="text-danger">*</span></label>
+                            <textarea class="form-control" id="modalPeligros" rows="3" required placeholder="Ingrese los peligros asociados"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="modalConsecuencias" class="form-label">Consecuencias <span class="text-danger">*</span></label>
+                            <textarea class="form-control" id="modalConsecuencias" rows="3" required placeholder="Ingrese las posibles consecuencias"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="modalMedidas" class="form-label">Medidas de Control <span class="text-danger">*</span></label>
+                            <textarea class="form-control" id="modalMedidas" rows="3" required placeholder="Ingrese las medidas de control"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-cancelar" data-bs-dismiss="modal">
+                        <i class="bi bi-x-circle"></i> Cancelar
+                    </button>
+                    <button type="button" class="btn btn-primary" id="btnGuardarOdi">
+                        <i class="bi bi-check-circle"></i> Crear
+                    </button>
                 </div>
             </div>
         </div>
