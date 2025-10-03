@@ -461,3 +461,15 @@ body.sidebar-open {
   text-align: center;
   vertical-align: middle;
 }
+
+/* Estilos para los select de EPP */
+.epp-select {
+  color: #000000 !important;
+  font-weight: 600;
+}
+
+.epp-select option {
+  color: #000000 !important;
+  font-weight: 600;
+  background-color: #ffffff;
+}

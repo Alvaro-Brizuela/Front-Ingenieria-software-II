@@ -1,3 +1,7 @@
+const API_URL = 'https://back-end-fastapi-production.up.railway.app';
+let availableEPPs = [];
+let selectedWorker = null;
+
 document.addEventListener('DOMContentLoaded', function() {
     /* PLANTILLA HEADER - SIDE BAR */
 
@@ -45,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Abre el sidebar y desplaza el cuerpo de la página
     toggleBtn.addEventListener("click", () => {
         sidebar.classList.add("show");
-        body.classList.add("sidebar-open");
+        body.classList.add("show");
         toggleBtn.classList.add("hide");
     });
 
@@ -53,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
     closeBtn.addEventListener("click", () => {
         sidebar.classList.remove("show");
         body.classList.remove("sidebar-open");
-        toggleBtn.classList.remove("hide"); 
+        toggleBtn.classList.remove("hide");
     });
 
     // Cierra el sidebar si se hace clic fuera de él
@@ -70,65 +74,268 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
 /* ----- FIN DEL CÓDIGO DEL SIDEBAR ----- */
-    /* ----- ACÁ FUNCIONALIDAD DE LA TABLA EPP ----- */
-    const addRowBtn = document.getElementById('addRowBtn');
-    const tableBody = document.querySelector('#eppTable tbody');
 
-    // ACÁ Función para agregar una nueva fila
-    function addNewRow() {
-        const newRow = document.createElement('tr');
-        newRow.innerHTML = `
-            <td>
-                <input list="epp-names" name="epp-name" class="form-control epp-input" required>
-                <datalist id="epp-names">
-                    <option value="Casco de seguridad">
-                    <option value="Guantes de protección">
-                    <option value="Gafas de seguridad">
-                    <option value="Mascarilla N95">
-                    <option value="Chaleco reflectante">
-                    <option value="Botas de seguridad">
-                </datalist>
-            </td>
-            <td><input type="number" min="1" class="form-control quantity-input" required></td>
-            <td><input type="date" class="form-control date-input" required></td>
-            <td>
-              <button type="button" class="btn btn-danger btn-sm delete-row-btn">
-                <i class="bi bi-trash3-fill"></i>
-              </button>
-            </td>
-        `;
-        tableBody.appendChild(newRow);
-    }
-    
-    // ACÁ Función para eliminar la fila
-    function deleteRow(event) {
-        // Asegúrate de que el clic fue en el botón o el ícono
-        const button = event.target.closest('.delete-row-btn');
-        if (button) {
-            const row = button.closest('tr'); // Encuentra la fila más cercana
-            if (row) {
-                row.remove(); // Elimina la fila
-            }
-        }
-    }
-
-    // ACÁ Event Listeners
-    if (addRowBtn) {
-        addRowBtn.addEventListener('click', addNewRow);
-    } else {
-        console.error("Error: No se encontró el botón con el ID 'addRowBtn'.");
-    }
-
-    // Usamos delegación de eventos para los botones de eliminar
-    tableBody.addEventListener('click', deleteRow);
-
-     // Event Listeners para los nuevos botones
-    if (downloadPdfBtn) {
-        downloadPdfBtn.addEventListener('click', downloadPdf);
-    }
-
-    if (saveBtn) {
-        saveBtn.addEventListener('click', saveData);
-    }
-    /* ----- FIN: NUEVA FUNCIONALIDAD DE BOTONES ----- */
+    // Cargar EPPs al inicio
+    loadEPPs();
 });
+
+// Función para cargar los EPPs disponibles
+async function loadEPPs() {
+    try {
+        const token = localStorage.getItem('access_token');
+        const response = await fetch(`${API_URL}/epp/list`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        if (response.ok) {
+            availableEPPs = await response.json();
+        } else {
+            console.error('Error al cargar EPPs');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
+
+// Función para buscar trabajadores
+async function searchWorkers() {
+    const searchType = document.querySelector('input[name="searchType"]:checked').id;
+    const token = localStorage.getItem('access_token');
+
+    let endpoint = '';
+    let queryParams = '';
+
+    if (searchType === 'searchByRut') {
+        const rut = document.getElementById('rutInput').value.trim();
+        if (!rut) {
+            alert('Ingrese un RUT para buscar');
+            return;
+        }
+        endpoint = '/trabajadores/search-by-rut';
+        queryParams = `?rut=${rut}`;
+    } else {
+        const nombre = document.getElementById('nombreInput').value.trim();
+        const apellidoPaterno = document.getElementById('apellidoPaternoInput').value.trim();
+        const apellidoMaterno = document.getElementById('apellidoMaternoInput').value.trim();
+
+        if (!nombre && !apellidoPaterno && !apellidoMaterno) {
+            alert('Ingrese al menos un dato para buscar');
+            return;
+        }
+
+        endpoint = '/trabajadores/search';
+        const params = new URLSearchParams();
+        if (nombre) params.append('nombre', nombre);
+        if (apellidoPaterno) params.append('apellido_paterno', apellidoPaterno);
+        if (apellidoMaterno) params.append('apellido_materno', apellidoMaterno);
+        queryParams = `?${params.toString()}`;
+    }
+
+    try {
+        const response = await fetch(`${API_URL}${endpoint}${queryParams}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            // El API retorna {total: X, trabajadores: [...]}
+            const workers = data.trabajadores || [];
+            displaySearchResults(workers);
+            document.getElementById('resultsSection').style.display = 'block';
+        } else {
+            alert('No se encontraron trabajadores');
+            document.getElementById('searchResults').innerHTML = '';
+            document.getElementById('resultsSection').style.display = 'none';
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Error al buscar trabajadores');
+    }
+}
+
+// Función para mostrar los resultados de la búsqueda
+function displaySearchResults(workers) {
+    const resultsTable = document.getElementById('searchResults');
+
+    if (!workers || workers.length === 0) {
+        resultsTable.innerHTML = '<tr><td colspan="5" class="text-center">No se encontraron trabajadores</td></tr>';
+        return;
+    }
+
+    resultsTable.innerHTML = workers.map(worker => `
+        <tr>
+            <td>${worker.rut}</td>
+            <td>${worker.nombre}</td>
+            <td>${worker.apellido_paterno}</td>
+            <td>${worker.apellido_materno}</td>
+            <td>
+                <button class="btn btn-sm btn-primary" onclick='selectWorker(${JSON.stringify(worker)})'>
+                    Seleccionar
+                </button>
+            </td>
+        </tr>
+    `).join('');
+}
+
+// Función para seleccionar un trabajador
+function selectWorker(worker) {
+    selectedWorker = worker;
+
+    // Ocultar resultados de búsqueda y mostrar datos del trabajador
+    document.getElementById('resultsSection').style.display = 'none';
+    document.getElementById('workerDataSection').style.display = 'block';
+
+    // Llenar los datos del trabajador (el API retorna datos directamente, no en datos_trabajador)
+    document.getElementById('displayRut').textContent = worker.rut;
+    document.getElementById('displayNombre').textContent = worker.nombre;
+    document.getElementById('displayApellidoPaterno').textContent = worker.apellido_paterno;
+    document.getElementById('displayApellidoMaterno').textContent = worker.apellido_materno;
+    document.getElementById('displayCargo').textContent = worker.cargo ? worker.cargo.nombre : 'Sin cargo';
+
+    // Limpiar tabla de EPPs y agregar primera fila
+    document.querySelector('#eppTable tbody').innerHTML = '';
+    addEppRow();
+}
+
+// Función para agregar una fila de EPP
+function addEppRow() {
+    const tableBody = document.querySelector('#eppTable tbody');
+    const newRow = document.createElement('tr');
+
+    newRow.innerHTML = `
+        <td>
+            <select class="form-control epp-select" required onchange="updateEppOptions()">
+                <option value="">Seleccione un EPP</option>
+            </select>
+        </td>
+        <td><input type="number" min="1" class="form-control quantity-input"></td>
+        <td><input type="date" class="form-control date-input"></td>
+        <td>
+            <button type="button" class="btn btn-danger btn-sm" onclick="removeEppRow(this)">
+                <i class="bi bi-trash3-fill"></i>
+            </button>
+        </td>
+    `;
+
+    tableBody.appendChild(newRow);
+    updateEppOptions();
+}
+
+// Función para actualizar las opciones de EPP en todos los selects
+function updateEppOptions() {
+    const allSelects = document.querySelectorAll('.epp-select');
+    const selectedEppIds = Array.from(allSelects)
+        .map(select => select.value)
+        .filter(value => value !== '');
+
+    allSelects.forEach(select => {
+        const currentValue = select.value;
+        select.innerHTML = '<option value="">Seleccione un EPP</option>';
+
+        availableEPPs.forEach(epp => {
+            // Mostrar el EPP si no está seleccionado en otro select o si es el valor actual de este select
+            if (!selectedEppIds.includes(String(epp.id_epp)) || String(epp.id_epp) === currentValue) {
+                const option = document.createElement('option');
+                option.value = epp.id_epp;
+                option.textContent = epp.epp; // El API retorna "epp" no "nombre_epp"
+                select.appendChild(option);
+            }
+        });
+
+        // Restaurar el valor seleccionado
+        if (currentValue) {
+            select.value = currentValue;
+        }
+    });
+}
+
+// Función para eliminar una fila de EPP
+function removeEppRow(button) {
+    const row = button.closest('tr');
+    row.remove();
+    updateEppOptions();
+}
+
+// Función para generar el PDF de EPP
+async function GeneratePDFEPP() {
+    if (!selectedWorker) {
+        alert('Debe seleccionar un trabajador primero');
+        return;
+    }
+
+    const submitButton = document.getElementById('generatePdfBtn');
+    submitButton.disabled = true;
+    submitButton.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Generando...';
+
+    // Recopilar datos de EPPs
+    const eppRows = document.querySelectorAll('#eppTable tbody tr');
+    const elementos = [];
+
+    for (let row of eppRows) {
+        const eppId = row.querySelector('.epp-select').value;
+        const quantity = row.querySelector('.quantity-input').value;
+        const date = row.querySelector('.date-input').value;
+
+        if (!eppId) {
+            alert('Debe seleccionar al menos un EPP');
+            submitButton.disabled = false;
+            submitButton.innerHTML = 'Generar PDF';
+            return;
+        }
+
+        elementos.push({
+            id_epp: parseInt(eppId),
+            cantidad: quantity ? parseInt(quantity) : null,
+            fecha_entrega: date ? date : null
+        });
+    }
+
+    // Extraer solo el número del RUT (sin guión ni dígito verificador)
+    const rutSinFormato = selectedWorker.rut.split('-')[0];
+
+    const data = {
+        rut: rutSinFormato,
+        elementos: elementos
+    };
+
+    try {
+        const token = localStorage.getItem('access_token');
+        const response = await fetch(`${API_URL}/epp/generate-pdf`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify(data)
+        });
+
+        if (response.ok) {
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `epp_entrega_${rutSinFormato}.pdf`;
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+            a.remove();
+
+            alert('PDF generado correctamente');
+        } else {
+            const error = await response.json();
+            alert(`Error: ${error.detail || 'Error al generar el PDF'}`);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Error al generar el PDF');
+    } finally {
+        submitButton.disabled = false;
+        submitButton.innerHTML = 'Generar PDF';
+    }
+}
