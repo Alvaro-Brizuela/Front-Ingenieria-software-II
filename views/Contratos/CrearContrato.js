@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Obtener token del localStorage
     function getToken() {
-        return localStorage.getItem('token');
+        return localStorage.getItem('access_token');
     }
 
     // Cargar datos de la empresa
