@@ -14,11 +14,6 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
   <!-- Flatpickr CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-  <link rel="icon" type="image/png" href="img/logo-contaplus-favicon.png">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="icon" type="image/png" href="img/logo-contaplus-favicon.png">
 
   <link rel="stylesheet" href="Epp.css">
 
@@ -27,6 +22,12 @@
   <style>
         .card-solicitud {
             margin-bottom: 2rem;
+        }
+        .search-section {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
         }
     </style>
 
@@ -282,115 +283,167 @@
       <div class="d-flex justify-content-between align-items-center mb-4">
         <h1 class="card-title h3 m-0">Gestión de Equipo de Protección Personal (EPP)</h1>
       </div>
-      <!-- ACÁ Formulario de EPP -->
-      <div class="row g-3 mb-4">
-        <div class="col-md-6">
-          <label for="nombre" class="form-label">NOMBRE:</label>
-          <select class="form-select" id="nombre">
-            <option selected disabled value="">Seleccione un trabajador...</option>
-          </select>
+
+      <!-- Sección de búsqueda de trabajador -->
+      <div class="search-section">
+        <h2 class="h5 mb-3">Buscar Trabajador</h2>
+
+        <!-- Radio buttons para tipo de búsqueda -->
+        <div class="btn-group w-100 mb-3" role="group">
+          <input type="radio" class="btn-check" name="searchType" id="searchByRut" checked>
+          <label class="btn btn-outline-primary" for="searchByRut">Búsqueda por RUT</label>
+
+          <input type="radio" class="btn-check" name="searchType" id="searchByData">
+          <label class="btn btn-outline-primary" for="searchByData">Búsqueda por Datos</label>
         </div>
-        <div class="col-md-6">
-          <label for="fecha" class="form-label">FECHA:</label>
-          <input type="date" class="form-control" id="fecha">
+
+        <!-- Formularios de búsqueda -->
+        <div id="searchByRutForm">
+          <div class="row g-3 mb-3">
+            <div class="col-md-8">
+              <label for="rutInput" class="form-label">RUT:</label>
+              <input type="text" class="form-control" id="rutInput" placeholder="Ej: 12345678">
+            </div>
+            <div class="col-md-4 d-flex align-items-end">
+              <button class="btn btn-primary w-100" onclick="searchWorkers()">
+                <i class="bi bi-search"></i> Buscar
+              </button>
+            </div>
+          </div>
         </div>
-        <div class="col-md-6">
-          <label for="rut" class="form-label">RUT:</label>
-          <input type="text" class="form-control" id="rut">
+
+        <div id="searchByDataForm" style="display: none;">
+          <div class="row g-3 mb-3">
+            <div class="col-md-4">
+              <label for="nombreInput" class="form-label">Nombre:</label>
+              <input type="text" class="form-control" id="nombreInput">
+            </div>
+            <div class="col-md-3">
+              <label for="apellidoPaternoInput" class="form-label">Apellido Paterno:</label>
+              <input type="text" class="form-control" id="apellidoPaternoInput">
+            </div>
+            <div class="col-md-3">
+              <label for="apellidoMaternoInput" class="form-label">Apellido Materno:</label>
+              <input type="text" class="form-control" id="apellidoMaternoInput">
+            </div>
+            <div class="col-md-2 d-flex align-items-end">
+              <button class="btn btn-primary w-100" onclick="searchWorkers()">
+                <i class="bi bi-search"></i> Buscar
+              </button>
+            </div>
+          </div>
         </div>
-        <div class="col-md-6">
-          <label for="cargo" class="form-label">CARGO:</label>
-          <select class="form-select" id="cargo">
-            <option selected disabled value="">Seleccione un cargo...</option>
-          </select>
+
+        <!-- Resultados de búsqueda -->
+        <div id="resultsSection" style="display: none;">
+          <h3 class="h6 mb-2">Resultados:</h3>
+          <div class="table-responsive">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>RUT</th>
+                  <th>Nombre</th>
+                  <th>Apellido Paterno</th>
+                  <th>Apellido Materno</th>
+                  <th>Acción</th>
+                </tr>
+              </thead>
+              <tbody id="searchResults">
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
-      <!-- ACÁ Tabla de EPP -->
-      <div class="mb-4">
-        <p>Con el propósito de promover y mantener el nivel de seguridad y cumplimiento en lo establecido en la Ley Nº
-          16.744.- y sus Decretos Reglamentarios en lo relacionado al suministro de equipos de protección personal, por
-          intermedio de la presente, se deja constancia de la provisión u entrega de los siguientes elementos de
-          protección personal:</p>
       </div>
 
-      <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="h5 m-0">Elementos de Protección Personal</h2>
-        <button id="addRowBtn" class="btn btn-primary add-button">
-          <i class="bi bi-plus-lg"></i> Agregar fila
-        </button>
-      </div>
-
-      <div class="table-responsive">
-        <table id="eppTable" class="table">
-          <thead>
-            <tr>
-              <th>Nombre del EPP</th>
-              <th>Cantidad</th>
-              <th>Fecha de Entrega</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>
-                <input list="epp-names" name="epp-name" class="form-control epp-input" required>
-                <datalist id="epp-names">
-                  <option value="Casco de seguridad">
-                  <option value="Guantes de protección">
-                  <option value="Gafas de seguridad">
-                  <option value="Mascarilla N95">
-                  <option value="Chaleco reflectante">
-                  <option value="Botas de seguridad">
-                </datalist>
-              </td>
-              <td><input type="number" min="1" class="form-control quantity-input" required></td>
-              <td><input type="date" class="form-control date-input" required></td>
-              <td>
-                <button type="button" class="btn btn-danger btn-sm delete-row-btn">
-                  <i class="bi bi-trash3-fill"></i>
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <!-- ACÁ Certificación y firmas -->
-      <div class="mt-4 mb-4">
-        <p>Certifico haber recibido los elementos de protección personal, como así también instrucciones para su
-          correcto uso y reconozco la **OBLIGACION DE USAR**, conservar y cuidar los mismos, e informar del deterioro o
-          extravío, conforme a lo indicado anteriormente.</p>
-      </div>
-
-      <div class="row mt-5">
-        <div class="col-md-6 text-center">
-          <p class="mb-1">_________________________________</p>
-          <p><strong>[NOMBRE EMPRESA]</strong></p>
-          <p><strong>RUT:</strong></p>
-          <p><strong>EMPLEADOR</strong></p>
+      <!-- Sección de datos del trabajador seleccionado -->
+      <div id="workerDataSection" style="display: none;">
+        <div class="row g-3 mb-4">
+          <div class="col-md-6">
+            <label class="form-label">RUT:</label>
+            <p class="form-control-plaintext" id="displayRut"></p>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Nombre:</label>
+            <p class="form-control-plaintext" id="displayNombre"></p>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Apellido Paterno:</label>
+            <p class="form-control-plaintext" id="displayApellidoPaterno"></p>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Apellido Materno:</label>
+            <p class="form-control-plaintext" id="displayApellidoMaterno"></p>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Cargo:</label>
+            <p class="form-control-plaintext" id="displayCargo"></p>
+          </div>
         </div>
-        <div class="col-md-6 text-center">
-          <p class="mb-1">_________________________________</p>
-          <p><strong>[NOMBRE TRABAJADOR]</strong></p>
-          <p><strong>RUT:</strong></p>
-          <p><strong>TRABAJADOR</strong></p>
+
+        <!-- Texto informativo -->
+        <div class="mb-4">
+          <p>Con el propósito de promover y mantener el nivel de seguridad y cumplimiento en lo establecido en la Ley Nº
+            16.744.- y sus Decretos Reglamentarios en lo relacionado al suministro de equipos de protección personal, por
+            intermedio de la presente, se deja constancia de la provisión u entrega de los siguientes elementos de
+            protección personal:</p>
+        </div>
+
+        <!-- Tabla de EPP -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h2 class="h5 m-0">Elementos de Protección Personal</h2>
+          <button id="addRowBtn" class="btn btn-primary add-button" onclick="addEppRow()">
+            <i class="bi bi-plus-lg"></i> Agregar fila
+          </button>
+        </div>
+
+        <div class="table-responsive">
+          <table id="eppTable" class="table">
+            <thead>
+              <tr>
+                <th>Nombre del EPP</th>
+                <th>Cantidad</th>
+                <th>Fecha de Entrega</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Certificación y firmas -->
+        <div class="mt-4 mb-4">
+          <p>Certifico haber recibido los elementos de protección personal, como así también instrucciones para su
+            correcto uso y reconozco la **OBLIGACION DE USAR**, conservar y cuidar los mismos, e informar del deterioro o
+            extravío, conforme a lo indicado anteriormente.</p>
+        </div>
+
+        <!-- Botones de acción -->
+        <div class="d-flex justify-content-end mt-5 gap-2">
+          <button id="generatePdfBtn" class="btn btn-primary" onclick="GeneratePDFEPP()">
+            <i class="bi bi-file-earmark-pdf-fill"></i> Generar PDF
+          </button>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="d-flex justify-content-end mt-5 gap-2">
-          <button id="downloadPdfBtn" class="btn btn-secondary">
-              <i class="bi bi-file-earmark-pdf-fill"></i> Descargar PDF
-          </button>
-          <button id="saveBtn" class="btn btn-success">
-              <i class="bi bi-save-fill"></i> Guardar
-          </button>
-      </div>
-      </div>
-  </div>
-  
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="Epp.js"></script>
+  <script>
+    // Cambiar entre formularios de búsqueda
+    document.querySelectorAll('input[name="searchType"]').forEach(radio => {
+      radio.addEventListener('change', function() {
+        if (this.id === 'searchByRut') {
+          document.getElementById('searchByRutForm').style.display = 'block';
+          document.getElementById('searchByDataForm').style.display = 'none';
+        } else {
+          document.getElementById('searchByRutForm').style.display = 'none';
+          document.getElementById('searchByDataForm').style.display = 'block';
+        }
+      });
+    });
+  </script>
 </body>
 
 </html>
