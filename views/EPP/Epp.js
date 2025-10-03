@@ -143,11 +143,15 @@ async function searchWorkers() {
         });
 
         if (response.ok) {
-            const workers = await response.json();
+            const data = await response.json();
+            // El API retorna {total: X, trabajadores: [...]}
+            const workers = data.trabajadores || [];
             displaySearchResults(workers);
+            document.getElementById('resultsSection').style.display = 'block';
         } else {
             alert('No se encontraron trabajadores');
             document.getElementById('searchResults').innerHTML = '';
+            document.getElementById('resultsSection').style.display = 'none';
         }
     } catch (error) {
         console.error('Error:', error);
@@ -166,10 +170,10 @@ function displaySearchResults(workers) {
 
     resultsTable.innerHTML = workers.map(worker => `
         <tr>
-            <td>${worker.datos_trabajador.rut}-${worker.datos_trabajador.DV_rut}</td>
-            <td>${worker.datos_trabajador.nombre}</td>
-            <td>${worker.datos_trabajador.apellido_paterno}</td>
-            <td>${worker.datos_trabajador.apellido_materno}</td>
+            <td>${worker.rut}</td>
+            <td>${worker.nombre}</td>
+            <td>${worker.apellido_paterno}</td>
+            <td>${worker.apellido_materno}</td>
             <td>
                 <button class="btn btn-sm btn-primary" onclick='selectWorker(${JSON.stringify(worker)})'>
                     Seleccionar
@@ -187,12 +191,12 @@ function selectWorker(worker) {
     document.getElementById('resultsSection').style.display = 'none';
     document.getElementById('workerDataSection').style.display = 'block';
 
-    // Llenar los datos del trabajador
-    document.getElementById('displayRut').textContent = `${worker.datos_trabajador.rut}-${worker.datos_trabajador.DV_rut}`;
-    document.getElementById('displayNombre').textContent = worker.datos_trabajador.nombre;
-    document.getElementById('displayApellidoPaterno').textContent = worker.datos_trabajador.apellido_paterno;
-    document.getElementById('displayApellidoMaterno').textContent = worker.datos_trabajador.apellido_materno;
-    document.getElementById('displayCargo').textContent = worker.cargo ? worker.cargo.nombre_cargo : 'Sin cargo';
+    // Llenar los datos del trabajador (el API retorna datos directamente, no en datos_trabajador)
+    document.getElementById('displayRut').textContent = worker.rut;
+    document.getElementById('displayNombre').textContent = worker.nombre;
+    document.getElementById('displayApellidoPaterno').textContent = worker.apellido_paterno;
+    document.getElementById('displayApellidoMaterno').textContent = worker.apellido_materno;
+    document.getElementById('displayCargo').textContent = worker.cargo ? worker.cargo.nombre : 'Sin cargo';
 
     // Limpiar tabla de EPPs y agregar primera fila
     document.querySelector('#eppTable tbody').innerHTML = '';
@@ -292,8 +296,11 @@ async function GeneratePDFEPP() {
         });
     }
 
+    // Extraer solo el número del RUT (sin guión ni dígito verificador)
+    const rutSinFormato = selectedWorker.rut.split('-')[0];
+
     const data = {
-        rut: String(selectedWorker.datos_trabajador.rut),
+        rut: rutSinFormato,
         epp_list: eppList
     };
 
@@ -313,7 +320,7 @@ async function GeneratePDFEPP() {
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `epp_entrega_${selectedWorker.datos_trabajador.rut}.pdf`;
+            a.download = `epp_entrega_${rutSinFormato}.pdf`;
             document.body.appendChild(a);
             a.click();
             window.URL.revokeObjectURL(url);
